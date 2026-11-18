@@ -149,16 +149,9 @@ heydarkf-template/
 ├── contact.html            # 6-step brief form, autosave, live status
 ├── docs.html               # this manual, with the live Token Studio
 ├── assets/
-│   ├── css/
-│   │   └── global.css      # ← the only shared file: tokens + UI kit
-│   ├── preview/            # README screenshots (add yours)
-│   └── og-cover.png        # 1200×630 social card
-├── fa/                     # optional Persian mirror (see i18n)
-├── 404.html                # optional — recipe in docs §19
-├── robots.txt
-├── sitemap.xml
-├── LICENSE
-└── README.md
+   ├── css/
+   │   └── global.css      # ← the only shared file: tokens + UI kit
+   ├── preview/            # README screenshots (add yours)
 ```
 
 Each page carries its **own** `<style>` and `<script>` block, so any single file can be lifted out and still work.
