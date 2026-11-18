@@ -14,6 +14,8 @@ Soft gradients · subtle glass · asymmetric layouts · live design tokens.
 
 *Beyond code. Into engineering.*
 
+**All the information in the demo is test data.**
+
 <br>
 
 [![License](https://img.shields.io/badge/license-MIT-009966?style=flat-square&labelColor=101413)](#-license)
@@ -28,8 +30,8 @@ Soft gradients · subtle glass · asymmetric layouts · live design tokens.
 <br>
 
 [**Live demo**](https://heydar.kazemifakhr.ir) ·
-[**Documentation**](https://heydar.kazemifakhr.ir/docs.html) ·
-[**Token Studio**](https://heydar.kazemifakhr.ir/docs.html#sec-studio) ·
+[**Documentation**](https://heydar.kazemifakhr.ir/project/demo-modern-personal-html-theme-1/docs.html) ·
+[**Token Studio**](https://heydar.kazemifakhr.ir/project/demo-modern-personal-html-theme-1/docs.html#sec-studio) ·
 [**Report a bug**](../../issues/new)
 
 <br>
