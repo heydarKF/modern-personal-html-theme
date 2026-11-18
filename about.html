@@ -1,0 +1,1842 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — HeydarKF | Engineer's hands, student's mind</title>
+    <meta
+      name="description"
+      content="Meet Heydar Kazemi Fakhr (HeydarKF) — the human behind the terminal. From a broken WordPress theme to secure systems and AI agents, with a seminary notebook on the same desk."
+    />
+    <meta name="author" content="Heydar Kazemi Fakhr" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#f6f8f7"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0b0f0e"
+    />
+    <link rel="canonical" href="https://heydar.kazemifakhr.ir/about.html" />
+    <link
+      rel="alternate"
+      hreflang="fa"
+      href="https://heydar.kazemifakhr.ir/fa/about.html"
+    />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="HeydarKF" />
+    <meta property="og:title" content="About — HeydarKF" />
+    <meta
+      property="og:description"
+      content="Engineer's hands, student's mind. The story behind the systems."
+    />
+    <meta
+      property="og:url"
+      content="https://heydar.kazemifakhr.ir/about.html"
+    />
+    <meta
+      property="og:image"
+      content="https://heydar.kazemifakhr.ir/assets/og-cover.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About — HeydarKF" />
+    <meta
+      name="twitter:description"
+      content="Engineer's hands, student's mind."
+    />
+    <meta
+      name="twitter:image"
+      content="https://heydar.kazemifakhr.ir/assets/og-cover.png"
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="assets/css/global.css" />
+
+    <script>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        try {
+          var t = localStorage.getItem("hkf-theme");
+          if (!t)
+            t = matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+          d.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About HeydarKF",
+        "url": "https://heydar.kazemifakhr.ir/about.html",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Heydar Kazemi Fakhr",
+          "alternateName": "HeydarKF",
+          "jobTitle": "Backend Engineer & Full-Stack Developer",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Qom",
+            "addressCountry": "IR"
+          }
+        }
+      }
+    </script>
+
+    <!-- ============ Page-specific CSS (About) ============ -->
+    <style>
+      /* ---------- About hero: short & warm ---------- */
+      .about-hero {
+        position: relative;
+        padding: calc(var(--header-offset) + 30px) 0 80px;
+      }
+      .about-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--line) 1px, transparent 1px);
+        background-size: 56px 56px;
+        -webkit-mask-image: radial-gradient(
+          ellipse 80% 90% at 70% 10%,
+          #000 25%,
+          transparent 72%
+        );
+        mask-image: radial-gradient(
+          ellipse 80% 90% at 70% 10%,
+          #000 25%,
+          transparent 72%
+        );
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .about-hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
+        gap: clamp(36px, 6vw, 84px);
+        align-items: center;
+      }
+      .about-title {
+        font-size: clamp(2.4rem, 5.2vw, 4.1rem);
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.06;
+        margin-bottom: 20px;
+      }
+      .about-title .dot {
+        color: var(--accent-ink);
+      }
+      .about-lede {
+        font-size: 1.05rem;
+        max-width: 52ch;
+        margin-bottom: 28px;
+      }
+      .about-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      /* Portrait: asymmetric frame + offset ghost corner */
+      .about-visual {
+        justify-self: end;
+        padding: 12px 20px 30px 28px;
+        perspective: 900px;
+      }
+      .portrait-wrap {
+        position: relative;
+        width: min(340px, 100%);
+      }
+      .portrait-ghost {
+        position: absolute;
+        inset: 0;
+        transform: translate(13px, 13px);
+        border: 1.5px dashed var(--accent-line);
+        border-radius: 26px 26px 26px 104px;
+        pointer-events: none;
+      }
+      .portrait {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        border-radius: 26px 26px 26px 104px;
+        overflow: hidden;
+        border: 1px solid var(--glass-line);
+        box-shadow: var(--shadow-2);
+        background:
+          radial-gradient(
+            120% 90% at 85% -10%,
+            rgba(0, 153, 102, 0.35),
+            transparent 55%
+          ),
+          radial-gradient(
+            90% 70% at 10% 110%,
+            rgba(216, 181, 106, 0.22),
+            transparent 60%
+          ),
+          linear-gradient(160deg, #101b17, #0d1512 55%, #12241e);
+        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        transition: transform 0.5s var(--ease);
+        will-change: transform;
+      }
+      .portrait::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
+      /* scanning beam */
+      .portrait::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 70px;
+        top: -80px;
+        background: linear-gradient(
+          180deg,
+          transparent,
+          rgba(0, 201, 138, 0.14),
+          transparent
+        );
+        animation: scan 6.5s var(--ease) infinite;
+        pointer-events: none;
+      }
+      @keyframes scan {
+        0% {
+          top: -80px;
+        }
+        60%,
+        100% {
+          top: 110%;
+        }
+      }
+
+      .portrait-arch {
+        position: absolute;
+        inset: 12% 16% 20%;
+        display: grid;
+        place-items: center;
+      }
+      .portrait-arch svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+      .portrait-arch .arch {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 1.6;
+        opacity: 0.85;
+      }
+      .portrait-arch .arch-inner {
+        fill: none;
+        stroke: rgba(216, 181, 106, 0.55);
+        stroke-width: 1.2;
+        stroke-dasharray: 3 6;
+      }
+      .portrait-glyph {
+        position: absolute;
+        left: 50%;
+        top: 52%;
+        transform: translate(-50%, -50%);
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 3.4rem;
+        color: #3ecf9a;
+        text-shadow: 0 0 26px rgba(0, 201, 138, 0.45);
+      }
+      .portrait-glyph .pc {
+        display: inline-block;
+        width: 0.55em;
+        height: 0.14em;
+        background: #3ecf9a;
+        vertical-align: baseline;
+        animation: blink 1.05s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+      .portrait-caption {
+        position: absolute;
+        left: 22px;
+        bottom: 18px;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        color: #7d8f88;
+      }
+      .portrait-status {
+        position: absolute;
+        top: -14px;
+        right: -8px;
+        z-index: 2;
+      }
+
+      /* rotating seal */
+      .seal {
+        position: absolute;
+        left: -24px;
+        bottom: -22px;
+        width: 108px;
+        height: 108px;
+        z-index: 2;
+        display: grid;
+        place-items: center;
+      }
+      .seal-disc {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: var(--glass);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--glass-line);
+        box-shadow: var(--shadow-1);
+      }
+      .seal svg {
+        position: absolute;
+        inset: 0;
+        animation: spin 22s linear infinite;
+      }
+      .seal text {
+        font-family: var(--font-mono);
+        font-size: 9.2px;
+        letter-spacing: 2.4px;
+        fill: var(--muted);
+      }
+      .seal-core {
+        position: relative;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--accent-ink);
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ---------- Story: narrative + sticky desk ---------- */
+      .story-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        gap: clamp(36px, 5vw, 72px);
+        align-items: start;
+      }
+      .story-prose p {
+        font-size: 1.02rem;
+        max-width: 58ch;
+        margin-bottom: 22px;
+      }
+      .story-prose p strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .pull-quote {
+        position: relative;
+        margin: 36px 0;
+        padding: 6px 0 6px 26px;
+        border-left: 3px solid var(--accent);
+        max-width: 54ch;
+      }
+      .pull-quote::before {
+        content: "“";
+        position: absolute;
+        left: 14px;
+        top: -34px;
+        font-family: var(--font-display);
+        font-size: 5rem;
+        line-height: 1;
+        color: var(--accent-soft);
+        -webkit-text-stroke: 1px var(--accent-line);
+        pointer-events: none;
+      }
+      .pull-quote p {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+        line-height: 1.35;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin-bottom: 10px;
+      }
+      .pull-quote cite {
+        font-family: var(--font-mono);
+        font-style: normal;
+        font-size: 0.72rem;
+        color: var(--faint);
+      }
+
+      .story-visual {
+        position: sticky;
+        top: var(--header-offset);
+      }
+      .desk {
+        padding: 26px;
+      }
+      .desk:hover {
+        transform: none;
+      }
+      .desk-term {
+        border-radius: 16px;
+        background: #0d1512;
+        border: 1px solid rgba(0, 201, 138, 0.16);
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+      .desk-term-bar {
+        display: flex;
+        gap: 6px;
+        padding: 11px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .desk-term-bar i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+      }
+      .desk-term-bar i:nth-child(1) {
+        background: #ef4444;
+      }
+      .desk-term-bar i:nth-child(2) {
+        background: #eab308;
+      }
+      .desk-term-bar i:nth-child(3) {
+        background: #22c55e;
+      }
+      .desk-term-body {
+        padding: 15px 16px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        line-height: 1.9;
+        color: #8fa39a;
+      }
+      .desk-term-body .p {
+        color: #3ecf9a;
+        font-weight: 700;
+      }
+      .desk-term-body .cur {
+        display: inline-block;
+        width: 7px;
+        height: 12px;
+        background: #3ecf9a;
+        vertical-align: -2px;
+        animation: blink 1.05s steps(1) infinite;
+      }
+      .desk-row {
+        display: grid;
+        grid-template-columns: 1fr 92px;
+        gap: 16px;
+        align-items: end;
+      }
+      .desk-books {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .book {
+        height: 30px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        transition: transform var(--t-fast) var(--ease);
+      }
+      .book:hover {
+        transform: translateX(5px);
+      }
+      .book-1 {
+        background: linear-gradient(90deg, #0f3d2e, #14523c);
+        color: #bfe8d6;
+        width: 100%;
+      }
+      .book-2 {
+        background: linear-gradient(90deg, #d8b56a, #c9a254);
+        color: #3a2c12;
+        width: 88%;
+      }
+      .book-3 {
+        background: linear-gradient(90deg, #2b7f8c, #226a75);
+        color: #d8eef1;
+        width: 94%;
+      }
+      .desk-tea {
+        position: relative;
+        display: grid;
+        place-items: end center;
+      }
+      .tea-glass {
+        position: relative;
+        width: 52px;
+        height: 62px;
+        border-radius: 8px 8px 14px 14px;
+        border: 2px solid var(--line-2);
+        border-top-width: 1.5px;
+        background: linear-gradient(
+          180deg,
+          transparent 18%,
+          rgba(216, 141, 60, 0.55) 18%,
+          rgba(178, 106, 38, 0.75)
+        );
+        overflow: visible;
+      }
+      .tea-glass::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        top: 24%;
+        height: 3px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.35);
+      }
+      .steam {
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        right: 0;
+        height: 34px;
+        pointer-events: none;
+      }
+      .steam i {
+        position: absolute;
+        bottom: 2px;
+        width: 2px;
+        height: 16px;
+        border-radius: 2px;
+        background: var(--faint);
+        opacity: 0;
+        animation: steam 2.6s ease-in-out infinite;
+      }
+      .steam i:nth-child(1) {
+        left: 30%;
+      }
+      .steam i:nth-child(2) {
+        left: 55%;
+        animation-delay: 0.9s;
+      }
+      .steam i:nth-child(3) {
+        left: 74%;
+        animation-delay: 1.7s;
+      }
+      @keyframes steam {
+        0% {
+          transform: translateY(4px) scaleY(0.6);
+          opacity: 0;
+        }
+        35% {
+          opacity: 0.55;
+        }
+        100% {
+          transform: translateY(-16px) scaleY(1.15);
+          opacity: 0;
+        }
+      }
+      .desk-caption {
+        margin-top: 18px;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--faint);
+        text-align: center;
+      }
+
+      /* ---------- Timeline ---------- */
+      .timeline {
+        position: relative;
+        max-width: 780px;
+        padding-left: 42px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 9px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        border-radius: 2px;
+        background: var(--line-2);
+      }
+      .timeline-fill {
+        position: absolute;
+        left: 9px;
+        top: 6px;
+        width: 2px;
+        height: 0;
+        border-radius: 2px;
+        background: linear-gradient(
+          180deg,
+          var(--accent-strong),
+          var(--accent)
+        );
+        box-shadow: 0 0 12px rgba(0, 153, 102, 0.35);
+      }
+      .tl-item {
+        position: relative;
+        padding-bottom: 36px;
+        transition: transform var(--t-fast) var(--ease);
+      }
+      .tl-item:last-child {
+        padding-bottom: 0;
+      }
+      .tl-item:hover {
+        transform: translateX(5px);
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -39px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--accent);
+        background: var(--bg);
+        transition:
+          background-color var(--t-med) var(--ease),
+          box-shadow var(--t-med) var(--ease);
+      }
+      .tl-item.is-passed::before {
+        background: var(--accent);
+        box-shadow: 0 0 0 5px var(--accent-soft);
+      }
+      .tl-year {
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        color: var(--accent-ink);
+        margin-bottom: 6px;
+      }
+      .tl-title {
+        font-size: 1.18rem;
+        margin-bottom: 6px;
+      }
+      .tl-desc {
+        font-size: 0.92rem;
+        max-width: 56ch;
+      }
+
+      /* ---------- Values ---------- */
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .value-card {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+      .value-idx {
+        position: absolute;
+        top: 22px;
+        right: 24px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--faint);
+      }
+      .value-icon {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+        transition:
+          transform var(--t-fast) var(--ease),
+          background-color var(--t-fast) var(--ease),
+          color var(--t-fast) var(--ease);
+      }
+      .value-card:hover .value-icon {
+        background: var(--accent);
+        color: var(--on-accent);
+        transform: scale(1.06) rotate(-4deg);
+      }
+      .value-desc {
+        font-size: 0.92rem;
+      }
+      .value-note {
+        margin-top: auto;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--faint);
+      }
+
+      /* ---------- Toolbox ---------- */
+      .toolbox {
+        padding: 12px 30px;
+      }
+      .toolbox:hover {
+        transform: none;
+      }
+      .tool-row {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 20px;
+        align-items: start;
+        padding: 22px 0;
+        border-top: 1px solid var(--line);
+      }
+      .tool-row:first-child {
+        border-top: 0;
+      }
+      .tool-label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--faint);
+        padding-top: 8px;
+      }
+      .tool-label b {
+        display: block;
+        color: var(--accent-ink);
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .tool-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+      }
+
+      /* ---------- Off the clock ---------- */
+      .offclock {
+        position: relative;
+      }
+      .offclock::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          640px 360px at 88% 40%,
+          rgba(216, 181, 106, 0.1),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .offclock-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(30px, 5vw, 64px);
+        align-items: center;
+      }
+      .offclock-copy p {
+        font-size: 1rem;
+        max-width: 52ch;
+        margin-bottom: 16px;
+      }
+      .offclock-copy p strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .now-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .now-card {
+        padding: 20px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        text-align: left;
+      }
+      .now-card .n-icon {
+        color: var(--accent-ink);
+      }
+      .now-label {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        color: var(--faint);
+      }
+      .now-value {
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.4;
+      }
+      .tea-btn {
+        cursor: pointer;
+        font: inherit;
+      }
+      .tea-btn .now-hint {
+        font-family: var(--font-mono);
+        font-size: 0.64rem;
+        color: var(--accent-ink);
+      }
+      .tea-count {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: var(--r-pill);
+        background: var(--accent-soft);
+        color: var(--accent-ink);
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+      .tea-count.pop {
+        animation: pop 0.35s var(--ease);
+      }
+      @keyframes pop {
+        40% {
+          transform: scale(1.25);
+        }
+      }
+      .tea-visual {
+        position: relative;
+        align-self: center;
+        margin-top: 2px;
+      }
+      .tea-puff {
+        position: absolute;
+        bottom: 100%;
+        width: 3px;
+        height: 18px;
+        border-radius: 3px;
+        background: var(--accent-ink);
+        opacity: 0;
+        animation: puff 0.9s ease-out forwards;
+        pointer-events: none;
+      }
+      @keyframes puff {
+        0% {
+          transform: translateY(6px) scaleY(0.5);
+          opacity: 0;
+        }
+        30% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(-26px) scaleY(1.3);
+          opacity: 0;
+        }
+      }
+
+      /* ---------- Light CTA ---------- */
+      .cta-slim {
+        position: relative;
+        overflow: hidden;
+        padding: clamp(28px, 4vw, 42px) clamp(28px, 4vw, 48px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        flex-wrap: wrap;
+      }
+      .cta-slim:hover {
+        transform: none;
+      }
+      .cta-slim::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          480px 240px at 94% 50%,
+          var(--accent-soft),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .cta-slim-copy {
+        position: relative;
+      }
+      .cta-slim-copy .h2 {
+        font-size: clamp(1.5rem, 2.6vw, 2rem);
+        margin-bottom: 8px;
+      }
+      .cta-slim-copy p {
+        font-size: 0.92rem;
+      }
+      .cta-slim-actions {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      /* ---------- About responsive ---------- */
+      @media (max-width: 1100px) {
+        .about-hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .about-visual {
+          justify-self: start;
+          padding-left: 24px;
+        }
+        .story-grid {
+          grid-template-columns: 1fr;
+        }
+        .story-visual {
+          position: static;
+          max-width: 460px;
+        }
+        .offclock-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 860px) {
+        .values-grid {
+          grid-template-columns: 1fr;
+          max-width: 560px;
+        }
+      }
+      @media (max-width: 640px) {
+        .tool-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .tool-label {
+          padding-top: 0;
+        }
+        .now-grid {
+          grid-template-columns: 1fr;
+          max-width: 340px;
+        }
+        .seal {
+          width: 88px;
+          height: 88px;
+          left: -12px;
+          bottom: -16px;
+        }
+        .portrait-status {
+          right: 0;
+        }
+        .cta-slim-actions {
+          width: 100%;
+        }
+        .cta-slim-actions .btn {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ============ Header ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-bar">
+      <a class="logo" href="index.html" aria-label="HeydarKF — home"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="skills.html">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact ME</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="header-actions">        
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <span class="header-sep" aria-hidden="true"></span>
+        <a class="btn btn-primary btn-sm header-contact" href="contact.html">Start a project</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+        </div>
+    </div>
+  </header>
+
+
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
+      <nav class="mobile-nav" aria-label="Mobile">
+        <a href="index.html"><span class="idx">01</span> Home</a>
+        <a href="about.html"><span class="idx">02</span> About</a>
+        <a href="skills.html"><span class="idx">03</span> Skills</a>
+        <a href="projects.html"><span class="idx">04</span> Projects</a>
+        <a href="blog.html"><span class="idx">05</span> Blog</a>
+        <a href="docs.html"><span class="idx">06</span> Docs</a>
+      </nav>
+      <div class="mobile-foot">
+        <a class="mail" href="mailto:hello@kazemifakhr.ir"
+          >hello@kazemifakhr.ir</a
+        >
+        <a class="btn btn-primary btn-sm" href="#sec-studio">Token Studio</a>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- ================= Short Hero ================= -->
+      <section class="about-hero" id="top">
+        <div class="container">
+          <div class="about-hero-grid">
+            <div>
+              <p class="kicker reveal">// about — nice to meet you</p>
+              <h1 class="about-title reveal" style="--d: 60ms">
+                Engineer’s hands,<br />student’s mind<span class="dot">.</span>
+              </h1>
+              <p class="about-lede reveal" style="--d: 120ms">
+                I’m Heydar — I build secure systems by day and study classical
+                logic by night. This is the story of how those two became one
+                craft.
+              </p>
+              <div class="about-meta reveal" style="--d: 180ms">
+                <span class="chip">Qom, Iran</span>
+                <span class="chip">6+ years shipping</span>
+                <span class="chip">EN · FA</span>
+                <span class="chip">Replies &lt; 24h</span>
+              </div>
+            </div>
+
+            <div class="about-visual reveal" style="--d: 160ms">
+              <div class="portrait-wrap" id="portraitWrap">
+                <span class="portrait-ghost" aria-hidden="true"></span>
+
+                <div
+                  class="portrait"
+                  id="portrait"
+                  role="img"
+                  aria-label="Abstract portrait of HeydarKF — a pointed arch framing a terminal glyph"
+                >
+                  <div class="portrait-arch" aria-hidden="true">
+                    <svg viewBox="0 0 200 240">
+                      <path
+                        class="arch"
+                        d="M30 230 V110 C30 60 70 34 100 14 C130 34 170 60 170 110 V230"
+                      />
+                      <path
+                        class="arch-inner"
+                        d="M46 230 V116 C46 74 78 50 100 32 C122 50 154 74 154 116 V230"
+                      />
+                    </svg>
+                  </div>
+                  <span class="portrait-glyph" aria-hidden="true"
+                    >&gt;<span class="pc"></span
+                  ></span>
+                  <span class="portrait-caption">heydar_kf · est. 2019</span>
+                </div>
+
+                <span class="badge portrait-status"
+                  ><span class="badge-dot"></span> online, probably</span
+                >
+
+                <div class="seal" aria-hidden="true">
+                  <span class="seal-disc"></span>
+                  <svg viewBox="0 0 108 108">
+                    <defs>
+                      <path
+                        id="sealPath"
+                        d="M54,54 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0"
+                      />
+                    </defs>
+                    <text>
+                      <textPath href="#sealPath">
+                        BEYOND CODE • INTO ENGINEERING •&#160;
+                      </textPath>
+                    </text>
+                  </svg>
+                  <span class="seal-core">&gt;_</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Story ================= -->
+      <section class="section" id="story">
+        <div class="container">
+          <div class="story-grid">
+            <div class="story-prose">
+              <p class="kicker reveal">01 — the story</p>
+              <h2 class="h2 reveal" style="--d: 60ms; margin-bottom: 28px">
+                A short story, honestly told.
+              </h2>
+
+              <p class="reveal" style="--d: 100ms">
+                It started with a broken WordPress theme. I was seventeen,
+                fixing a neighbor’s shop site for the price of a thank-you.
+                <strong>The site came back online; I never did.</strong>
+                PHP had me, and I stopped looking for the exit.
+              </p>
+
+              <p class="reveal" style="--d: 140ms">
+                Then a client’s site got defaced. I spent a week rebuilding it
+                and a year learning
+                <em>why</em> it happened. That’s when “it works” stopped being
+                enough — <strong>it had to be safe.</strong> Security became the
+                lens I see every line through.
+              </p>
+
+              <blockquote class="pull-quote reveal" style="--d: 160ms">
+                <p>
+                  Good code reads like good prose — precise, unhurried,
+                  impossible to misread.
+                </p>
+                <cite>// the one rule I keep coming back to</cite>
+              </blockquote>
+
+              <p class="reveal" style="--d: 180ms">
+                Today I build pure-PHP platforms and AI agents by day, and study
+                logic and rhetoric at the seminary by night. Two disciplines,
+                one habit:
+                <strong>ask better questions before writing answers.</strong>
+                The terminal and the textbook share a desk — and, honestly, the
+                same chair.
+              </p>
+            </div>
+
+            <!-- Sticky desk still-life -->
+            <aside
+              class="story-visual reveal"
+              style="--d: 140ms"
+              aria-label="Illustration of my desk"
+            >
+              <div class="card desk">
+                <div class="desk-term" aria-hidden="true">
+                  <div class="desk-term-bar"><i></i><i></i><i></i></div>
+                  <div class="desk-term-body">
+                    <span class="p">$</span> git commit -m "ask better
+                    questions"<br />
+                    <span class="p">$</span> ./study --logic --rhetoric<br />
+                    ✓ both worlds, one craft <span class="cur"></span>
+                  </div>
+                </div>
+                <div class="desk-row" aria-hidden="true">
+                  <div class="desk-books">
+                    <span class="book book-1">CLEAN CODE</span>
+                    <span class="book book-2">CLASSICAL LOGIC</span>
+                    <span class="book book-3">ARABIC RHETORIC</span>
+                  </div>
+                  <div class="desk-tea">
+                    <div class="tea-glass">
+                      <span class="steam"><i></i><i></i><i></i></span>
+                    </div>
+                  </div>
+                </div>
+                <p class="desk-caption">// one desk, two libraries</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Timeline ================= -->
+      <section class="section" id="path">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="kicker">02 — the path</p>
+              <h2 class="h2">Five stops that mattered.</h2>
+            </div>
+          </div>
+
+          <div class="timeline" id="timeline">
+            <span
+              class="timeline-fill"
+              id="timelineFill"
+              aria-hidden="true"
+            ></span>
+
+            <div class="tl-item reveal">
+              <p class="tl-year">2019</p>
+              <h3 class="h3 tl-title">First lines</h3>
+              <p class="tl-desc">
+                Fixed a neighbor’s WordPress site and fell into PHP head-first.
+                No roadmap, just curiosity.
+              </p>
+            </div>
+
+            <div class="tl-item reveal" style="--d: 60ms">
+              <p class="tl-year">2021</p>
+              <h3 class="h3 tl-title">Freelance, for real</h3>
+              <p class="tl-desc">
+                Shipped 20+ client projects and learned that deadlines are
+                features too.
+              </p>
+            </div>
+
+            <div class="tl-item reveal" style="--d: 120ms">
+              <p class="tl-year">2022</p>
+              <h3 class="h3 tl-title">The security turn</h3>
+              <p class="tl-desc">
+                A defaced client site turned me into a security-first engineer.
+                OWASP became bedtime reading.
+              </p>
+            </div>
+
+            <div class="tl-item reveal" style="--d: 180ms">
+              <p class="tl-year">2024</p>
+              <h3 class="h3 tl-title">Systems, not scripts</h3>
+              <p class="tl-desc">
+                Moved to pure-PHP MVC architecture and started building
+                tool-using AI agents.
+              </p>
+            </div>
+
+            <div class="tl-item reveal" style="--d: 240ms">
+              <p class="tl-year">2026</p>
+              <h3 class="h3 tl-title">Today</h3>
+              <p class="tl-desc">
+                Engineering secure platforms and agent workflows — and still
+                studying the classics, still asking.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Values ================= -->
+      <section class="section" id="principles">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="kicker">03 — principles</p>
+              <h2 class="h2">How I work when nobody’s watching.</h2>
+            </div>
+          </div>
+
+          <div class="values-grid">
+            <article class="card value-card reveal">
+              <span class="value-idx">01</span>
+              <div class="value-icon" aria-hidden="true">
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              </div>
+              <h3 class="h3">Clean code</h3>
+              <p class="value-desc">
+                Readable beats clever. If a teammate can’t parse it in one pass,
+                I rewrite it.
+              </p>
+              <p class="value-note">// readable &gt; clever</p>
+            </article>
+
+            <article class="card value-card reveal" style="--d: 80ms">
+              <span class="value-idx">02</span>
+              <div class="value-icon" aria-hidden="true">
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 class="h3">On-time delivery</h3>
+              <p class="value-desc">
+                Small milestones, honest estimates. You always know what ships
+                on Friday.
+              </p>
+              <p class="value-note">// friday means friday</p>
+            </article>
+
+            <article class="card value-card reveal" style="--d: 160ms">
+              <span class="value-idx">03</span>
+              <div class="value-icon" aria-hidden="true">
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                  />
+                </svg>
+              </div>
+              <h3 class="h3">Clear communication</h3>
+              <p class="value-desc">
+                Plain language, weekly notes, no vanishing acts. Silence is a
+                bug.
+              </p>
+              <p class="value-note">// silence is a bug</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Toolbox ================= -->
+      <section class="section" id="toolbox">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <p class="kicker">04 — daily drivers</p>
+              <h2 class="h2">The toolbox. No progress bars.</h2>
+              <p class="section-sub">
+                Percentages don’t ship software. These do.
+              </p>
+            </div>
+          </div>
+
+          <div class="card toolbox reveal">
+            <div class="tool-row">
+              <p class="tool-label"><b>Backend</b>06 tools</p>
+              <div class="tool-chips">
+                <span class="chip">PHP 8</span><span class="chip">MySQL</span
+                ><span class="chip">Redis</span>
+                <span class="chip">REST APIs</span
+                ><span class="chip">Pure MVC</span
+                ><span class="chip">WordPress</span>
+              </div>
+            </div>
+            <div class="tool-row">
+              <p class="tool-label"><b>Frontend</b>08 tools</p>
+              <div class="tool-chips">
+                <span class="chip">HTML5</span><span class="chip">CSS3</span
+                ><span class="chip">JavaScript</span>
+                <span class="chip">TypeScript</span
+                ><span class="chip">React</span
+                ><span class="chip">Tailwind</span>
+                <span class="chip">Alpine.js</span
+                ><span class="chip">Bootstrap</span>
+              </div>
+            </div>
+            <div class="tool-row">
+              <p class="tool-label"><b>Security &amp; AI</b>08 tools</p>
+              <div class="tool-chips">
+                <span class="chip">OWASP</span
+                ><span class="chip">Burp Suite</span
+                ><span class="chip">Pentesting</span>
+                <span class="chip">OpenAI API</span
+                ><span class="chip">DeepSeek</span
+                ><span class="chip">Qwen</span> <span class="chip">Agents</span
+                ><span class="chip">RAG</span>
+              </div>
+            </div>
+            <div class="tool-row">
+              <p class="tool-label"><b>Tools &amp; Ops</b>06 tools</p>
+              <div class="tool-chips">
+                <span class="chip">Linux</span><span class="chip">Docker</span
+                ><span class="chip">Git</span> <span class="chip">Nginx</span
+                ><span class="chip">CI/CD</span><span class="chip">Figma</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Off the clock ================= -->
+      <section class="section offclock" id="offclock">
+        <div class="container">
+          <div class="offclock-grid">
+            <div class="offclock-copy">
+              <p class="kicker reveal">05 — the other half</p>
+              <h2 class="h2 reveal" style="--d: 60ms; margin-bottom: 22px">
+                Off the clock.
+              </h2>
+              <p class="reveal" style="--d: 100ms">
+                Away from the keyboard I’m a <strong>seminary student</strong> —
+                logic, philosophy and Arabic rhetoric. Same muscles as
+                debugging: parse carefully, question assumptions, respect the
+                reader.
+              </p>
+              <p class="reveal" style="--d: 140ms">
+                Add a shelf of well-worn books, a chess board I refuse to resign
+                on, and
+                <strong>cardamom tea that outlives most of my bugs.</strong>
+              </p>
+            </div>
+
+            <div class="now-grid reveal" style="--d: 160ms">
+              <div class="card now-card">
+                <span class="n-icon" aria-hidden="true">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path
+                      d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                    />
+                  </svg>
+                </span>
+                <span class="now-label">NOW READING</span>
+                <span class="now-value"
+                  >Classical logic, again — it never gets old</span
+                >
+              </div>
+
+              <div class="card now-card">
+                <span class="n-icon" aria-hidden="true">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M9 18V5l12-2v13" />
+                    <circle cx="6" cy="18" r="3" />
+                    <circle cx="18" cy="16" r="3" />
+                  </svg>
+                </span>
+                <span class="now-label">NOW PLAYING</span>
+                <span class="now-value"
+                  >Setar &amp; lo-fi — the debugging playlist</span
+                >
+              </div>
+
+              <button
+                class="card now-card tea-btn"
+                id="teaBtn"
+                type="button"
+                aria-label="Pour another cup of tea"
+              >
+                <span class="n-icon" aria-hidden="true">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+                    <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" />
+                  </svg>
+                </span>
+                <span class="now-label">NOW BREWING</span>
+                <span class="now-value"
+                  >Cardamom tea
+                  <span class="tea-count" id="teaCount" aria-live="polite"
+                    >×3</span
+                  ></span
+                >
+                <span class="tea-visual" aria-hidden="true">
+                  <span class="tea-glass" style="width: 34px; height: 40px">
+                    <span class="steam"><i></i><i></i></span>
+                  </span>
+                </span>
+                <span class="now-hint">tap to pour another ↑</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= Light CTA ================= -->
+      <section class="section" id="next" style="padding-top: 20px">
+        <div class="container">
+          <div class="card cta-slim reveal">
+            <div class="cta-slim-copy">
+              <h2 class="h2">Want to see this in production?</h2>
+              <p>The projects page is where the story gets concrete.</p>
+            </div>
+            <div class="cta-slim-actions">
+              <a class="btn btn-primary" href="projects.html">
+                Browse the projects
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <a class="link-arrow" href="contact.html"
+                >or say hello <span class="arr">→</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= Minimal Footer ================= -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-row">
+          <a class="logo" href="index.html"
+            ><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a
+          >
+
+          <nav class="footer-links" aria-label="Footer">
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="projects.html">Projects</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+
+          <div class="footer-social">
+            <a
+              class="icon-btn"
+              href="https://github.com/heydarkf"
+              target="_blank"
+              rel="noopener"
+              aria-label="GitHub"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"
+                />
+              </svg>
+            </a>
+            <a
+              class="icon-btn"
+              href="https://www.linkedin.com/in/heydarkf"
+              target="_blank"
+              rel="noopener"
+              aria-label="LinkedIn"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"
+                />
+              </svg>
+            </a>
+            <a
+              class="icon-btn"
+              href="https://x.com/heydarkf"
+              target="_blank"
+              rel="noopener"
+              aria-label="X (Twitter)"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"
+                />
+              </svg>
+            </a>
+            <a
+              class="icon-btn"
+              href="mailto:hello@kazemifakhr.ir"
+              aria-label="Email"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 6-10 7L2 6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="credit">
+            Designed by <strong>HeydarKF (OS Heydar)</strong> · ©
+            <span id="year">2026</span> HeydarKF. All rights reserved.
+          </p>
+          <a class="to-top" href="#top">back to top ↑</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ============ JS: shared + page ============ -->
+    <script>
+      (function () {
+        "use strict";
+        var d = document,
+          root = d.documentElement;
+        var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var $ = function (s, c) {
+          return (c || d).querySelector(s);
+        };
+        var $$ = function (s, c) {
+          return Array.prototype.slice.call((c || d).querySelectorAll(s));
+        };
+
+        /* ---------- Theme (shared) ---------- */
+        var themeBtn = $("#themeToggle");
+        function setTheme(t) {
+          root.setAttribute("data-theme", t);
+          try {
+            localStorage.setItem("hkf-theme", t);
+          } catch (e) {}
+        }
+        if (themeBtn)
+          themeBtn.addEventListener("click", function () {
+            var next =
+              root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            if (d.startViewTransition && !reduced)
+              d.startViewTransition(function () {
+                setTheme(next);
+              });
+            else setTheme(next);
+          });
+
+        /* ---------- Floating header (shared) ---------- */
+        var header = $("#siteHeader"),
+          ticking = false;
+        function onScroll() {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(function () {
+            header.classList.toggle("is-scrolled", window.scrollY > 24);
+            updateTimeline();
+            ticking = false;
+          });
+        }
+        addEventListener("scroll", onScroll, { passive: true });
+
+        /* ---------- Language dropdown (shared) ---------- */
+        var lang = $("#lang"),
+          langBtn = $("#langBtn");
+        function closeLang() {
+          lang.classList.remove("is-open");
+          langBtn.setAttribute("aria-expanded", "false");
+        }
+        if (langBtn)
+          langBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            var open = lang.classList.toggle("is-open");
+            langBtn.setAttribute("aria-expanded", String(open));
+          });
+        d.addEventListener("click", function (e) {
+          if (lang && !lang.contains(e.target)) closeLang();
+        });
+
+        /* ---------- Mobile menu (shared) ---------- */
+        var burger = $("#burgerBtn"),
+          menu = $("#mobileMenu"),
+          lastFocus = null;
+        function openMenu() {
+          lastFocus = d.activeElement;
+          d.body.classList.add("menu-open");
+          burger.setAttribute("aria-expanded", "true");
+          burger.setAttribute("aria-label", "Close menu");
+          var first = $(".mobile-nav a", menu);
+          if (first)
+            setTimeout(function () {
+              first.focus();
+            }, 350);
+        }
+        function closeMenu() {
+          d.body.classList.remove("menu-open");
+          burger.setAttribute("aria-expanded", "false");
+          burger.setAttribute("aria-label", "Open menu");
+          if (lastFocus) lastFocus.focus();
+        }
+        if (burger)
+          burger.addEventListener("click", function () {
+            d.body.classList.contains("menu-open") ? closeMenu() : openMenu();
+          });
+        if (menu)
+          menu.addEventListener("click", function (e) {
+            if (e.target.closest("a")) closeMenu();
+          });
+        d.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            closeLang();
+            if (d.body.classList.contains("menu-open")) closeMenu();
+          }
+          if (e.key === "Tab" && d.body.classList.contains("menu-open")) {
+            var f = $$("a, button", menu).concat([burger]);
+            var first = f[0],
+              last = f[f.length - 1];
+            if (e.shiftKey && d.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            } else if (!e.shiftKey && d.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        });
+
+        /* ---------- Reveal once (shared) ---------- */
+        var revealEls = $$(".reveal");
+        if ("IntersectionObserver" in window && !reduced) {
+          var ro = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add("is-in");
+                  ro.unobserve(en.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+          );
+          revealEls.forEach(function (el) {
+            ro.observe(el);
+          });
+        } else {
+          revealEls.forEach(function (el) {
+            el.classList.add("is-in");
+          });
+        }
+
+        /* ---------- Portrait tilt ---------- */
+        var wrap = $("#portraitWrap"),
+          portrait = $("#portrait");
+        if (
+          wrap &&
+          portrait &&
+          matchMedia("(pointer: fine)").matches &&
+          !reduced
+        ) {
+          wrap.addEventListener("mousemove", function (e) {
+            var r = wrap.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - 0.5;
+            var y = (e.clientY - r.top) / r.height - 0.5;
+            portrait.style.setProperty("--ry", x * 7 + "deg");
+            portrait.style.setProperty("--rx", -y * 7 + "deg");
+          });
+          wrap.addEventListener("mouseleave", function () {
+            portrait.style.setProperty("--ry", "0deg");
+            portrait.style.setProperty("--rx", "0deg");
+          });
+        }
+
+        /* ---------- Timeline progress ---------- */
+        var timeline = $("#timeline"),
+          fill = $("#timelineFill");
+        var tlItems = timeline ? $$(".tl-item", timeline) : [];
+        function updateTimeline() {
+          if (!timeline || !fill) return;
+          if (reduced) {
+            fill.style.height = "100%";
+            tlItems.forEach(function (it) {
+              it.classList.add("is-passed");
+            });
+            return;
+          }
+          var r = timeline.getBoundingClientRect();
+          var p = Math.min(
+            Math.max((innerHeight * 0.62 - r.top) / r.height, 0),
+            1,
+          );
+          fill.style.height = p * 100 + "%";
+          tlItems.forEach(function (it) {
+            it.classList.toggle("is-passed", it.offsetTop <= p * r.height);
+          });
+        }
+        updateTimeline();
+        addEventListener("resize", updateTimeline, { passive: true });
+
+        /* ---------- Tea counter ---------- */
+        var teaBtn = $("#teaBtn"),
+          teaCount = $("#teaCount"),
+          teaVisual = $(".tea-visual", teaBtn || d);
+        var cups = 3;
+        try {
+          cups = parseInt(sessionStorage.getItem("hkf-tea"), 10) || 3;
+        } catch (e) {}
+        function renderTea() {
+          if (teaCount) teaCount.textContent = "×" + cups;
+        }
+        renderTea();
+        if (teaBtn)
+          teaBtn.addEventListener("click", function () {
+            cups++;
+            try {
+              sessionStorage.setItem("hkf-tea", String(cups));
+            } catch (e) {}
+            renderTea();
+            teaCount.classList.remove("pop");
+            void teaCount.offsetWidth;
+            teaCount.classList.add("pop");
+            if (teaVisual && !reduced) {
+              for (var i = 0; i < 3; i++) {
+                var puff = d.createElement("span");
+                puff.className = "tea-puff";
+                puff.style.left = 28 + i * 22 + "%";
+                puff.style.animationDelay = i * 0.12 + "s";
+                teaVisual.appendChild(puff);
+                puff.addEventListener("animationend", function () {
+                  this.remove();
+                });
+              }
+            }
+          });
+
+        /* ---------- Footer year ---------- */
+        var yr = $("#year");
+        if (yr) yr.textContent = new Date().getFullYear();
+
+        onScroll();
+      })();
+    </script>
+  </body>
+</html>

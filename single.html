@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why I Left Frameworks Behind — HeydarKF</title>
+  <meta name="description" content="After six years of renting other people’s abstractions, I rebuilt my stack on pure PHP MVC. The surprise wasn’t speed — it was ownership. An essay by Heydar Kazemi Fakhr.">
+  <meta name="author" content="Heydar Kazemi Fakhr">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f8f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f0e">
+  <link rel="canonical" href="https://heydar.kazemifakhr.ir/post.html?p=frameworks-behind">
+  <link rel="alternate" hreflang="fa" href="https://heydar.kazemifakhr.ir/fa/post.html?p=frameworks-behind">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="HeydarKF">
+  <meta property="og:title" content="Why I Left Frameworks Behind">
+  <meta property="og:description" content="The surprise wasn’t speed — it was ownership.">
+  <meta property="og:url" content="https://heydar.kazemifakhr.ir/post.html?p=frameworks-behind">
+  <meta property="og:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="article:published_time" content="2026-11-02">
+  <meta property="article:author" content="Heydar Kazemi Fakhr">
+  <meta property="article:section" content="Engineering">
+  <meta property="article:tag" content="PHP">
+  <meta property="article:tag" content="MVC">
+  <meta property="article:tag" content="Architecture">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why I Left Frameworks Behind">
+  <meta name="twitter:description" content="The surprise wasn’t speed — it was ownership.">
+  <meta name="twitter:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('hkf-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Why I Left Frameworks Behind",
+    "description": "After six years of renting other people’s abstractions, I rebuilt my stack on pure PHP MVC. The surprise wasn’t speed — it was ownership.",
+    "datePublished": "2026-11-02",
+    "dateModified": "2026-11-02",
+    "articleSection": "Engineering",
+    "keywords": ["PHP", "MVC", "Architecture"],
+    "author": { "@type": "Person", "name": "Heydar Kazemi Fakhr", "alternateName": "HeydarKF", "url": "https://heydar.kazemifakhr.ir/" },
+    "publisher": { "@type": "Person", "name": "Heydar Kazemi Fakhr" },
+    "mainEntityOfPage": "https://heydar.kazemifakhr.ir/post.html?p=frameworks-behind",
+    "image": "https://heydar.kazemifakhr.ir/assets/og-cover.png"
+  }
+  </script>
+
+  <!-- ============ Page CSS (Single post) ============ -->
+  <style>
+    :root {
+      --teal: #2b7f8c;
+      --cyan: #35b8c9;
+      --amber: #d8b56a;
+      --blue: #4f83c2;
+      --crimson: #d64550;
+      --reader-fs: 1.06rem;
+      --read-top: 78px;
+    }
+
+    /* ---------- Reading progress + tool rail ---------- */
+    .read-progress {
+      position: fixed; top: 0; left: 0; z-index: 120;
+      height: 3px; width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 0 12px rgba(0,153,102,.4);
+      transition: width .1s linear;
+    }
+    .read-rail {
+      position: fixed; right: 22px; top: 50%; transform: translateY(-50%);
+      z-index: 90; display: flex; flex-direction: column; gap: 8px; align-items: center;
+      padding: 10px 8px; border-radius: var(--r-pill);
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      border: 1px solid var(--glass-line); box-shadow: var(--shadow-1);
+      opacity: 0; visibility: hidden; transition: opacity var(--t-med) var(--ease), visibility var(--t-med);
+    }
+    .read-rail.on { opacity: 1; visibility: visible; }
+    .read-rail .icon-btn { width: 38px; height: 38px; }
+    .rail-sep { width: 20px; height: 1px; background: var(--line-2); }
+    .rail-pct { font-family: var(--font-mono); font-size: .6rem; color: var(--faint); writing-mode: vertical-rl; letter-spacing: .1em; }
+    .fs-mini { display: flex; flex-direction: column; gap: 2px; }
+    .fs-mini button { width: 38px; height: 30px; border-radius: var(--r-pill); display: grid; place-items: center; font-family: var(--font-mono); font-size: .66rem; color: var(--muted); transition: all var(--t-fast) var(--ease); }
+    .fs-mini button:hover { color: var(--accent-ink); background: var(--accent-soft); }
+
+    /* ---------- Article head ---------- */
+    .post-head { position: relative; padding: calc(var(--header-offset) + 16px) 0 34px; }
+    .post-head::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 75% 90% at 30% 0%, #000 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse 75% 90% at 30% 0%, #000 20%, transparent 72%);
+      opacity: .5; pointer-events: none;
+    }
+    .crumbs { position: relative; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: var(--font-mono); font-size: .68rem; color: var(--faint); margin-bottom: 26px; }
+    .crumbs a { color: var(--muted); text-decoration: none; transition: color var(--t-fast) var(--ease); }
+    .crumbs a:hover { color: var(--accent-ink); }
+    .crumbs .sep { color: var(--line-2); }
+    .crumbs .here { color: var(--accent-ink); }
+    .head-grid { position: relative; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 26px; align-items: end; }
+    .post-cat-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+    .cat-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: .66rem; font-weight: 500; border: 1px solid var(--line); color: var(--muted); text-decoration: none; transition: all var(--t-fast) var(--ease); }
+    .cat-chip i { width: 7px; height: 7px; border-radius: 50%; }
+    .cat-chip:hover { border-color: var(--accent-line); color: var(--ink); transform: translateY(-1px); }
+    .series-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: var(--r-pill); background: var(--accent-soft); border: 1px solid var(--accent-line); font-family: var(--font-mono); font-size: .66rem; color: var(--accent-ink); text-decoration: none; }
+    .series-chip:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .post-title { font-size: clamp(2.1rem, 4.6vw, 3.6rem); letter-spacing: -.035em; line-height: 1.08; max-width: 22ch; }
+    .post-title .dot { color: var(--accent-ink); }
+    .post-lede { font-size: clamp(1.02rem, 1.6vw, 1.2rem); color: var(--muted); max-width: 58ch; margin-top: 18px; line-height: 1.7; }
+    .head-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 24px; font-family: var(--font-mono); font-size: .7rem; color: var(--faint); }
+    .head-meta .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(140deg, var(--accent), var(--teal)); display: grid; place-items: center; font-family: var(--font-mono); font-size: .74rem; font-weight: 700; color: #052018; }
+    .head-meta b { color: var(--ink); font-weight: 600; font-family: var(--font-body); font-size: .88rem; }
+    .head-meta .dotsep { color: var(--line-2); }
+    .head-actions { display: flex; gap: 8px; align-items: center; }
+    .head-actions .icon-btn { width: 42px; height: 42px; }
+
+    /* ---------- Cover ---------- */
+    .cover-wrap { position: relative; padding-bottom: 40px; }
+    .post-cover { position: relative; aspect-ratio: 21/9; border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-2); }
+    .cv { position: absolute; inset: 0; overflow: hidden; }
+    .cv::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .cv-light::before { background-image: linear-gradient(rgba(16,20,19,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(16,20,19,.05) 1px, transparent 1px); }
+    [data-theme="dark"] .cv-light::before { background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); }
+    .cv-inner { position: absolute; inset: 0; }
+    .cv-glyph { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: var(--font-mono); font-weight: 700; line-height: 1; }
+    .cv-chip { position: absolute; padding: 5px 11px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: .6rem; background: rgba(13,21,18,.55); border: 1px solid rgba(255,255,255,.14); color: #cfe0d8; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .cv-light .cv-chip { background: rgba(255,255,255,.65); color: #3c4642; border-color: rgba(16,20,19,.1); }
+    [data-theme="dark"] .cv-light .cv-chip { background: rgba(13,21,18,.55); color: #cfe0d8; border-color: rgba(255,255,255,.14); }
+    .cv-1 { background: linear-gradient(150deg, #0f231c, #14382c 55%, #0d1a15); }
+    .cv-1 .cv-glyph { font-size: clamp(4rem, 9vw, 7rem); color: #3ecf9a; opacity: .9; }
+    .cv-1 .strike { position: absolute; left: 50%; top: 70%; transform: translate(-50%,-50%) rotate(-4deg); font-family: var(--font-mono); font-size: clamp(.7rem,1.4vw,.95rem); color: #7d8f88; text-decoration: line-through; text-decoration-color: var(--crimson); text-decoration-thickness: 2px; }
+    .cv-2 { background: linear-gradient(150deg, #241114, #3a1a1f 55%, #1c0e11); }
+    .cv-2 .rings i { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); border: 1.4px solid rgba(214,69,80,.55); border-radius: 50%; }
+    .cv-2 .rings i:nth-child(1) { width: 70px; height: 70px; }
+    .cv-2 .rings i:nth-child(2) { width: 130px; height: 130px; opacity: .7; }
+    .cv-2 .rings i:nth-child(3) { width: 190px; height: 190px; opacity: .4; }
+    .cv-2 .cross { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; transform: translate(-50%,-50%); }
+    .cv-2 .cross::before, .cv-2 .cross::after { content: ""; position: absolute; background: var(--crimson); }
+    .cv-2 .cross::before { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); }
+    .cv-2 .cross::after { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%); }
+    .cv-3 { background: linear-gradient(150deg, #0f2224, #14343a 55%, #0d1a1c); }
+    .cv-3 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cv-3 line { stroke: var(--cyan); stroke-width: 1.3; stroke-dasharray: 4 5; opacity: .7; }
+    .cv-3 .nd { position: absolute; width: 30px; height: 30px; border-radius: 50%; transform: translate(-50%,-50%); background: #0d1a1c; border: 1.5px solid var(--cyan); }
+    .cv-3 .stamp { position: absolute; right: 12%; bottom: 16%; transform: rotate(-8deg); padding: 6px 14px; border: 1.6px solid var(--cyan); border-radius: 6px; font-family: var(--font-mono); font-size: .7rem; color: var(--cyan); letter-spacing: .18em; }
+    .cv-4 { background: linear-gradient(150deg, #f2ecdd, #e9dfc8 60%, #e0d4b8); }
+    [data-theme="dark"] .cv-4 { background: linear-gradient(150deg, #201c13, #2a2418 60%, #191610); }
+    .cv-4 .rule { position: absolute; left: 12%; right: 12%; height: 1.4px; background: rgba(160,130,70,.4); }
+    .cv-4 .marg { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: var(--amber); }
+    .cv-4 .codeline { position: absolute; left: 12%; right: 20%; height: 18px; border-radius: 5px; background: rgba(0,153,102,.16); border: 1px solid var(--accent-line); }
+    .cv-5 { background: linear-gradient(150deg, #101a26, #16283c 55%, #0d1520); }
+    .cv-5 .hist { position: absolute; left: 12%; right: 12%; bottom: 22%; height: 46%; display: flex; align-items: flex-end; gap: 7px; }
+    .cv-5 .hist i { flex: 1; border-radius: 3px 3px 1px 1px; background: linear-gradient(180deg, var(--blue), rgba(79,131,194,.25)); height: var(--h); }
+    .cv-5 .budget { position: absolute; left: 10%; right: 10%; top: 34%; border-top: 2px dashed var(--crimson); }
+    .cv-6 { background: linear-gradient(150deg, #122019, #1a3026 55%, #0e1a14); }
+    .cv-6 .field { position: absolute; left: 16%; right: 16%; top: 34%; height: 38px; border-radius: 9px; border: 2px solid var(--crimson); background: rgba(255,255,255,.05); }
+    .cv-6 .field::after { content: ""; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 46%; height: 7px; border-radius: 3px; background: rgba(255,255,255,.2); }
+    .cv-6 .shield { position: absolute; left: 50%; top: 68%; transform: translate(-50%,-50%); color: #3ecf9a; }
+    .cv-7 { background: linear-gradient(150deg, #0f1e22, #143036 55%, #0d181c); }
+    .cv-7 .layer { position: absolute; left: 20%; right: 20%; height: 22px; border-radius: 7px; border: 1.4px solid rgba(53,184,201,.5); background: rgba(53,184,201,.1); }
+    .cv-7 .layer:nth-child(1) { top: 26%; }
+    .cv-7 .layer:nth-child(2) { top: 42%; left: 24%; right: 24%; opacity: .8; }
+    .cv-7 .layer:nth-child(3) { top: 58%; left: 28%; right: 28%; opacity: .6; }
+    .cv-7 .clock { position: absolute; right: 12%; top: 16%; width: 46px; height: 46px; border-radius: 50%; border: 2px solid var(--amber); }
+    .cv-7 .clock::after { content: ""; position: absolute; left: 50%; top: 50%; width: 2px; height: 15px; background: var(--amber); transform-origin: top center; transform: translate(-50%,0) rotate(140deg); }
+    .cv-8 { background: linear-gradient(150deg, #1d1a12, #262117 50%, #101b16 50%, #14261e); }
+    .cv-8 .half { position: absolute; top: 18%; bottom: 18%; width: 34%; display: flex; flex-direction: column; gap: 10px; }
+    .cv-8 .half.l { left: 10%; } .cv-8 .half.r { right: 10%; }
+    .cv-8 .half i { height: 7px; border-radius: 3px; }
+    .cv-8 .half.l i { background: rgba(216,181,106,.4); }
+    .cv-8 .half.l i:nth-child(2) { width: 70%; } .cv-8 .half.l i:nth-child(4) { width: 55%; }
+    .cv-8 .half.r i { background: rgba(62,207,154,.4); }
+    .cv-8 .half.r i:nth-child(1) { width: 60%; } .cv-8 .half.r i:nth-child(3) { width: 80%; }
+    .cv-8 .divider { position: absolute; left: 50%; top: 12%; bottom: 12%; width: 1.4px; background: rgba(255,255,255,.18); }
+    .cv-9 { background: linear-gradient(150deg, #10201a, #173428 55%, #0d1a14); }
+    .cv-9 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cv-9 line { stroke: var(--accent); stroke-width: 1.3; opacity: .6; }
+    .cv-9 .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); padding: 9px 18px; border-radius: 9px; border: 1.6px solid var(--accent); background: #0d1a14; font-family: var(--font-mono); font-size: .74rem; color: #3ecf9a; }
+    .cv-9 .sat { position: absolute; width: 16px; height: 16px; border-radius: 50%; transform: translate(-50%,-50%); background: #0d1a14; border: 1.5px solid var(--amber); }
+    .cover-cap { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-family: var(--font-mono); font-size: .66rem; color: var(--faint); }
+
+    /* ---------- Body layout ---------- */
+    .post-layout { display: grid; grid-template-columns: 250px minmax(0,1fr); gap: clamp(30px,5vw,72px); align-items: start; padding-bottom: 30px; }
+    .toc-col { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 18px; }
+    .toc-card { padding: 20px 20px 16px; }
+    .toc-card:hover { transform: none; }
+    .toc-title { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; color: var(--faint); margin-bottom: 12px; }
+    .toc-list { display: flex; flex-direction: column; gap: 2px; }
+    .toc-link {
+      display: flex; align-items: baseline; gap: 9px;
+      padding: 7px 9px; border-radius: 8px; border-left: 2px solid transparent;
+      font-size: .82rem; color: var(--muted); text-decoration: none; line-height: 1.4;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .toc-link .n { font-family: var(--font-mono); font-size: .6rem; color: var(--faint); }
+    .toc-link:hover { color: var(--ink); background: var(--bg-2); }
+    .toc-link[aria-current="true"] { color: var(--accent-ink); border-left-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+    .toc-link[aria-current="true"] .n { color: var(--accent-ink); }
+    .toc-foot { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .62rem; color: var(--faint); }
+    .toc-foot b { color: var(--accent-ink); }
+    .side-note { padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .side-note:hover { transform: none; }
+    .side-note p { font-size: .8rem; }
+    .side-note .mono-l { font-family: var(--font-mono); font-size: .64rem; color: var(--accent-ink); }
+
+    /* ---------- Article typography ---------- */
+    .article { font-size: var(--reader-fs); max-width: 70ch; }
+    .article > p { color: var(--muted); margin-bottom: 1.2em; line-height: 1.85; }
+    .article p strong { color: var(--ink); }
+    .article p em { color: var(--ink); }
+    .article h2 {
+      font-size: calc(var(--reader-fs) * 1.42); margin: 2em 0 .8em;
+      display: flex; align-items: center; gap: 14px; scroll-margin-top: 120px;
+    }
+    .article h2::before { content: ""; width: 22px; height: 2px; background: var(--accent); flex: none; }
+    .article h2 .h-num { font-family: var(--font-mono); font-size: .62em; color: var(--faint); font-weight: 500; }
+    .article h3 { font-size: calc(var(--reader-fs) * 1.14); margin: 1.6em 0 .6em; scroll-margin-top: 120px; }
+    .article blockquote {
+      position: relative; margin: 1.9em 0; padding: 6px 0 6px 26px; border-left: 3px solid var(--accent);
+      font-family: var(--font-display); font-weight: 600;
+      font-size: calc(var(--reader-fs) * 1.26); line-height: 1.45; color: var(--ink);
+    }
+    .article blockquote::before {
+      content: "“"; position: absolute; left: 12px; top: -30px;
+      font-family: var(--font-display); font-size: 4.4rem; line-height: 1;
+      color: var(--accent-soft); -webkit-text-stroke: 1px var(--accent-line); pointer-events: none;
+    }
+    .article ul, .article ol { margin: 0 0 1.3em 1.2em; list-style: none; }
+    .article ul li, .article ol li { color: var(--muted); margin-bottom: .55em; position: relative; padding-left: 1.2em; line-height: 1.75; }
+    .article ul li::before { content: "▸"; position: absolute; left: 0; color: var(--accent-ink); }
+    .article ol { counter-reset: step; }
+    .article ol li { counter-increment: step; }
+    .article ol li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; font-family: var(--font-mono); font-size: .72em; color: var(--accent-ink); top: .25em; }
+    .article a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--accent-line); }
+    .article a:hover { text-decoration-color: var(--accent-ink); }
+    .article code:not(pre code) {
+      font-family: var(--font-mono); font-size: .84em;
+      background: var(--bg-2); border: 1px solid var(--line);
+      padding: 2px 7px; border-radius: 6px; color: var(--accent-ink);
+    }
+    .code-block { position: relative; margin: 1.7em 0; }
+    .code-bar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; border-radius: var(--r-md) var(--r-md) 0 0;
+      background: #101b17; border: 1px solid rgba(0,201,138,.16); border-bottom: 0;
+      font-family: var(--font-mono); font-size: .66rem; color: #7d8f88;
+    }
+    .code-bar .fname { flex: 1; }
+    .code-copy {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 11px; border-radius: var(--r-pill);
+      border: 1px solid rgba(255,255,255,.14); color: #cfe0d8;
+      font-family: var(--font-mono); font-size: .62rem;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .code-copy:hover { border-color: var(--accent); color: #3ecf9a; }
+    .code-copy.done { border-color: var(--accent); color: #3ecf9a; }
+    .article pre {
+      margin: 0; padding: 18px 20px; border-radius: 0 0 var(--r-md) var(--r-md);
+      background: #0d1512; border: 1px solid rgba(0,201,138,.16);
+      overflow-x: auto; font-family: var(--font-mono);
+      font-size: calc(var(--reader-fs) * .78); line-height: 1.85; color: #c6d4cd;
+    }
+    .article pre .k { color: #3ecf9a; } .article pre .s { color: #d8b56a; }
+    .article pre .c { color: #64756e; } .article pre .n { color: #7fb3e8; }
+    .article table { width: 100%; border-collapse: collapse; margin: 1.7em 0; font-size: calc(var(--reader-fs) * .88); }
+    .article th, .article td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+    .article th { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+    .article td { color: var(--muted); }
+    .article td b { color: var(--ink); }
+    .callout {
+      margin: 1.7em 0; padding: 18px 20px; border-radius: var(--r-md);
+      background: var(--accent-soft); border: 1px solid var(--accent-line);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .callout svg { flex: none; color: var(--accent-ink); margin-top: 2px; }
+    .callout p { margin: 0; font-size: calc(var(--reader-fs) * .92); color: var(--muted); }
+    .callout p strong { color: var(--ink); }
+    .footnote-ref { font-family: var(--font-mono); font-size: .68em; color: var(--accent-ink); text-decoration: none; vertical-align: super; }
+    .footnotes { margin-top: 2.4em; padding-top: 1.2em; border-top: 1px solid var(--line); font-size: calc(var(--reader-fs) * .86); }
+    .footnotes h2 { font-size: calc(var(--reader-fs) * 1.05); margin: 0 0 .8em; }
+    .footnotes ol li { font-size: .95em; }
+    .footnotes .back { font-family: var(--font-mono); font-size: .7em; text-decoration: none; margin-left: 6px; }
+
+    /* ---------- Post footer ---------- */
+    .post-tags { display: flex; gap: 9px; flex-wrap: wrap; margin: 34px 0 26px; }
+    .post-share {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 18px 20px; border-radius: var(--r-md);
+      background: var(--bg-2); border: 1px solid var(--line); margin-bottom: 26px;
+    }
+    .post-share .lbl { font-family: var(--font-mono); font-size: .68rem; color: var(--faint); letter-spacing: .14em; }
+    .post-share .spacer { flex: 1; }
+    .share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: var(--r-pill); border: 1px solid var(--line); background: var(--surface); font-size: .82rem; font-weight: 600; color: var(--muted); text-decoration: none; transition: all var(--t-fast) var(--ease); }
+    .share-btn:hover { border-color: var(--accent-line); color: var(--accent-ink); transform: translateY(-2px); }
+    .author-card { display: flex; gap: 18px; align-items: flex-start; padding: 24px; margin-bottom: 26px; }
+    .author-card:hover { transform: none; }
+    .author-card .avatar { width: 58px; height: 58px; border-radius: 50%; flex: none; background: linear-gradient(140deg, var(--accent), var(--teal)); display: grid; place-items: center; font-family: var(--font-mono); font-size: 1rem; font-weight: 700; color: #052018; }
+    .author-card b { display: block; font-size: 1.05rem; color: var(--ink); margin-bottom: 4px; }
+    .author-card .role { font-family: var(--font-mono); font-size: .66rem; color: var(--accent-ink); margin-bottom: 10px; }
+    .author-card p { font-size: .9rem; margin-bottom: 12px; }
+    .author-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .author-links .icon-btn { width: 36px; height: 36px; }
+
+    .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 10px; }
+    .pn-card { display: flex; flex-direction: column; gap: 8px; padding: 20px; text-decoration: none; }
+    .pn-card.next { align-items: flex-end; text-align: right; }
+    .pn-card span { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); letter-spacing: .14em; }
+    .pn-card b { font-family: var(--font-display); font-size: 1.02rem; color: var(--ink); line-height: 1.35; letter-spacing: -.02em; }
+    .pn-card:hover b { color: var(--accent-ink); }
+    .pn-card .pn-meta { font-family: var(--font-mono); font-size: .62rem; color: var(--faint); }
+    .pn-card.is-empty { opacity: .45; pointer-events: none; }
+
+    /* ---------- Related ---------- */
+    .related-section { position: relative; }
+    .related-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(680px 360px at 88% 30%, rgba(216,181,106,.09), transparent 70%); pointer-events: none; }
+    .rel-grid { position: relative; display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .rel-card { padding: 10px 10px 18px; display: flex; flex-direction: column; text-decoration: none; }
+    .rel-cover { position: relative; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); }
+    .rel-cover .cv-glyph { font-size: 2.6rem; }
+    .rel-body { padding: 15px 12px 0; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .rel-meta { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: .62rem; color: var(--faint); }
+    .rel-title { font-size: 1.02rem; letter-spacing: -.02em; line-height: 1.35; color: var(--ink); transition: color var(--t-fast) var(--ease); }
+    .rel-card:hover .rel-title { color: var(--accent-ink); }
+    .rel-read { margin-top: auto; padding-top: 8px; font-family: var(--font-mono); font-size: .64rem; color: var(--accent-ink); }
+
+    /* ---------- Comments ---------- */
+    .comments-section { position: relative; }
+    .comments-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(640px 340px at 10% 30%, var(--accent-soft), transparent 70%); pointer-events: none; }
+    .cm-wrap { position: relative; max-width: 760px; }
+    .cm-form { padding: 24px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 26px; }
+    .cm-form:hover { transform: none; }
+    .cm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cm-input, .cm-textarea {
+      width: 100%; padding: 13px 16px; border-radius: var(--r-sm);
+      border: 1px solid var(--line-2); background: var(--surface); color: var(--ink);
+      font: inherit; font-size: .92rem;
+      transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+    }
+    .cm-textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+    .cm-input:focus, .cm-textarea:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .cm-input.err, .cm-textarea.err { border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(214,69,80,.14); }
+    .cm-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .cm-hint { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .cm-err { display: none; font-family: var(--font-mono); font-size: .68rem; color: var(--crimson); }
+    .cm-err.on { display: block; }
+    .cm-count { font-family: var(--font-mono); font-size: .7rem; color: var(--faint); margin-bottom: 16px; }
+    .cm-count b { color: var(--accent-ink); }
+    .cm-list { display: flex; flex-direction: column; gap: 14px; }
+    .cm-item { padding: 20px 22px; display: flex; gap: 14px; }
+    .cm-item:hover { transform: none; }
+    .cm-avatar { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center; font-family: var(--font-mono); font-size: .74rem; font-weight: 700; color: #052018; background: linear-gradient(140deg, var(--accent), var(--teal)); }
+    .cm-avatar.alt { background: linear-gradient(140deg, var(--amber), var(--crimson)); color: #2a1608; }
+    .cm-avatar.alt2 { background: linear-gradient(140deg, var(--cyan), var(--blue)); color: #06202a; }
+    .cm-main { flex: 1; min-width: 0; }
+    .cm-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+    .cm-head b { font-size: .92rem; color: var(--ink); }
+    .cm-head .when { font-family: var(--font-mono); font-size: .62rem; color: var(--faint); }
+    .cm-head .mine { font-family: var(--font-mono); font-size: .58rem; padding: 2px 8px; border-radius: var(--r-pill); background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent-ink); }
+    .cm-text { font-size: .9rem; white-space: pre-wrap; word-break: break-word; }
+    .cm-actions { margin-top: 10px; display: flex; gap: 14px; }
+    .cm-like, .cm-del { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: .66rem; color: var(--faint); transition: color var(--t-fast) var(--ease); }
+    .cm-like:hover { color: var(--accent-ink); }
+    .cm-like.liked { color: var(--accent-ink); }
+    .cm-del:hover { color: var(--crimson); }
+    .cm-empty { padding: 34px 20px; text-align: center; border: 1px dashed var(--line-2); border-radius: var(--r-md); font-size: .9rem; color: var(--muted); }
+
+    /* ---------- Toast ---------- */
+    .toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; transform: translate(-50%,16px); display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--accent-line); box-shadow: var(--shadow-2); font-size: .86rem; font-weight: 600; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s; }
+    .toast.show { opacity: 1; visibility: visible; transform: translate(-50%,0); }
+    .toast svg { color: var(--accent-ink); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1240px) { .read-rail { display: none; } }
+    @media (max-width: 1100px) {
+      .post-layout { grid-template-columns: 1fr; }
+      .toc-col { position: static; order: -1; }
+      .toc-card { max-width: 560px; }
+      .side-note { display: none; }
+      .rel-grid { grid-template-columns: 1fr; max-width: 560px; }
+      .head-grid { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 760px) {
+      .post-cover { aspect-ratio: 16/9; }
+      .post-nav { grid-template-columns: 1fr; }
+      .pn-card.next { align-items: flex-start; text-align: left; }
+      .cm-row { grid-template-columns: 1fr; }
+      .author-card { flex-direction: column; }
+    }
+    @media (max-width: 620px) {
+      .post-title { max-width: none; }
+      .head-actions { width: 100%; }
+      .article blockquote { padding-left: 18px; }
+      .article blockquote::before { display: none; }
+    }
+    @media print {
+      .site-header, .read-rail, .read-progress, .toc-col, .post-share, .comments-section, .related-section, .site-footer, .mobile-menu, .head-actions { display: none !important; }
+      body::before, body::after { display: none; }
+      .post-layout { grid-template-columns: 1fr; }
+      .article { max-width: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#article">Skip to article</a>
+  <span class="read-progress" id="readProgress" aria-hidden="true"></span>
+
+    <!-- ============ Header ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-bar">
+      <a class="logo" href="index.html" aria-label="HeydarKF — home"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" >About</a>
+        <a href="skills.html">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="contact.html">Contact ME</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="header-actions">        
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <span class="header-sep" aria-hidden="true"></span>
+        <a class="btn btn-primary btn-sm header-contact" href="contact.html">Start a project</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+        </div>
+    </div>
+  </header>
+
+
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
+      <nav class="mobile-nav" aria-label="Mobile">
+        <a href="index.html"><span class="idx">01</span> Home</a>
+        <a href="about.html"><span class="idx">02</span> About</a>
+        <a href="skills.html"><span class="idx">03</span> Skills</a>
+        <a href="projects.html"><span class="idx">04</span> Projects</a>
+        <a href="blog.html"><span class="idx">05</span> Blog</a>
+        <a href="docs.html"><span class="idx">06</span> Docs</a>
+      </nav>
+      <div class="mobile-foot">
+        <a class="mail" href="mailto:hello@kazemifakhr.ir"
+          >hello@kazemifakhr.ir</a
+        >
+        <a class="btn btn-primary btn-sm" href="#sec-studio">Token Studio</a>
+      </div>
+    </div>
+  <!-- ================= Floating reading rail ================= -->
+  <div class="read-rail" id="readRail" role="group" aria-label="Reading tools">
+    <button class="icon-btn" id="railTop" aria-label="Back to top">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+    <span class="rail-sep" aria-hidden="true"></span>
+    <div class="fs-mini" role="group" aria-label="Text size">
+      <button id="fsUp" aria-label="Increase text size">A+</button>
+      <button id="fsDown" aria-label="Decrease text size">A−</button>
+    </div>
+    <span class="rail-sep" aria-hidden="true"></span>
+    <button class="icon-btn" id="railCopy" aria-label="Copy article link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+    <button class="icon-btn" id="railPrint" aria-label="Print article">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    </button>
+    <span class="rail-sep" aria-hidden="true"></span>
+    <span class="rail-pct" id="railPct">0%</span>
+  </div>
+
+  <main id="main">
+    <!-- ================= Head ================= -->
+    <header class="post-head" id="top">
+      <div class="container">
+        <nav class="crumbs reveal" aria-label="Breadcrumb">
+          <a href="index.html">home</a><span class="sep">/</span>
+          <a href="blog.html">field notes</a><span class="sep">/</span>
+          <a href="blog.html" id="crumbCat">engineering</a><span class="sep">/</span>
+          <span class="here" id="crumbHere">why-i-left-frameworks-behind</span>
+        </nav>
+        <div class="head-grid">
+          <div>
+            <div class="post-cat-row reveal" style="--d:50ms">
+              <a class="cat-chip" id="catChip" href="blog.html"><i style="background:#009966"></i><span id="catLabel">Engineering</span></a>
+              <a class="series-chip" id="seriesChip" href="blog.html#collections" hidden>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span id="seriesLabel"></span>
+              </a>
+            </div>
+            <h1 class="post-title reveal" style="--d:100ms" id="postTitle">Why I Left Frameworks Behind<span class="dot">.</span></h1>
+            <p class="post-lede reveal" style="--d:150ms" id="postLede">This is not a framework-bashing essay. Frameworks are fine. This is about what happens when you stop renting your architecture and finally buy it.</p>
+            <div class="head-meta reveal" style="--d:200ms">
+              <span class="avatar" aria-hidden="true">HK</span>
+              <b>Heydar Kazemi Fakhr</b>
+              <span class="dotsep">·</span><span id="metaDate">Nov 02, 2026</span>
+              <span class="dotsep">·</span><span id="metaRead">6 min read</span>
+              <span class="dotsep">·</span><span id="metaWords">— words</span>
+            </div>
+          </div>
+          <div class="head-actions reveal" style="--d:240ms">
+            <button class="icon-btn" id="headCopy" aria-label="Copy article link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </button>
+            <button class="icon-btn" id="headBookmark" aria-label="Bookmark this essay" aria-pressed="false">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </button>
+            <button class="icon-btn" id="headPrint" aria-label="Print article">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= Cover ================= -->
+    <div class="cover-wrap">
+      <div class="container">
+        <figure class="reveal" style="--d:120ms; margin:0;">
+          <div class="post-cover" id="postCover" role="img" aria-label="Essay cover illustration">
+            <div class="cv cv-1"><div class="cv-inner">
+              <span class="cv-glyph">{ }</span>
+              <span class="strike">framework::magic()</span>
+              <span class="cv-chip" style="left:12%;top:14%">app/Core · 40 lines</span>
+            </div></div>
+          </div>
+          <figcaption class="cover-cap">
+            <span id="coverCap">// cover: the whole magic, forty lines</span>
+            <span>illustration · HeydarKF</span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- ================= Body ================= -->
+    <div class="container">
+      <div class="post-layout">
+        <!-- TOC -->
+        <aside class="toc-col">
+          <nav class="card toc-card reveal" aria-label="Table of contents">
+            <p class="toc-title">ON THIS PAGE</p>
+            <div class="toc-list" id="tocList"></div>
+            <div class="toc-foot"><span>progress</span><b id="tocPct">0%</b></div>
+          </nav>
+          <div class="card side-note reveal" style="--d:80ms">
+            <p class="mono-l">// reading comfort</p>
+            <p>Text size lives in the rail on the right, or use <strong>A+ / A−</strong> below. Your preference is remembered.</p>
+            <div class="fs-mini" style="flex-direction:row;" role="group" aria-label="Text size">
+              <button id="fsUp2" aria-label="Increase text size">A+</button>
+              <button id="fsDown2" aria-label="Decrease text size">A−</button>
+            </div>
+            <p class="mono-l" id="fsLabel">100%</p>
+          </div>
+        </aside>
+
+        <!-- Article -->
+        <article class="article reveal" id="article" style="--d:60ms">
+          <p>For six years I shipped on frameworks. They were good rooms: furnished, lit, someone else paying for the plumbing. Then a client asked for a change that cut across three of the framework’s opinions, and I spent two days fighting furniture I was not allowed to move.</p>
+
+          <h2 id="the-rent-comes-due"><span class="h-num">01</span>The rent comes due</h2>
+          <p>Every abstraction is a contract with a stranger’s future decisions. Upgrades arrive as ultimatums. Magic saves time until the day it costs a week. I counted the hours I spent <strong>working around</strong> my tools versus <strong>working with</strong> them, and the ledger was embarrassing.</p>
+          <blockquote>I didn’t want fewer features. I wanted fewer surprises.</blockquote>
+          <p>The turning point was not ideological. It was arithmetic: a maintenance quote that was mostly archaeology, and a upgrade path that required rewriting code the framework had told me never to touch. When the tool’s roadmap becomes your roadmap, you are no longer the author of your system.<a class="footnote-ref" href="#fn-1" id="fnref-1">[1]</a></p>
+
+          <h2 id="what-pure-mvc-buys"><span class="h-num">02</span>What pure MVC actually buys</h2>
+          <p>A router I can read in one sitting. A container with forty lines, not four thousand. Middleware that is just functions. When something breaks at 2am, the stack trace ends in code I wrote, which means it ends in code I can fix.</p>
+          <div class="code-block">
+            <div class="code-bar"><span class="fname">app/Core/Router.php</span><button class="code-copy" data-copy-code>copy</button></div>
+            <pre><code><span class="c">// the whole magic</span>
+<span class="k">final class</span> Router {
+  <span class="k">public function</span> dispatch(Request <span class="n">$r</span>): Response {
+    <span class="n">$handler</span> = <span class="n">$this</span>-&gt;match(<span class="n">$r</span>-&gt;method(), <span class="n">$r</span>-&gt;path());
+    <span class="k">return</span> <span class="n">$this</span>-&gt;pipeline(<span class="n">$r</span>, <span class="n">$handler</span>);
+  }
+}</code></pre>
+          </div>
+          <p>Speed came too — 3× less memory, no boot cache to invalidate — but that was the side effect. The product was <strong>ownership</strong>: every line auditable, every decision mine to defend.</p>
+          <div class="callout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p><strong>Measured, not vibes:</strong> on the same workload, the pure-MVC rewrite served p95 at 94ms against 210ms on the framework build, with resident memory down from 148MB to 41MB. Numbers from <a href="projects.html#ledger">Ledgerly</a>’s hardening sprint.</p>
+          </div>
+
+          <h2 id="the-honest-caveat"><span class="h-num">03</span>The honest caveat</h2>
+          <p>You pay for this in discipline. No framework means no one else enforcing structure; your own standards become the only guardrail. If your team can’t hold a convention without a compiler’s help, rent the room. It’s a fine room.</p>
+          <ul>
+            <li>Write the conventions down before the first controller, not after the tenth.</li>
+            <li>Make the container strict: unknown ids throw at boot with the resolution chain printed.</li>
+            <li>Keep a performance gate beside the tests, or “fast” becomes a story you tell.</li>
+            <li>Budget review time for the core itself — it is now your product too.</li>
+          </ul>
+          <p>But if you can hold it, buying the house changes how you sleep. The next essay in this shelf goes deeper on the smallest piece of that house: <a href="post.html?p=forty-line-container">the forty-line container</a>.</p>
+
+          <h2 id="what-i-kept"><span class="h-num">04</span>What I kept from the frameworks</h2>
+          <p>Leaving is not looting. The good ideas came with me, stripped of their ceremony:</p>
+          <ol>
+            <li><strong>Middleware pipelines</strong> — as plain closures composing around a handler.</li>
+            <li><strong>Request DTOs</strong> — validation at the boundary, typed objects downstream.</li>
+            <li><strong>Service providers</strong> — as one explicit bindings file you can read aloud.</li>
+            <li><strong>Migrations</strong> — as numbered SQL with a runner that refuses to skip.</li>
+          </ol>
+          <p>Frameworks are libraries of hard-won decisions. You can adopt the decisions without adopting the dependency. That is the whole trick, and it is not a trick at all — it is reading.</p>
+
+          <div class="footnotes">
+            <h2 id="notes">Notes</h2>
+            <ol>
+              <li id="fn-1">The quote that started it: “we can’t change that, the framework owns that table.” Six words, one invoice, zero ownership. <a class="back" href="#fnref-1">↩</a></li>
+            </ol>
+          </div>
+        </article>
+      </div>
+
+      <!-- tags + share -->
+      <div class="post-tags" id="postTags">
+        <span class="chip">PHP</span><span class="chip">MVC</span><span class="chip">Architecture</span>
+      </div>
+      <div class="post-share">
+        <span class="lbl">SHARE THIS ESSAY</span>
+        <span class="spacer"></span>
+        <a class="share-btn" id="shareX" href="#" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+          Post on X
+        </a>
+        <a class="share-btn" id="shareLi" href="#" target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          LinkedIn
+        </a>
+        <button class="share-btn" id="shareCopy">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Copy link
+        </button>
+      </div>
+
+      <!-- author -->
+      <div class="card author-card">
+        <span class="avatar" aria-hidden="true">HK</span>
+        <div>
+          <b>Heydar Kazemi Fakhr</b>
+          <p class="role">backend engineer · seminary student · Qom, IR</p>
+          <p>I build secure systems by day and study classical logic by night. I write to find out what I think — usually after a bug has already told me.</p>
+          <div class="author-links">
+            <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+            <a class="icon-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener" aria-label="X"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+            <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+            <a class="btn btn-ghost btn-sm" href="about.html">More about me →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- prev / next -->
+      <nav class="post-nav" aria-label="More essays">
+        <a class="card pn-card prev" id="pnPrev" href="blog.html">
+          <span>← NEWER ESSAY</span>
+          <b id="pnPrevTitle">—</b>
+          <span class="pn-meta" id="pnPrevMeta"></span>
+        </a>
+        <a class="card pn-card next" id="pnNext" href="blog.html">
+          <span>OLDER ESSAY →</span>
+          <b id="pnNextTitle">—</b>
+          <span class="pn-meta" id="pnNextMeta"></span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- ================= Related ================= -->
+    <section class="section related-section" id="related">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// keep reading</p>
+            <h2 class="h2">Related field notes.</h2>
+          </div>
+          <a class="link-arrow" href="blog.html">the whole shelf <span class="arr">→</span></a>
+        </div>
+        <div class="rel-grid" id="relGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================= Comments ================= -->
+    <section class="section comments-section" id="discussion">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// the margin</p>
+            <h2 class="h2">Discussion.</h2>
+            <p class="section-sub">Disagree in the margin, not over the text. Notes are stored locally in this demo build.</p>
+          </div>
+        </div>
+        <div class="cm-wrap">
+          <form class="card cm-form reveal" id="cmForm" novalidate>
+            <div class="cm-row">
+              <input class="cm-input" id="cmName" type="text" placeholder="Your name" aria-label="Your name" maxlength="60" autocomplete="name">
+              <input class="cm-input" id="cmRole" type="text" placeholder="Role / site (optional)" aria-label="Role or site, optional" maxlength="60">
+            </div>
+            <textarea class="cm-textarea" id="cmText" placeholder="Write a marginal note… questions welcome, drive-by opinions less so." aria-label="Your comment" maxlength="1200"></textarea>
+            <p class="cm-err" id="cmErr">A name and a note of at least 12 characters, please.</p>
+            <div class="cm-foot">
+              <button class="btn btn-primary btn-sm" type="submit">Pin the note</button>
+              <span class="cm-hint">// <span id="cmLeft">1200</span> characters left · be the reader you’d want</span>
+            </div>
+          </form>
+          <p class="cm-count" id="cmCount" aria-live="polite"></p>
+          <div class="cm-list" id="cmList"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <a class="logo" href="index.html"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="about.html">About</a><a href="skills.html">Skills</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/heydarkf" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a class="icon-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+          <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="credit">Designed by <strong>HeydarKF (OS Heydar)</strong> · © <span id="year">2026</span> HeydarKF. All rights reserved.</p>
+        <a class="to-top" href="#top">back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Link copied</span>
+  </div>
+
+  <!-- ============ Essay sources (all posts, for routing / related / nav) ============ -->
+  <template id="tpl-frameworks-behind">
+    <div class="tpl-lede">This is not a framework-bashing essay. Frameworks are fine. This is about what happens when you stop renting your architecture and finally buy it.</div>
+    <div class="tpl-body">
+      <p>For six years I shipped on frameworks. They were good rooms: furnished, lit, someone else paying for the plumbing. Then a client asked for a change that cut across three of the framework’s opinions, and I spent two days fighting furniture I was not allowed to move.</p>
+      <h2>The rent comes due</h2>
+      <p>Every abstraction is a contract with a stranger’s future decisions. Upgrades arrive as ultimatums. Magic saves time until the day it costs a week. I counted the hours I spent <strong>working around</strong> my tools versus <strong>working with</strong> them, and the ledger was embarrassing.</p>
+      <blockquote>I didn’t want fewer features. I wanted fewer surprises.</blockquote>
+      <h2>What pure MVC actually buys</h2>
+      <p>A router I can read in one sitting. A container with forty lines, not four thousand. Middleware that is just functions. When something breaks at 2am, the stack trace ends in code I wrote, which means it ends in code I can fix.</p>
+      <pre><code><span class="c">// app/Core/Router.php — the whole magic</span>
+<span class="k">final class</span> Router {
+  <span class="k">public function</span> dispatch(Request <span class="n">$r</span>): Response {
+    <span class="n">$handler</span> = <span class="n">$this</span>-&gt;match(<span class="n">$r</span>-&gt;method(), <span class="n">$r</span>-&gt;path());
+    <span class="k">return</span> <span class="n">$this</span>-&gt;pipeline(<span class="n">$r</span>, <span class="n">$handler</span>);
+  }
+}</code></pre>
+      <p>Speed came too — 3× less memory, no boot cache to invalidate — but that was the side effect. The product was <strong>ownership</strong>: every line auditable, every decision mine to defend.</p>
+      <h2>The honest caveat</h2>
+      <p>You pay for this in discipline. No framework means no one else enforcing structure; your own standards become the only guardrail. If your team can’t hold a convention without a compiler’s help, rent the room. It’s a fine room.</p>
+      <p>But if you can hold it, buying the house changes how you sleep.</p>
+    </div>
+  </template>
+
+  <template id="tpl-bug-threat-model">
+    <div class="tpl-lede">The site came back online in six days. The lesson took a year. This is the postmortem I wish someone had handed me at seventeen.</div>
+    <div class="tpl-body">
+      <p>The defacement was almost polite: a flag, a handle, a message in broken English. The client was not amused. I rebuilt the site in six days and then spent a year answering the only question that mattered — <strong>how did they get in, and what else did I build the same way?</strong></p>
+      <h2>Trace the trust, not the code</h2>
+      <p>The entry point was an upload endpoint that trusted a MIME type from the client. Boring. Textbook. But the real failure was upstream: I had never drawn a single trust boundary. Every input was treated as a guest, never as a potential adversary.</p>
+      <blockquote>Security is not a feature you add. It is a question you ask at every boundary: who benefits if this fails?</blockquote>
+      <h2>The four questions I now ask</h2>
+      <ul>
+        <li>What am I protecting, and from whom specifically?</li>
+        <li>Where does data cross from untrusted to trusted?</li>
+        <li>What does the attacker see at each of those crossings?</li>
+        <li>If this control fails, what fails next — and how loudly?</li>
+      </ul>
+      <p>That list is STRIDE with the academic paint stripped off. It fits on an index card, which means it actually gets used, which means it actually works.</p>
+      <h2>What changed in the code</h2>
+      <p>Uploads became content-addressed storage outside the web root, served through a controller that re-sniffs bytes and refuses surprises. Validation moved to the boundary and stayed there. Every refusal logs with enough context to reconstruct intent.</p>
+      <p>The client never noticed any of it. That is the point. <strong>Good security is invisible until the day it is the only thing visible.</strong></p>
+    </div>
+  </template>
+
+  <template id="tpl-agents-contracts">
+    <div class="tpl-lede">My agents stopped hallucinating side effects the day I stopped describing tools in prose and started signing contracts with them.</div>
+    <div class="tpl-body">
+      <p>Early Atlas agents were poetical: long system prompts describing what each tool “should” do, in paragraphs, like a job posting. The models read them the way interns read job postings — optimistically.</p>
+      <h2>Prose is a lossy interface</h2>
+      <p>A paragraph cannot express that <strong>amount</strong> is integer cents, that <strong>currency</strong> is ISO-4217, that a failure returns a typed error rather than an apology. Prose leaves the model to infer the contract, and inference is where the incidents live.</p>
+      <blockquote>A prompt persuades. A contract obligates. Build the second one.</blockquote>
+      <h2>The contract layer</h2>
+      <p>Every tool now ships a JSON Schema for input and output, a declared side-effect class (read, write, irreversible), and a timeout with a typed failure. The router validates before dispatch and after return; anything off-contract is rejected and retried with the validation error, not with vibes.</p>
+      <pre><code>{
+  <span class="s">"tool"</span>: <span class="s">"ledger.invoice.create"</span>,
+  <span class="s">"effects"</span>: <span class="s">"write"</span>,
+  <span class="s">"input"</span>: {
+    <span class="s">"amount_cents"</span>: { <span class="s">"type"</span>: <span class="s">"integer"</span>, <span class="s">"minimum"</span>: 1 },
+    <span class="s">"currency"</span>: { <span class="s">"enum"</span>: [<span class="s">"USD"</span>, <span class="s">"EUR"</span>, <span class="s">"IRR"</span>] }
+  },
+  <span class="s">"on_failure"</span>: <span class="s">"typed_error"</span>
+}</code></pre>
+      <h2>Boring is the goal</h2>
+      <p>With contracts in place, swapping GPT for DeepSeek or a local Qwen became a config change, not a rewrite — the abstraction layer holds because the interface is machine-checkable. Task success went from “usually” to 99.2% on the regression suite.</p>
+      <p>The poetry is still there, in the planner’s prompts. But the hands that touch the world wear gloves that fit.</p>
+    </div>
+  </template>
+
+  <template id="tpl-reading-code-classics">
+    <div class="tpl-lede">In the seminary we read texts that are a thousand years old and still binding. You learn to read slowly, or you learn nothing. Code deserves the same patience.</div>
+    <div class="tpl-body">
+      <p>A classical legal text arrives with layers: the base line, a commentary, a super-commentary, and marginalia arguing with all three. You cannot skim it. You parse the grammar, locate the claim, find the objection, and only then decide what the author actually committed to.</p>
+      <h2>Code is also a layered text</h2>
+      <p>A function is the base line. Its tests are the commentary. The commit message is the marginalia. The incident postmortem is the super-commentary that argues with everyone. Reviewing only the base line is like ruling on a text you read half of.</p>
+      <blockquote>Parse before you judge. The bug is usually in what you assumed the line meant.</blockquote>
+      <h2>The habit that transfers</h2>
+      <ul>
+        <li>Read the signature aloud as a claim: what does this promise?</li>
+        <li>Find the objection: which test or edge case disputes it?</li>
+        <li>Locate the commitment: what behavior would break a dependent?</li>
+        <li>Only then, suggest — in the margin, not over the text.</li>
+      </ul>
+      <p>That last rule changed my reviews. Comments became questions in the margin rather than rewrites over the author’s line. Authors defended their choices, I learned why, and the code kept its voice.</p>
+      <h2>Slow reading, fast shipping</h2>
+      <p>Paradoxically, reviews got faster. Most disagreements were misparses, and misparses die early when you read the grammar first. The seminary habit — <strong>patience as a method, not a mood</strong> — turned out to be a productivity tool with a thousand-year track record.</p>
+    </div>
+  </template>
+
+  <template id="tpl-p95-promise">
+    <div class="tpl-lede">The mean said 80ms. The p95 said 1.9s. One of those numbers was lying about real people, and it wasn’t the ugly one.</div>
+    <div class="tpl-body">
+      <p>Dashboards love averages because averages are calm. Users live in the tail. The checkout that times out for one in twenty shoppers is not a “performance issue”; it is twenty percent of someone’s revenue, distributed unfairly.</p>
+      <h2>From metric to budget</h2>
+      <p>We set p95 ≤ 120ms per endpoint and treated it as a budget, not a target. Each handler gets an allocation: query 60ms, serialization 20ms, network 30ms, margin 10ms. Spend over budget and the build fails the performance gate, same as a broken test.</p>
+      <table>
+        <tr><th>Stage</th><th>Budget</th><th>Measured p95</th></tr>
+        <tr><td><b>Query</b></td><td>60ms</td><td>41ms</td></tr>
+        <tr><td><b>Serialize</b></td><td>20ms</td><td>12ms</td></tr>
+        <tr><td><b>Network</b></td><td>30ms</td><td>26ms</td></tr>
+        <tr><td><b>Margin</b></td><td>10ms</td><td>—</td></tr>
+      </table>
+      <h2>What the tail taught us</h2>
+      <p>The 1.9s tail was three things: an N+1 hiding behind a cache hit rate that looked healthy, a lock convoy on a hot row, and JSON serialization of objects nobody asked for. None of them moved the mean enough to alarm. All of them moved the p95 enough to matter.</p>
+      <blockquote>A latency budget is a promise to the slowest user you serve, not the average one you report.</blockquote>
+      <h2>Keeping the promise</h2>
+      <p>Covering indexes killed the N+1. The hot row became an append-only ledger with periodic compaction. Serialization moved to explicit view models. p95 settled at 94ms and stayed there through two sale events.</p>
+      <p>The budget stays in CI. Promises that aren’t tested are just marketing.</p>
+    </div>
+  </template>
+
+  <template id="tpl-validation-boundary">
+    <div class="tpl-lede">A form that validates in the controller, the model, and the JavaScript is not triple-safe. It is three places to forget.</div>
+    <div class="tpl-body">
+      <p>Validation scattered across layers feels thorough. It is actually entropy: three implementations of the same rule, drifting apart with every commit, each one assuming the other caught the bad case.</p>
+      <h2>Trust changes at boundaries</h2>
+      <p>There is exactly one place where untrusted input becomes trusted data: the boundary. HTTP edge, queue consumer, file import, CLI argument. Validate there, once, into a typed object — and downstream code never re-checks, because it cannot receive anything else.</p>
+      <pre><code><span class="c">// Downstream never asks "is this valid?"</span>
+<span class="k">final class</span> Email {
+  <span class="k">private function</span> __construct(<span class="k">private string</span> <span class="n">$value</span>) {}
+  <span class="k">public static function</span> fromInput(<span class="k">string</span> <span class="n">$raw</span>): <span class="k">self</span> {
+    <span class="n">$ok</span> = filter_var(<span class="n">$raw</span>, FILTER_VALIDATE_EMAIL);
+    <span class="k">if</span> (!<span class="n">$ok</span>) <span class="k">throw new</span> InvalidInput(<span class="s">'email'</span>);
+    <span class="k">return new self</span>(<span class="n">$ok</span>);
+  }
+}</code></pre>
+      <blockquote>Parse, don’t validate. Make the illegal state unrepresentable, then stop worrying about it.</blockquote>
+      <h2>The doors, listed</h2>
+      <ul>
+        <li>HTTP: request DTOs built at the edge, handlers receive objects only.</li>
+        <li>Queues: payloads re-parsed on consume — producers lie eventually.</li>
+        <li>Imports: every row through the same parser, failures quarantined with context.</li>
+        <li>Database: constraints as the last door, never the first.</li>
+      </ul>
+      <p>After the refactor, the security review found zero “missing validation” findings for the first time. Not because we checked more — because there was finally <strong>one place to check</strong>.</p>
+    </div>
+  </template>
+
+  <template id="tpl-caching-contract">
+    <div class="tpl-lede">A cache is not storage. It is a negotiated truce between freshness and speed, and like any truce, it needs terms.</div>
+    <div class="tpl-body">
+      <p>The first cache I shipped had no TTL policy, no invalidation map, and no owner. It was fast for three weeks and then became a distributed system for serving confidently wrong prices.</p>
+      <h2>Write the terms down</h2>
+      <p>Every cached key now declares: its TTL, what invalidates it, who owns it, and what staleness is acceptable to a human. Prices: 60 seconds, invalidated on write, tolerable because checkout re-reads. Catalog copy: 10 minutes, tolerable because nobody dies from an old adjective.</p>
+      <pre><code><span class="c">// cache/contract.php</span>
+<span class="k">return</span> [
+  <span class="s">'product.price'</span> =&gt; [<span class="s">'ttl'</span> =&gt; 60,  <span class="s">'invalidate_on'</span> =&gt; [<span class="s">'price.updated'</span>], <span class="s">'stale_ok'</span> =&gt; <span class="s">'60s'</span>],
+  <span class="s">'catalog.copy'</span>  =&gt; [<span class="s">'ttl'</span> =&gt; 600, <span class="s">'invalidate_on'</span> =&gt; [<span class="s">'cms.publish'</span>],   <span class="s">'stale_ok'</span> =&gt; <span class="s">'10m'</span>],
+];</code></pre>
+      <blockquote>An undocumented TTL is a lie with an expiry date you didn’t choose.</blockquote>
+      <h2>Invalidation is a publish, not a delete</h2>
+      <p>Deleting keys on write races with concurrent readers. Publishing an event and letting consumers rebuild avoids the race and gives you an audit trail of freshness. The cache became a projection of the event log, which means it can always be rebuilt from truth.</p>
+      <h2>The payoff</h2>
+      <p>Hit rate 94%, zero price incidents since, and onboarding docs that answer “how stale can this be?” before anyone asks. The truce holds because the terms are written where the code can read them.</p>
+    </div>
+  </template>
+
+  <template id="tpl-notebook-terminal">
+    <div class="tpl-lede">My paper notebook and my terminal history are the same document in two media. Both begin with a question, never a conclusion.</div>
+    <div class="tpl-body">
+      <p>In the seminary, the notebook opens with the question under discussion — the mas’ala — before any argument. You write what is being asked, then what each school claims, then where the evidence lands. Conclusion last, and provisional.</p>
+      <h2>Debugging is a mas’ala</h2>
+      <p>My incident notes now open the same way: <strong>what exactly is being asked?</strong> “Checkout fails” is not a question. “Why does checkout fail for IRR carts above 10M rials only on Tuesdays?” is a question, and it already contains half the answer.</p>
+      <blockquote>Write the question before the answer. The question is the instrument; the answer is just its reading.</blockquote>
+      <h2>The protocol</h2>
+      <ul>
+        <li>State the question with its boundaries: who, when, how much.</li>
+        <li>List the claims: each hypothesis, attributed to its evidence.</li>
+        <li>Mark the objection: the one observation each hypothesis cannot explain.</li>
+        <li>Conclude provisionally, and write what would change your mind.</li>
+      </ul>
+      <p>That last line — what would change your mind — is the whole discipline. It turns a debugging session from a search for confirmation into a search for falsification, which is faster and far less embarrassing.</p>
+      <h2>One chair, two libraries</h2>
+      <p>People ask how I balance the seminary and the terminal. Wrong frame: they are the same library. One trains the parsing of arguments, the other the parsing of systems. The notebook and the shell share a chair because they share a method — <strong>ask better questions before writing answers.</strong></p>
+    </div>
+  </template>
+
+  <template id="tpl-forty-line-container">
+    <div class="tpl-lede">Dependency injection without a framework: a container small enough to read aloud, strict enough to trust at 2am.</div>
+    <div class="tpl-body">
+      <p>Every framework container I used could do two hundred things. I needed four: bind, make, share, and fail loudly. So I wrote the four, in forty lines, and deleted the dependency.</p>
+      <h2>The whole contract</h2>
+      <p>Bindings are closures, not configuration. Shared instances are memoized per request. Unknown ids throw with the resolution chain in the message, so a missing binding reads like a stack trace, not a riddle.</p>
+      <pre><code><span class="k">final class</span> Container {
+  <span class="k">private array</span> <span class="n">$bindings</span> = [];
+  <span class="k">private array</span> <span class="n">$shared</span> = [];
+  <span class="k">public function</span> bind(<span class="k">string</span> <span class="n">$id</span>, Closure <span class="n">$fn</span>): <span class="k">void</span> {
+    <span class="n">$this</span>-&gt;bindings[<span class="n">$id</span>] = <span class="n">$fn</span>;
+  }
+  <span class="k">public function</span> get(<span class="k">string</span> <span class="n">$id</span>): <span class="k">mixed</span> {
+    <span class="k">return</span> <span class="n">$this</span>-&gt;shared[<span class="n">$id</span>] ??= <span class="n">$this</span>-&gt;resolve(<span class="n">$id</span>, []);
+  }
+}</code></pre>
+      <blockquote>If you can read the whole container aloud in one breath, you can debug it in one sitting.</blockquote>
+      <h2>What strictness buys</h2>
+      <ul>
+        <li>No autowiring magic: every dependency is declared where it is bound.</li>
+        <li>Circular dependencies throw at boot with the cycle printed, not at runtime.</li>
+        <li>Tests swap bindings in one line; no mock framework required.</li>
+      </ul>
+      <p>Forty lines is not a stunt. It is the size at which a tool stops being a product you depend on and becomes a decision you own. Own the small things; rent only what you must.</p>
+    </div>
+  </template>
+
+  <!-- ============ JS ============ -->
+  <script>
+  (function () {
+    'use strict';
+    var d = document, root = d.documentElement;
+    var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var $ = function (s, c) { return (c || d).querySelector(s); };
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); }
+
+    /* ---------- Catalog ---------- */
+    var CAT_LABEL = { engineering: 'Engineering', security: 'Security', ai: 'AI', craft: 'Craft', performance: 'Performance' };
+    var CAT_HUE = { engineering: '#009966', security: '#d64550', ai: '#35b8c9', craft: '#d8b56a', performance: '#4f83c2' };
+    var META = [
+      { slug: 'frameworks-behind',     cat: 'engineering', date: '2026-11-02', cv: 1, title: 'Why I Left Frameworks Behind',                  tags: ['PHP', 'MVC', 'Architecture'],   series: null,    cap: '// cover: the whole magic, forty lines' },
+      { slug: 'bug-threat-model',      cat: 'security',    date: '2026-10-18', cv: 2, title: 'The Bug That Taught Me Threat Modeling',        tags: ['OWASP', 'Threat modeling', 'Postmortem'], series: 'Secure by Default', cap: '// cover: the boundary, crossed' },
+      { slug: 'agents-contracts',      cat: 'ai',          date: '2026-09-30', cv: 3, title: 'Agents Need Contracts, Not Prompts',            tags: ['Agents', 'Schema', 'OpenAI API'], series: null,   cap: '// cover: tools, signed' },
+      { slug: 'reading-code-classics', cat: 'craft',       date: '2026-09-12', cv: 4, title: 'Reading Code Like Classical Texts',             tags: ['Craft', 'Review', 'Seminary'],  series: 'The Craft Notebooks', cap: '// cover: marginalia, q.v.' },
+      { slug: 'p95-promise',           cat: 'performance', date: '2026-08-21', cv: 5, title: 'p95 Is a Promise: Latency Budgets in Practice', tags: ['Latency', 'SLO', 'MySQL'],      series: 'Ship Fast, Stay Calm', cap: '// cover: the budget line' },
+      { slug: 'validation-boundary',   cat: 'security',    date: '2026-07-29', cv: 6, title: 'Validation Is a Security Boundary',             tags: ['Validation', 'Boundaries', 'PHP'], series: 'Secure by Default', cap: '// cover: one door, checked' },
+      { slug: 'caching-contract',      cat: 'performance', date: '2026-07-08', cv: 7, title: 'Caching Is a Contract With Time',               tags: ['Caching', 'Redis', 'TTL'],      series: 'Ship Fast, Stay Calm', cap: '// cover: the truce, in layers' },
+      { slug: 'notebook-terminal',     cat: 'craft',       date: '2026-06-17', cv: 8, title: 'The Seminary Notebook Meets the Terminal',      tags: ['Craft', 'Method', 'Notebook'],  series: 'The Craft Notebooks', cap: '// cover: one chair, two libraries' },
+      { slug: 'forty-line-container',  cat: 'engineering', date: '2026-06-03', cv: 9, title: 'The Forty-Line Container',                      tags: ['DI', 'PHP', 'Architecture'],    series: null,    cap: '// cover: four satellites, one box' }
+    ];
+    var BY_SLUG = {};
+    META.forEach(function (m) {
+      var tpl = $('#tpl-' + m.slug);
+      var bodyEl = tpl ? $('.tpl-body', tpl.content) : null;
+      var ledeEl = tpl ? $('.tpl-lede', tpl.content) : null;
+      m.words = bodyEl ? (bodyEl.textContent || '').trim().split(/\s+/).length : 0;
+      m.mins = Math.max(3, Math.round(m.words / 200));
+      m.lede = ledeEl ? ledeEl.textContent.trim() : '';
+      m.bodyHTML = bodyEl ? bodyEl.innerHTML : '';
+      BY_SLUG[m.slug] = m;
+    });
+    var ORDER = META.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    function fmtDate(iso) {
+      var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var p = iso.split('-'); return m[+p[1] - 1] + ' ' + p[2] + ', ' + p[0];
+    }
+    function coverHTML(cv) {
+      var inner = '';
+      if (cv === 1) inner = '<span class="cv-glyph">{ }</span><span class="strike">framework::magic()</span><span class="cv-chip" style="left:12%;top:14%">app/Core · 40 lines</span>';
+      if (cv === 2) inner = '<span class="rings"><i></i><i></i><i></i></span><span class="cross"></span><span class="cv-chip" style="left:10%;bottom:12%">trust boundary · crossed</span>';
+      if (cv === 3) inner = '<svg viewBox="0 0 100 60" preserveAspectRatio="none"><line x1="20" y1="20" x2="50" y2="12"/><line x1="50" y1="12" x2="78" y2="30"/><line x1="20" y1="20" x2="44" y2="44"/><line x1="44" y1="44" x2="78" y2="30"/></svg><span class="nd" style="left:20%;top:33%"></span><span class="nd" style="left:50%;top:20%"></span><span class="nd" style="left:78%;top:50%"></span><span class="nd" style="left:44%;top:73%"></span><span class="stamp">SIGNED</span>';
+      if (cv === 4) inner = '<span class="rule" style="top:26%"></span><span class="rule" style="top:40%"></span><span class="rule" style="top:54%"></span><span class="rule" style="top:68%"></span><span class="codeline" style="top:47%"></span><span class="marg" style="right:9%;top:44%"></span><span class="cv-chip" style="left:10%;bottom:10%">marginalia · q.v.</span>';
+      if (cv === 5) inner = '<span class="hist"><i style="--h:30%"></i><i style="--h:46%"></i><i style="--h:62%"></i><i style="--h:80%"></i><i style="--h:58%"></i><i style="--h:40%"></i><i style="--h:26%"></i><i style="--h:16%"></i></span><span class="budget"></span><span class="cv-chip" style="right:10%;top:12%">p95 ≤ 120ms</span>';
+      if (cv === 6) inner = '<span class="field"></span><span class="shield"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span><span class="cv-chip" style="left:10%;top:12%">parse, don’t validate</span>';
+      if (cv === 7) inner = '<span class="layer"></span><span class="layer"></span><span class="layer"></span><span class="clock"></span><span class="cv-chip" style="left:10%;bottom:10%">TTL 60s · stale_ok</span>';
+      if (cv === 8) inner = '<span class="half l"><i></i><i></i><i></i><i></i></span><span class="half r"><i></i><i></i><i></i><i></i></span><span class="divider"></span><span class="cv-chip" style="left:50%;top:8%;transform:translateX(-50%)">one chair</span>';
+      if (cv === 9) inner = '<svg viewBox="0 0 100 60" preserveAspectRatio="none"><line x1="50" y1="30" x2="22" y2="14"/><line x1="50" y1="30" x2="80" y2="16"/><line x1="50" y1="30" x2="24" y2="48"/><line x1="50" y1="30" x2="78" y2="46"/></svg><span class="box">Container</span><span class="sat" style="left:22%;top:23%"></span><span class="sat" style="left:80%;top:27%"></span><span class="sat" style="left:24%;top:80%"></span><span class="sat" style="left:78%;top:77%"></span><span class="cv-chip" style="left:10%;bottom:10%">40 lines · no magic</span>';
+      return '<div class="cv cv-' + cv + (cv === 4 ? ' cv-light' : '') + '"><div class="cv-inner">' + inner + '</div></div>';
+    }
+
+    /* ---------- Resolve current post (?p= or #slug, default featured) ---------- */
+    var params = new URLSearchParams(location.search);
+    var slug = params.get('p') || location.hash.replace('#', '');
+    if (!BY_SLUG[slug]) slug = 'frameworks-behind';
+    var POST = BY_SLUG[slug];
+    var IS_DEFAULT = slug === 'frameworks-behind';
+
+    /* ---------- Hydrate head / meta / cover ---------- */
+    d.title = POST.title + ' — HeydarKF';
+    $('#postTitle').innerHTML = esc(POST.title) + '<span class="dot">.</span>';
+    $('#postLede').textContent = POST.lede;
+    $('#crumbHere').textContent = slug;
+    $('#crumbCat').textContent = CAT_LABEL[POST.cat].toLowerCase();
+    $('#crumbCat').href = 'blog.html';
+    $('#catLabel').textContent = CAT_LABEL[POST.cat];
+    $('#catChip').querySelector('i').style.background = CAT_HUE[POST.cat];
+    $('#catChip').href = 'blog.html';
+    if (POST.series) { $('#seriesChip').hidden = false; $('#seriesLabel').textContent = POST.series + ' · part ' + (ORDER.filter(function (x) { return x.series === POST.series && x.date >= POST.date; }).length); }
+    $('#metaDate').textContent = fmtDate(POST.date);
+    $('#metaRead').textContent = POST.mins + ' min read';
+    $('#metaWords').textContent = POST.words + ' words';
+    $('#postCover').innerHTML = coverHTML(POST.cv);
+    $('#coverCap').textContent = POST.cap;
+    $('#postTags').innerHTML = POST.tags.map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('');
+    var ogSet = function (sel, val) { var el = $(sel); if (el) el.setAttribute('content', val); };
+    ogSet('meta[property="og:title"]', POST.title);
+    ogSet('meta[name="twitter:title"]', POST.title);
+    ogSet('meta[property="og:description"]', POST.lede);
+    ogSet('meta[name="twitter:description"]', POST.lede);
+    ogSet('meta[name="description"]', POST.lede);
+    ogSet('meta[property="article:published_time"]', POST.date);
+    ogSet('meta[property="article:section"]', CAT_LABEL[POST.cat]);
+    var canon = $('link[rel="canonical"]'); if (canon) canon.href = 'https://heydar.kazemifakhr.ir/post.html?p=' + slug;
+    try { history.replaceState(null, '', 'post.html?p=' + slug); } catch (e) {}
+
+    /* For non-default posts, replace the hand-set article body with the template body,
+       keeping the rich default article for the flagship essay. */
+    var article = $('#article');
+    if (!IS_DEFAULT) {
+      article.innerHTML = POST.bodyHTML;
+      /* wrap bare pre blocks into code-block chrome */
+      $$('pre', article).forEach(function (pre) {
+        var wrap = d.createElement('div'); wrap.className = 'code-block';
+        var bar = d.createElement('div'); bar.className = 'code-bar';
+        bar.innerHTML = '<span class="fname">snippet</span><button class="code-copy" data-copy-code>copy</button>';
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(bar); wrap.appendChild(pre);
+      });
+    }
+
+    /* ---------- TOC ---------- */
+    var heads = $$('h2[id]', article);
+    var tocList = $('#tocList');
+    tocList.innerHTML = heads.map(function (h, i) {
+      var label = h.textContent.replace(/^\d+/, '').trim();
+      return '<a class="toc-link" href="#' + h.id + '"><span class="n">' + String(i + 1).padStart(2, '0') + '</span>' + esc(label) + '</a>';
+    }).join('');
+    var tocLinks = $$('.toc-link', tocList);
+    tocLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var t = $(a.getAttribute('href'));
+        if (!t) return;
+        e.preventDefault();
+        window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 118, behavior: reduced ? 'auto' : 'smooth' });
+        try { history.replaceState(null, '', 'post.html?p=' + slug + a.getAttribute('href')); } catch (err) {}
+      });
+    });
+
+    /* ---------- Progress + spy + rail ---------- */
+    var readProgress = $('#readProgress'), rail = $('#readRail'), railPct = $('#railPct'), tocPct = $('#tocPct');
+    var header = $('#siteHeader'), ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        var max = d.documentElement.scrollHeight - innerHeight;
+        var pct = max > 0 ? Math.min(100, Math.round(window.scrollY / max * 100)) : 0;
+        readProgress.style.width = pct + '%';
+        railPct.textContent = pct + '%';
+        tocPct.textContent = pct + '%';
+        rail.classList.toggle('on', window.scrollY > 420);
+        var probe = innerHeight * 0.34, active = null;
+        heads.forEach(function (h) { if (h.getBoundingClientRect().top <= probe) active = h.id; });
+        tocLinks.forEach(function (a) {
+          if (a.getAttribute('href') === '#' + active) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+        ticking = false;
+      });
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+
+    /* ---------- Font size ---------- */
+    var FS = [0.96, 1.06, 1.16, 1.28], FS_PCT = [90, 100, 110, 120], fsLevel = 1;
+    try { var st = parseInt(localStorage.getItem('hkf-fs'), 10); if (!isNaN(st)) fsLevel = Math.min(3, Math.max(0, st)); } catch (e) {}
+    function applyFs() {
+      root.style.setProperty('--reader-fs', FS[fsLevel] + 'rem');
+      $('#fsLabel').textContent = FS_PCT[fsLevel] + '%';
+      try { localStorage.setItem('hkf-fs', String(fsLevel)); } catch (e) {}
+    }
+    applyFs();
+    function fsBind(up, down) {
+      $(up).addEventListener('click', function () { fsLevel = Math.min(3, fsLevel + 1); applyFs(); });
+      $(down).addEventListener('click', function () { fsLevel = Math.max(0, fsLevel - 1); applyFs(); });
+    }
+    fsBind('#fsUp', '#fsDown'); fsBind('#fsUp2', '#fsDown2');
+
+    /* ---------- Toast + copy ---------- */
+    var toast = $('#toast'), toastMsg = $('#toastMsg'), toastTimer = null;
+    function showToast(msg) { toastMsg.textContent = msg; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200); }
+    function pageURL() { return location.href.split('#')[0]; }
+    function copyText(text, okMsg) {
+      function done() { showToast(okMsg); }
+      function fallback() {
+        var ta = d.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        d.body.appendChild(ta); ta.select();
+        try { d.execCommand('copy'); done(); } catch (e) { showToast('Copy failed — long-press the URL'); }
+        ta.remove();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    }
+    ['#headCopy', '#railCopy', '#shareCopy'].forEach(function (sel) {
+      $(sel).addEventListener('click', function () { copyText(pageURL(), 'Essay link copied ✓'); });
+    });
+    d.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-copy-code]');
+      if (!btn) return;
+      var pre = btn.closest('.code-block').querySelector('pre');
+      copyText(pre.innerText, 'Code copied ✓');
+      btn.classList.add('done'); btn.textContent = 'copied ✓';
+      setTimeout(function () { btn.classList.remove('done'); btn.textContent = 'copy'; }, 1800);
+    });
+
+    /* ---------- Bookmark ---------- */
+    var bmBtn = $('#headBookmark');
+    function bmGet() { try { return JSON.parse(localStorage.getItem('hkf-bookmarks') || '[]'); } catch (e) { return []; } }
+    function bmRender() {
+      var on = bmGet().indexOf(slug) > -1;
+      bmBtn.setAttribute('aria-pressed', String(on));
+      bmBtn.querySelector('svg').setAttribute('fill', on ? 'currentColor' : 'none');
+      bmBtn.style.color = on ? 'var(--accent-ink)' : '';
+      bmBtn.style.borderColor = on ? 'var(--accent-line)' : '';
+    }
+    bmRender();
+    bmBtn.addEventListener('click', function () {
+      var list = bmGet(), i = list.indexOf(slug);
+      if (i > -1) { list.splice(i, 1); showToast('Removed from your shelf'); }
+      else { list.push(slug); showToast('Saved to your shelf ✓'); }
+      try { localStorage.setItem('hkf-bookmarks', JSON.stringify(list)); } catch (e) {}
+      bmRender();
+    });
+
+    /* ---------- Share links + print + top ---------- */
+    $('#shareX').href = 'https://x.com/intent/post?text=' + encodeURIComponent(POST.title + ' — ' + POST.lede) + '&url=' + encodeURIComponent(pageURL());
+    $('#shareLi').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageURL());
+    function doPrint() { window.print(); }
+    $('#headPrint').addEventListener('click', doPrint);
+    $('#railPrint').addEventListener('click', doPrint);
+    $('#railTop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }); });
+
+    /* ---------- Prev / next ---------- */
+    var idx = ORDER.map(function (x) { return x.slug; }).indexOf(slug);
+    var prev = ORDER[idx - 1], next = ORDER[idx + 1];
+    function fillNav(el, titleEl, metaEl, p, emptyLabel) {
+      if (!p) { el.classList.add('is-empty'); el.removeAttribute('href'); titleEl.textContent = emptyLabel; metaEl.textContent = ''; return; }
+      el.href = 'post.html?p=' + p.slug;
+      titleEl.textContent = p.title;
+      metaEl.textContent = CAT_LABEL[p.cat] + ' · ' + p.mins + ' min';
+    }
+    fillNav($('#pnPrev'), $('#pnPrevTitle'), $('#pnPrevMeta'), prev, 'Start of the shelf');
+    fillNav($('#pnNext'), $('#pnNextTitle'), $('#pnNextMeta'), next, 'End of the shelf');
+
+    /* ---------- Related ---------- */
+    function score(p) {
+      var s = 0;
+      if (p.cat === POST.cat) s += 3;
+      if (p.series && p.series === POST.series) s += 4;
+      p.tags.forEach(function (t) { if (POST.tags.indexOf(t) > -1) s += 2; });
+      return s;
+    }
+    var related = ORDER.filter(function (p) { return p.slug !== slug; })
+      .map(function (p) { return { p: p, s: score(p) }; })
+      .sort(function (a, b) { return b.s - a.s || (a.p.date < b.p.date ? 1 : -1); })
+      .slice(0, 3).map(function (x) { return x.p; });
+    $('#relGrid').innerHTML = related.map(function (p, i) {
+      return '<a class="card rel-card reveal" style="--d:' + i * 80 + 'ms" href="post.html?p=' + p.slug + '">' +
+        '<div class="rel-cover">' + coverHTML(p.cv) + '</div>' +
+        '<div class="rel-body">' +
+          '<div class="rel-meta"><span style="color:' + CAT_HUE[p.cat] + '">●</span><span>' + CAT_LABEL[p.cat] + '</span><span>·</span><span>' + fmtDate(p.date) + '</span></div>' +
+          '<h3 class="rel-title">' + esc(p.title) + '</h3>' +
+          '<span class="rel-read">' + p.mins + ' min read →</span>' +
+        '</div></a>';
+    }).join('');
+
+    /* ---------- Comments (local, per-post) ---------- */
+    var SEED = [
+      { id: 's1', name: 'Sara Ahmadi', role: 'CTO, SecureNet', text: 'The “rent comes due” framing is exactly what our last framework migration felt like. We kept the middleware idea and dropped the rest — same conclusion, different road.', ts: Date.now() - 86400000 * 3, likes: 4, mine: false, alt: 0 },
+      { id: 's2', name: 'Mehdi R.', role: 'backend dev', text: 'Question: how do you keep the forty-line container from growing into a four-hundred-line one? Discipline alone feels fragile on a team of six.', ts: Date.now() - 86400000 * 1, likes: 2, mine: false, alt: 1 },
+      { id: 's3', name: 'Heydar KF', role: 'author', text: 'Fair challenge. Two rules: the core has its own review budget, and any addition needs a deletion candidate in the same PR. Size stays a decision, not an accident.', ts: Date.now() - 3600000 * 20, likes: 6, mine: false, alt: 2 }
+    ];
+    var cmKey = 'hkf-comments-' + slug;
+    function cmLoad() {
+      try {
+        var raw = localStorage.getItem(cmKey);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return SEED.slice();
+    }
+    function cmSave(list) { try { localStorage.setItem(cmKey, JSON.stringify(list)); } catch (e) {} }
+    var comments = cmLoad();
+    var cmList = $('#cmList'), cmCount = $('#cmCount');
+    function ago(ts) {
+      var s = Math.max(1, Math.round((Date.now() - ts) / 1000));
+      if (s < 60) return s + 's ago';
+      var m = Math.round(s / 60); if (m < 60) return m + 'm ago';
+      var h = Math.round(m / 60); if (h < 24) return h + 'h ago';
+      var dd = Math.round(h / 24); return dd + 'd ago';
+    }
+    function initials(name) {
+      return name.trim().split(/\s+/).map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase() || '?';
+    }
+    function cmRender() {
+      cmCount.innerHTML = '<b>' + comments.length + '</b> note' + (comments.length === 1 ? '' : 's') + ' in the margin';
+      if (!comments.length) { cmList.innerHTML = '<div class="cm-empty">No notes yet. Be the first reader to argue in the margin.</div>'; return; }
+      cmList.innerHTML = comments.slice().sort(function (a, b) { return b.ts - a.ts; }).map(function (c) {
+        var altClass = c.alt === 1 ? ' alt' : c.alt === 2 ? ' alt2' : '';
+        return '<div class="card cm-item" data-id="' + c.id + '">' +
+          '<span class="cm-avatar' + altClass + '" aria-hidden="true">' + esc(initials(c.name)) + '</span>' +
+          '<div class="cm-main">' +
+            '<div class="cm-head"><b>' + esc(c.name) + '</b>' +
+              (c.role ? '<span class="when">' + esc(c.role) + '</span>' : '') +
+              '<span class="when">' + ago(c.ts) + '</span>' +
+              (c.mine ? '<span class="mine">you</span>' : '') + '</div>' +
+            '<p class="cm-text">' + esc(c.text) + '</p>' +
+            '<div class="cm-actions">' +
+              '<button class="cm-like' + (c.liked ? ' liked' : '') + '" data-like="' + c.id + '">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="' + (c.liked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
+                '<span>' + c.likes + '</span></button>' +
+              (c.mine ? '<button class="cm-del" data-del="' + c.id + '">remove</button>' : '') +
+            '</div>' +
+          '</div></div>';
+      }).join('');
+    }
+    cmRender();
+    cmList.addEventListener('click', function (e) {
+      var like = e.target.closest('[data-like]');
+      if (like) {
+        var c = comments.filter(function (x) { return x.id === like.dataset.like; })[0];
+        if (!c) return;
+        c.liked = !c.liked; c.likes += c.liked ? 1 : -1;
+        cmSave(comments); cmRender(); return;
+      }
+      var del = e.target.closest('[data-del]');
+      if (del) {
+        comments = comments.filter(function (x) { return x.id !== del.dataset.del; });
+        cmSave(comments); cmRender(); showToast('Note removed');
+      }
+    });
+    var cmForm = $('#cmForm'), cmName = $('#cmName'), cmRole = $('#cmRole'), cmText = $('#cmText'), cmErr = $('#cmErr'), cmLeft = $('#cmLeft');
+    cmText.addEventListener('input', function () { cmLeft.textContent = String(1200 - cmText.value.length); cmText.classList.remove('err'); cmErr.classList.remove('on'); });
+    cmName.addEventListener('input', function () { cmName.classList.remove('err'); cmErr.classList.remove('on'); });
+    cmForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = cmName.value.trim(), text = cmText.value.trim();
+      var ok = name.length >= 2 && text.length >= 12;
+      if (!ok) {
+        cmErr.classList.add('on');
+        if (name.length < 2) cmName.classList.add('err');
+        if (text.length < 12) cmText.classList.add('err');
+        return;
+      }
+      comments.push({ id: 'u' + Date.now(), name: name, role: cmRole.value.trim(), text: text, ts: Date.now(), likes: 0, mine: true, alt: Math.floor(Math.random() * 3) });
+      cmSave(comments); cmRender();
+      cmForm.reset(); cmLeft.textContent = '1200';
+      showToast('Note pinned to the margin ✓');
+      cmList.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+    });
+
+    /* ---------- Shared chrome ---------- */
+    var themeBtn = $('#themeToggle');
+    function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('hkf-theme', t); } catch (e) {} }
+    if (themeBtn) themeBtn.addEventListener('click', function () {
+      var nextT = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (d.startViewTransition && !reduced) d.startViewTransition(function () { setTheme(nextT); });
+      else setTheme(nextT);
+    });
+    var lang = $('#lang'), langBtn = $('#langBtn');
+    function closeLang() { lang.classList.remove('is-open'); langBtn.setAttribute('aria-expanded', 'false'); }
+    if (langBtn) langBtn.addEventListener('click', function (e) { e.stopPropagation(); langBtn.setAttribute('aria-expanded', String(lang.classList.toggle('is-open'))); });
+    d.addEventListener('click', function (e) { if (lang && !lang.contains(e.target)) closeLang(); });
+    var burger = $('#burgerBtn'), menu = $('#mobileMenu'), lastFocus = null;
+    function openMenu() { lastFocus = d.activeElement; d.body.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu'); var f = $('.mobile-nav a', menu); if (f) setTimeout(function () { f.focus(); }, 350); }
+    function closeMenu() { d.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); if (lastFocus) lastFocus.focus(); }
+    if (burger) burger.addEventListener('click', function () { d.body.classList.contains('menu-open') ? closeMenu() : openMenu(); });
+    if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeLang(); if (d.body.classList.contains('menu-open')) closeMenu(); }
+      if (e.key === 'Tab' && d.body.classList.contains('menu-open')) {
+        var mf = $$('a, button', menu).concat([burger]);
+        var mF = mf[0], mL = mf[mf.length - 1];
+        if (e.shiftKey && d.activeElement === mF) { e.preventDefault(); mL.focus(); }
+        else if (!e.shiftKey && d.activeElement === mL) { e.preventDefault(); mF.focus(); }
+      }
+    });
+    if ('IntersectionObserver' in window && !reduced) {
+      var ro = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); ro.unobserve(x.target); } }); }, { threshold: .1, rootMargin: '0px 0px -30px 0px' });
+      $$('.reveal').forEach(function (el) { ro.observe(el); });
+    } else $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
+
+    var yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
+    onScroll();
+  })();
+  </script>
+</body>
+</html>

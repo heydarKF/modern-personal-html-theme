@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills &amp; Services — HeydarKF | The stack, and what it builds</title>
+  <meta name="description" content="Heydar Kazemi Fakhr's working stack: pure-PHP backend, product frontend, security, AI agents and ops — with proficiency you can inspect, services you can hire, and the process behind them.">
+  <meta name="author" content="Heydar Kazemi Fakhr">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f8f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f0e">
+  <link rel="canonical" href="https://heydar.kazemifakhr.ir/skills.html">
+  <link rel="alternate" hreflang="fa" href="https://heydar.kazemifakhr.ir/fa/skills.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HeydarKF">
+  <meta property="og:title" content="Skills &amp; Services — HeydarKF">
+  <meta property="og:description" content="The stack, and what it builds. Proficiency you can inspect, services you can hire.">
+  <meta property="og:url" content="https://heydar.kazemifakhr.ir/skills.html">
+  <meta property="og:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skills &amp; Services — HeydarKF">
+  <meta name="twitter:description" content="The stack, and what it builds.">
+  <meta name="twitter:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('hkf-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": "Skills & Services — HeydarKF",
+    "url": "https://heydar.kazemifakhr.ir/skills.html",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Heydar Kazemi Fakhr",
+      "alternateName": "HeydarKF",
+      "jobTitle": "Backend Engineer & Full-Stack Developer",
+      "knowsAbout": ["PHP", "MVC", "MySQL", "Redis", "JavaScript", "React", "Tailwind", "OWASP", "AI Agents", "Linux", "Docker"]
+    }
+  }
+  </script>
+
+  <!-- ============ Page CSS (Skills) ============ -->
+  <style>
+    :root {
+      --teal: #2b7f8c;
+      --cyan: #35b8c9;
+      --amber: #d8b56a;
+      --blue: #4f83c2;
+      --crimson: #d64550;
+      --bar-top: 86px;
+    }
+
+    /* ---------- Hero ---------- */
+    .s-hero { position: relative; padding: calc(var(--header-offset) + 22px) 0 52px; }
+    .s-hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 72% 90% at 24% 0%, #000 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse 72% 90% at 24% 0%, #000 20%, transparent 72%);
+      opacity: .5; pointer-events: none;
+    }
+    .s-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.35fr) minmax(300px,.85fr); gap: clamp(30px,5vw,64px); align-items: center; }
+    .s-title { font-size: clamp(2.5rem, 5.4vw, 4.2rem); letter-spacing: -.035em; margin-bottom: 14px; }
+    .s-title .dot { color: var(--accent-ink); }
+    .s-lede { font-size: 1.02rem; max-width: 50ch; margin-bottom: 24px; }
+    .s-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    /* terminal manifest card */
+    .manifest { padding: 0; overflow: hidden; background: #0d1512; border-color: rgba(0,201,138,.16); }
+    .manifest:hover { transform: none; }
+    .manifest-bar { display: flex; align-items: center; gap: 7px; padding: 13px 18px; background: rgba(255,255,255,.03); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .manifest-bar i { width: 10px; height: 10px; border-radius: 50%; }
+    .manifest-bar i:nth-child(1) { background: #ef4444; }
+    .manifest-bar i:nth-child(2) { background: #eab308; }
+    .manifest-bar i:nth-child(3) { background: #22c55e; }
+    .manifest-bar span { margin-left: 10px; font-family: var(--font-mono); font-size: .72rem; color: #7d8f88; }
+    .manifest-body { padding: 20px 22px 24px; font-family: var(--font-mono); font-size: .78rem; line-height: 2; color: #8fa39a; }
+    .manifest-body .p { color: #3ecf9a; font-weight: 700; margin-right: 8px; }
+    .manifest-body .ok { color: #3ecf9a; font-weight: 700; }
+    .manifest-body .dim { color: #64756e; }
+    .manifest-cur { display: inline-block; width: 8px; height: 14px; background: #3ecf9a; vertical-align: -2px; animation: blink 1.05s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ---------- Sticky domain nav ---------- */
+    .dom-wrap { position: sticky; top: var(--bar-top); z-index: 60; padding: 10px 0; }
+    .dom-bar {
+      display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none;
+      padding: 10px 12px; border-radius: var(--r-md); border: 1px solid transparent;
+      transition: background-color var(--t-med) var(--ease), border-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+    }
+    .dom-bar::-webkit-scrollbar { display: none; }
+    .dom-wrap.is-stuck .dom-bar {
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      border-color: var(--glass-line); box-shadow: var(--shadow-1); border-radius: 18px;
+    }
+    .dom-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: var(--r-pill); border: 1px solid var(--line);
+      font-size: .85rem; font-weight: 600; color: var(--muted); text-decoration: none; white-space: nowrap;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .dom-link i { width: 7px; height: 7px; border-radius: 50%; }
+    .dom-link sup { font-family: var(--font-mono); font-size: .6rem; color: var(--faint); }
+    .dom-link:hover { border-color: var(--accent-line); color: var(--ink); transform: translateY(-1px); }
+    .dom-link[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); box-shadow: var(--shadow-accent); }
+    .dom-link[aria-current="true"] sup { color: var(--on-accent); opacity: .75; }
+    .dom-hint { margin-left: auto; font-family: var(--font-mono); font-size: .66rem; color: var(--faint); white-space: nowrap; padding-left: 10px; }
+
+    /* ---------- Matrix ---------- */
+    .matrix-section { padding-top: 30px; }
+    .domain { position: relative; padding: clamp(30px,4vw,46px) 0; border-top: 1px solid var(--line); scroll-margin-top: 150px; }
+    .domain:first-of-type { border-top: 0; }
+    .domain::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .8; }
+    .domain[data-hue="green"]::before { background: radial-gradient(600px 300px at 90% 20%, var(--accent-soft), transparent 70%); }
+    .domain[data-hue="cyan"]::before { background: radial-gradient(600px 300px at 8% 30%, rgba(53,184,201,.08), transparent 70%); }
+    .domain[data-hue="red"]::before { background: radial-gradient(600px 300px at 90% 30%, rgba(214,69,80,.07), transparent 70%); }
+    .domain[data-hue="amber"]::before { background: radial-gradient(600px 300px at 10% 30%, rgba(216,181,106,.09), transparent 70%); }
+    .domain[data-hue="blue"]::before { background: radial-gradient(600px 300px at 90% 30%, rgba(79,131,194,.08), transparent 70%); }
+    .domain-grid { position: relative; display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(26px,4vw,56px); align-items: start; }
+    .domain-head { position: sticky; top: 150px; }
+    .domain-idx { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .22em; color: var(--faint); margin-bottom: 12px; }
+    .domain-name { font-size: clamp(1.5rem,2.6vw,2.1rem); letter-spacing: -.03em; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+    .domain-name i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+    .domain-desc { font-size: .94rem; max-width: 40ch; margin-bottom: 18px; }
+    .domain-proof { display: flex; flex-direction: column; gap: 8px; }
+    .proof-line { display: flex; align-items: baseline; gap: 10px; font-family: var(--font-mono); font-size: .7rem; color: var(--muted); }
+    .proof-line b { color: var(--accent-ink); font-weight: 700; }
+    .proof-line a { color: var(--muted); text-decoration: none; border-bottom: 1px dashed var(--line-2); }
+    .proof-line a:hover { color: var(--accent-ink); border-color: var(--accent-line); }
+
+    .skill-list { display: flex; flex-direction: column; gap: 12px; }
+    .skill {
+      padding: 18px 20px; display: grid;
+      grid-template-columns: minmax(0,1fr) auto; gap: 6px 18px; align-items: center;
+    }
+    .skill:hover { transform: translateY(-3px); }
+    .skill-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .skill-glyph {
+      width: 38px; height: 38px; flex: none; border-radius: 11px;
+      display: grid; place-items: center;
+      font-family: var(--font-mono); font-size: .72rem; font-weight: 700;
+      background: var(--bg-2); color: var(--muted); border: 1px solid var(--line);
+      transition: all var(--t-fast) var(--ease);
+    }
+    .skill:hover .skill-glyph { background: var(--accent); border-color: var(--accent); color: var(--on-accent); transform: rotate(-4deg) scale(1.05); }
+    .skill-name { font-weight: 600; font-size: .98rem; color: var(--ink); }
+    .skill-note { grid-column: 1 / -1; font-size: .82rem; color: var(--muted); }
+    .skill-years { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); white-space: nowrap; }
+    .skill-meter { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+    .meter-track { flex: 1; height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .meter-fill {
+      height: 100%; width: 0; border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent-deep), var(--accent-strong));
+      transition: width 1.1s var(--ease) .15s;
+    }
+    .is-in .meter-fill { width: var(--lvl); }
+    .meter-label { font-family: var(--font-mono); font-size: .62rem; color: var(--accent-ink); min-width: 74px; text-align: right; }
+    .skill-tags { grid-column: 1 / -1; display: flex; gap: 7px; flex-wrap: wrap; margin-top: 6px; }
+    .skill-tags .tag { font-size: .62rem; }
+
+    /* ---------- Services ---------- */
+    .services-section { position: relative; }
+    .services-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(700px 380px at 85% 20%, var(--accent-soft), transparent 70%); pointer-events: none; }
+    .svc-grid { position: relative; display: grid; grid-template-columns: repeat(12,1fr); gap: 22px; }
+    .svc { position: relative; padding: 30px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+    .svc--lead { grid-column: span 7; grid-row: span 2; }
+    .svc--a { grid-column: span 5; }
+    .svc--b { grid-column: span 5; }
+    .svc--wide { grid-column: span 12; flex-direction: row; align-items: center; gap: 28px; }
+    .svc--wide .svc-copy { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .svc-icon {
+      width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center;
+      background: var(--accent-soft); color: var(--accent-ink);
+      transition: all var(--t-fast) var(--ease);
+    }
+    .svc:hover .svc-icon { background: var(--accent); color: var(--on-accent); transform: scale(1.06) rotate(-4deg); }
+    .svc-name { font-size: 1.3rem; }
+    .svc--lead .svc-name { font-size: 1.6rem; }
+    .svc-desc { font-size: .92rem; max-width: 52ch; }
+    .svc-list { display: flex; flex-direction: column; gap: 7px; }
+    .svc-list li { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: .74rem; color: var(--muted); }
+    .svc-list li::before { content: "✓"; color: var(--accent-ink); font-weight: 700; }
+    .svc-foot { margin-top: auto; padding-top: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+    .svc-price { font-family: var(--font-mono); font-size: .7rem; color: var(--faint); }
+    .svc-price b { color: var(--ink); font-size: .86rem; }
+    .svc-cta { margin-left: auto; }
+    .svc-code {
+      margin-top: 6px; padding: 16px 18px; border-radius: var(--r-md);
+      background: #0d1512; border: 1px solid rgba(0,201,138,.16);
+      font-family: var(--font-mono); font-size: .72rem; line-height: 1.85; color: #c6d4cd; overflow-x: auto;
+    }
+    .svc-code .k { color: #3ecf9a; } .svc-code .s { color: #d8b56a; } .svc-code .c { color: #64756e; }
+    .svc-spark { flex: none; width: 200px; }
+    .svc-spark svg { width: 100%; height: 56px; overflow: visible; }
+    .svc-spark polyline { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 300; stroke-dashoffset: 300; transition: stroke-dashoffset 1.4s var(--ease) .2s; }
+    .is-in .svc-spark polyline { stroke-dashoffset: 0; }
+    .svc-spark figcaption { margin-top: 8px; font-family: var(--font-mono); font-size: .66rem; color: var(--faint); text-align: right; }
+    .svc-spark figcaption b { color: var(--accent-ink); }
+
+    /* ---------- Process ---------- */
+    .process-section { position: relative; }
+    .process-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(680px 360px at 12% 40%, rgba(216,181,106,.09), transparent 70%); pointer-events: none; }
+    .proc-track { position: relative; display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; }
+    .proc-track::before { content: ""; position: absolute; left: 4%; right: 4%; top: 27px; height: 2px; background: var(--line-2); }
+    .proc-fill { position: absolute; left: 4%; top: 27px; height: 2px; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); box-shadow: 0 0 12px rgba(0,153,102,.35); transition: width .2s linear; }
+    .proc-step { position: relative; padding-top: 62px; }
+    .proc-dot {
+      position: absolute; top: 18px; left: 0; width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--accent); background: var(--bg);
+      transition: background-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+    }
+    .proc-step.is-passed .proc-dot { background: var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+    .proc-num { position: absolute; top: 16px; left: 34px; font-family: var(--font-mono); font-size: .7rem; color: var(--faint); letter-spacing: .18em; }
+    .proc-card { padding: 24px; height: 100%; display: flex; flex-direction: column; gap: 10px; }
+    .proc-name { font-size: 1.1rem; }
+    .proc-desc { font-size: .88rem; }
+    .proc-out { margin-top: auto; padding-top: 10px; font-family: var(--font-mono); font-size: .66rem; color: var(--accent-ink); }
+
+    /* ---------- Currently learning ---------- */
+    .learn-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .learn-card { padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+    .learn-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .learn-badge {
+      display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: var(--r-pill);
+      background: rgba(216,181,106,.14); border: 1px solid rgba(216,181,106,.35);
+      font-family: var(--font-mono); font-size: .62rem; color: #a07c2c;
+    }
+    [data-theme="dark"] .learn-badge { color: var(--amber); }
+    .learn-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: pulse-amber 2s infinite; }
+    @keyframes pulse-amber { 0%,100% { box-shadow: 0 0 0 0 rgba(216,181,106,.4); } 55% { box-shadow: 0 0 0 6px rgba(216,181,106,0); } }
+    .learn-icon { color: var(--accent-ink); }
+    .learn-desc { font-size: .88rem; }
+    .learn-progress { margin-top: auto; display: flex; flex-direction: column; gap: 7px; }
+    .lp-track { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .lp-fill { height: 100%; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--amber), #e6c98a); transition: width 1.2s var(--ease) .2s; }
+    .is-in .lp-fill { width: var(--p); }
+    .lp-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .lp-meta b { color: var(--accent-ink); }
+
+    /* ---------- CTA ---------- */
+    .cta-section { position: relative; padding-top: 20px; }
+    .cta-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px 320px at 90% 60%, rgba(43,127,140,.10), transparent 70%); pointer-events: none; }
+    .cta-bar {
+      position: relative; overflow: hidden;
+      padding: clamp(30px,4.5vw,50px) clamp(28px,4vw,52px);
+      display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap;
+    }
+    .cta-bar:hover { transform: none; }
+    .cta-bar::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(520px 280px at 94% 50%, var(--accent-soft), transparent 70%),
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      opacity: .6; pointer-events: none;
+    }
+    .cta-copy { position: relative; max-width: 560px; }
+    .cta-copy .h2 { margin-bottom: 10px; }
+    .cta-copy p { font-size: .94rem; }
+    .cta-actions { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
+    .cta-mail { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); text-decoration: none; border-bottom: 1px dashed var(--line-2); padding-bottom: 2px; transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
+    .cta-mail:hover { color: var(--accent-ink); border-color: var(--accent-line); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .s-hero-grid { grid-template-columns: 1fr; }
+      .manifest { max-width: 520px; }
+      .domain-grid { grid-template-columns: 1fr; }
+      .domain-head { position: static; }
+      .svc--lead { grid-column: span 12; grid-row: auto; }
+      .svc--a, .svc--b { grid-column: span 6; }
+      .proc-track { grid-template-columns: repeat(2,1fr); }
+      .proc-track::before, .proc-fill { display: none; }
+      .learn-grid { grid-template-columns: 1fr; max-width: 560px; }
+    }
+    @media (max-width: 760px) {
+      .svc--a, .svc--b { grid-column: span 12; }
+      .svc--wide { flex-direction: column; align-items: flex-start; }
+      .svc-spark { width: 100%; }
+      .dom-hint { display: none; }
+    }
+    @media (max-width: 620px) {
+      .proc-track { grid-template-columns: 1fr; }
+      .cta-actions { width: 100%; }
+      .cta-actions .btn { width: 100%; }
+      .skill { grid-template-columns: 1fr; }
+      .skill-years { grid-row: 1; justify-self: end; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ============ Header ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-bar">
+      <a class="logo" href="index.html" aria-label="HeydarKF — home"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" >About</a>
+        <a href="skills.html" aria-current="page">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact ME</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="header-actions">        
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <span class="header-sep" aria-hidden="true"></span>
+        <a class="btn btn-primary btn-sm header-contact" href="contact.html">Start a project</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+        </div>
+    </div>
+  </header>
+
+
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
+      <nav class="mobile-nav" aria-label="Mobile">
+        <a href="index.html"><span class="idx">01</span> Home</a>
+        <a href="about.html"><span class="idx">02</span> About</a>
+        <a href="skills.html"><span class="idx">03</span> Skills</a>
+        <a href="projects.html"><span class="idx">04</span> Projects</a>
+        <a href="blog.html"><span class="idx">05</span> Blog</a>
+        <a href="docs.html"><span class="idx">06</span> Docs</a>
+      </nav>
+      <div class="mobile-foot">
+        <a class="mail" href="mailto:hello@kazemifakhr.ir"
+          >hello@kazemifakhr.ir</a
+        >
+        <a class="btn btn-primary btn-sm" href="#sec-studio">Token Studio</a>
+      </div>
+    </div>
+
+  <main id="main">
+    <!-- ================= Hero ================= -->
+    <section class="s-hero" id="top">
+      <div class="container">
+        <div class="s-hero-grid">
+          <div>
+            <p class="kicker reveal">// capabilities — inspected, not claimed</p>
+            <h1 class="s-title reveal" style="--d:60ms">The stack, and what it builds<span class="dot">.</span></h1>
+            <p class="s-lede reveal" style="--d:120ms">Five domains, twenty-two tools, one standard. Every level below is backed by shipped work you can open — not a percentage I invented.</p>
+            <div class="s-meta reveal" style="--d:180ms">
+              <span class="chip">6+ years in production</span>
+              <span class="chip">50+ projects shipped</span>
+              <span class="chip">100+ security audits</span>
+              <span class="chip">3 things in learning</span>
+            </div>
+          </div>
+          <aside class="card manifest reveal" style="--d:160ms" aria-label="Stack manifest">
+            <div class="manifest-bar"><i></i><i></i><i></i><span>heydar@kf: ~/stack</span></div>
+            <div class="manifest-body">
+              <div><span class="p">$</span>cat manifest.json</div>
+              <div class="dim">{</div>
+              <div>&nbsp;&nbsp;"backend": <span class="ok">"php · mvc · mysql · redis"</span>,</div>
+              <div>&nbsp;&nbsp;"frontend": <span class="ok">"js · react · tailwind"</span>,</div>
+              <div>&nbsp;&nbsp;"security": <span class="ok">"owasp · burp · hardening"</span>,</div>
+              <div>&nbsp;&nbsp;"agents": <span class="ok">"openai · deepseek · qwen"</span>,</div>
+              <div>&nbsp;&nbsp;"ops": <span class="ok">"linux · docker · ci"</span></div>
+              <div class="dim">}</div>
+              <div><span class="p">$</span>./verify --all</div>
+              <div><span class="ok">✓ 22/22 backed by shipped work</span> <span class="manifest-cur"></span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Sticky domain nav ================= -->
+    <div class="dom-wrap" id="domWrap">
+      <div class="container">
+        <nav class="dom-bar" id="domBar" aria-label="Skill domains">
+          <a class="dom-link" href="#backend" aria-current="true"><i style="background:#009966"></i>Backend <sup>6</sup></a>
+          <a class="dom-link" href="#frontend"><i style="background:#35b8c9"></i>Frontend <sup>6</sup></a>
+          <a class="dom-link" href="#security"><i style="background:#d64550"></i>Security <sup>4</sup></a>
+          <a class="dom-link" href="#agents"><i style="background:#d8b56a"></i>AI &amp; Agents <sup>3</sup></a>
+          <a class="dom-link" href="#ops"><i style="background:#4f83c2"></i>Ops &amp; Tooling <sup>3</sup></a>
+          <span class="dom-hint">// scroll — the rail follows</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ================= Matrix ================= -->
+    <section class="section matrix-section" id="matrix">
+      <div class="container">
+
+        <!-- Backend -->
+        <div class="domain" id="backend" data-hue="green">
+          <div class="domain-grid">
+            <div class="domain-head reveal">
+              <p class="domain-idx">DOMAIN 01</p>
+              <h2 class="domain-name"><i style="background:#009966"></i>Backend</h2>
+              <p class="domain-desc">Where I live. Pure-PHP architecture, honest data layers, and APIs that behave the same at 3am as at noon.</p>
+              <div class="domain-proof">
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#nexus">Nexus Commerce</a></p>
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#ledger">Ledgerly</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#frameworks-behind">Why I Left Frameworks Behind</a></p>
+              </div>
+            </div>
+            <div class="skill-list">
+              <div class="card skill reveal" style="--lvl:96%">
+                <div class="skill-top"><span class="skill-glyph">php</span><span class="skill-name">PHP 8</span></div>
+                <span class="skill-years">6 yrs</span>
+                <p class="skill-note">Strict types, enums, fibers, and a style guide I actually enforce. The language is my母语 — sorry, my mother tongue.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">strict_types</span><span class="tag">attributes</span><span class="tag">opcache</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:94%;--d:60ms">
+                <div class="skill-top"><span class="skill-glyph">mvc</span><span class="skill-name">Pure MVC Architecture</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Router, container, pipeline — forty lines each, zero magic. Shared components between writer and reader apps.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">middleware</span><span class="tag">DI</span><span class="tag">DTOs</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:90%;--d:120ms">
+                <div class="skill-top"><span class="skill-glyph">sql</span><span class="skill-name">MySQL / MariaDB</span></div>
+                <span class="skill-years">6 yrs</span>
+                <p class="skill-note">Covering indexes, integer-cent money, append-only ledgers. I read EXPLAIN before I read the ORM docs.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">EXPLAIN</span><span class="tag">transactions</span><span class="tag">migrations</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:86%;--d:180ms">
+                <div class="skill-top"><span class="skill-glyph">rds</span><span class="skill-name">Redis</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Caching contracts with written TTLs, queues, rate limits, and pub/sub invalidation instead of delete-and-pray.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">TTL policy</span><span class="tag">streams</span><span class="tag">locks</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:92%;--d:240ms">
+                <div class="skill-top"><span class="skill-glyph">api</span><span class="skill-name">REST &amp; GraphQL APIs</span></div>
+                <span class="skill-years">5 yrs</span>
+                <p class="skill-note">Versioned, documented, typed errors. Contracts first, handlers second, surprises never.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">OpenAPI</span><span class="tag">idempotency</span><span class="tag">pagination</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:88%;--d:300ms">
+                <div class="skill-top"><span class="skill-glyph">wp</span><span class="skill-name">WordPress Engineering</span></div>
+                <span class="skill-years">6 yrs</span>
+                <p class="skill-note">Custom themes and plugins as real software: autoloaded, tested, RTL-native. Not page-builder archaeology.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">blocks</span><span class="tag">REST</span><span class="tag">i18n</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="domain" id="frontend" data-hue="cyan">
+          <div class="domain-grid">
+            <div class="domain-head reveal">
+              <p class="domain-idx">DOMAIN 02</p>
+              <h2 class="domain-name"><i style="background:#35b8c9"></i>Frontend</h2>
+              <p class="domain-desc">Interfaces that feel engineered: token-driven, accessible, fast on a mid-range phone in a bad tunnel.</p>
+              <div class="domain-proof">
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#pulse">Pulse UI Kit</a></p>
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#transit">Qom Transit PWA</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#validation-boundary">Validation Is a Security Boundary</a></p>
+              </div>
+            </div>
+            <div class="skill-list">
+              <div class="card skill reveal" style="--lvl:95%">
+                <div class="skill-top"><span class="skill-glyph">js</span><span class="skill-name">JavaScript / TypeScript</span></div>
+                <span class="skill-years">6 yrs</span>
+                <p class="skill-note">Vanilla first, frameworks when earned. Types at the boundaries, events delegated, bundles measured.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">ES2023</span><span class="tag">modules</span><span class="tag">WAAPI</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:84%;--d:60ms">
+                <div class="skill-top"><span class="skill-glyph">rct</span><span class="skill-name">React</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">For state-heavy dashboards. Hooks disciplined, effects rare, server state kept out of the client.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">hooks</span><span class="tag">suspense</span><span class="tag">memo</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:93%;--d:120ms">
+                <div class="skill-top"><span class="skill-glyph">tw</span><span class="skill-name">Tailwind CSS</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Design tokens as config, not opinions. One source of truth feeding light, dark, and RTL.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">tokens</span><span class="tag">logical props</span><span class="tag">JIT</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:90%;--d:180ms">
+                <div class="skill-top"><span class="skill-glyph">alp</span><span class="skill-name">Alpine.js</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">My default for server-rendered pages: sprinkle behavior, keep the HTML honest, ship 14kb.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">x-data</span><span class="tag">stores</span><span class="tag">morph</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:92%;--d:240ms">
+                <div class="skill-top"><span class="skill-glyph">a11y</span><span class="skill-name">Accessibility &amp; Semantics</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">AA contrast on every pair, focus traps that trap, landmarks that mean something. Keyboard-first, always.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">WCAG AA</span><span class="tag">ARIA</span><span class="tag">reduced-motion</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:87%;--d:300ms">
+                <div class="skill-top"><span class="skill-glyph">pwa</span><span class="skill-name">PWA &amp; Offline-first</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">Service workers, IndexedDB, install prompts that don’t beg. Works underground, syncs when signal returns.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">SW</span><span class="tag">IndexedDB</span><span class="tag">manifest</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="domain" id="security" data-hue="red">
+          <div class="domain-grid">
+            <div class="domain-head reveal">
+              <p class="domain-idx">DOMAIN 03</p>
+              <h2 class="domain-name"><i style="background:#d64550"></i>Security</h2>
+              <p class="domain-desc">The lens I see every line through. Boundaries drawn, threats modeled, refusals logged with intent.</p>
+              <div class="domain-proof">
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#sentinel">Sentinel SOC dashboard</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#bug-threat-model">The Bug That Taught Me Threat Modeling</a></p>
+                <p class="proof-line"><b>count →</b> 100+ audits since 2022</p>
+              </div>
+            </div>
+            <div class="skill-list">
+              <div class="card skill reveal" style="--lvl:93%">
+                <div class="skill-top"><span class="skill-glyph">ows</span><span class="skill-name">OWASP Top-10 &amp; ASVS</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Checklists as index cards, not posters. Every finding mapped to a control and a regression test.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">expert</span></div>
+                <div class="skill-tags"><span class="tag">ASVS L2</span><span class="tag">CWE</span><span class="tag">CVSS</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:88%;--d:60ms">
+                <div class="skill-top"><span class="skill-glyph">brp</span><span class="skill-name">Burp Suite &amp; Pentesting</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Manual probing over scanner noise. Auth flows, upload paths, IDOR hunts — with written scope and rules.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">repeater</span><span class="tag">intruder</span><span class="tag">scope</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:91%;--d:120ms">
+                <div class="skill-top"><span class="skill-glyph">thr</span><span class="skill-name">Threat Modeling</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">Four questions on an index card: protect what, from whom, where trust crosses, what fails next.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">STRIDE</span><span class="tag">trust boundaries</span><span class="tag">DFDs</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:90%;--d:180ms">
+                <div class="skill-top"><span class="skill-glyph">hrd</span><span class="skill-name">Hardening &amp; Secure Defaults</span></div>
+                <span class="skill-years">4 yrs</span>
+                <p class="skill-note">Headers, CSP, cookie flags, upload quarantine, least privilege. Defaults safe enough to forget safely.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">CSP</span><span class="tag">HSTS</span><span class="tag">sandboxing</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI & Agents -->
+        <div class="domain" id="agents" data-hue="amber">
+          <div class="domain-grid">
+            <div class="domain-head reveal">
+              <p class="domain-idx">DOMAIN 04</p>
+              <h2 class="domain-name"><i style="background:#d8b56a"></i>AI &amp; Agents</h2>
+              <p class="domain-desc">Contracts, not prompts. An abstraction layer that lets models swap like config, and tools that wear gloves.</p>
+              <div class="domain-proof">
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#atlas">Atlas Agents workspace</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#agents-contracts">Agents Need Contracts, Not Prompts</a></p>
+                <p class="proof-line"><b>building →</b> Hakim study companion</p>
+              </div>
+            </div>
+            <div class="skill-list">
+              <div class="card skill reveal" style="--lvl:90%">
+                <div class="skill-top"><span class="skill-glyph">agt</span><span class="skill-name">Agent Architecture</span></div>
+                <span class="skill-years">2 yrs</span>
+                <p class="skill-note">DAG planners, shared memory, tool registries, typed failures. Boring agents are reliable agents.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">planner</span><span class="tag">tool-use</span><span class="tag">evals</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:88%;--d:60ms">
+                <div class="skill-top"><span class="skill-glyph">llm</span><span class="skill-name">Model Abstraction Layer</span></div>
+                <span class="skill-years">2 yrs</span>
+                <p class="skill-note">OpenAI-compatible interface over GPT, DeepSeek, Qwen and local models. Routing by cost, latency and task class.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">OpenAI API</span><span class="tag">DeepSeek</span><span class="tag">Qwen</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:82%;--d:120ms">
+                <div class="skill-top"><span class="skill-glyph">rag</span><span class="skill-name">RAG &amp; Retrieval</span></div>
+                <span class="skill-years">2 yrs</span>
+                <p class="skill-note">Chunking that respects structure, embeddings with provenance, citations or silence. No confident hallucinations.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">proficient</span></div>
+                <div class="skill-tags"><span class="tag">embeddings</span><span class="tag">rerank</span><span class="tag">citations</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ops -->
+        <div class="domain" id="ops" data-hue="blue">
+          <div class="domain-grid">
+            <div class="domain-head reveal">
+              <p class="domain-idx">DOMAIN 05</p>
+              <h2 class="domain-name"><i style="background:#4f83c2"></i>Ops &amp; Tooling</h2>
+              <p class="domain-desc">The unglamorous half that keeps promises: budgets in CI, deploys without drama, logs that answer questions.</p>
+              <div class="domain-proof">
+                <p class="proof-line"><b>proof →</b> <a href="projects.html#ledger">Ledgerly p95 −63%</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#p95-promise">p95 Is a Promise</a></p>
+                <p class="proof-line"><b>essay →</b> <a href="blog.html#caching-contract">Caching Is a Contract With Time</a></p>
+              </div>
+            </div>
+            <div class="skill-list">
+              <div class="card skill reveal" style="--lvl:90%">
+                <div class="skill-top"><span class="skill-glyph">lnx</span><span class="skill-name">Linux &amp; Nginx</span></div>
+                <span class="skill-years">5 yrs</span>
+                <p class="skill-note">systemd units, tuned FPM pools, TLS done right, logs rotated and readable. The server is a codebase too.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">systemd</span><span class="tag">FPM</span><span class="tag">TLS</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:84%;--d:60ms">
+                <div class="skill-top"><span class="skill-glyph">dkr</span><span class="skill-name">Docker &amp; CI/CD</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">Reproducible images, blue-green deploys, performance gates beside tests. Releases invisible to users.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">compose</span><span class="tag">GH Actions</span><span class="tag">gates</span></div>
+              </div>
+              <div class="card skill reveal" style="--lvl:86%;--d:120ms">
+                <div class="skill-top"><span class="skill-glyph">obs</span><span class="skill-name">Observability &amp; SLOs</span></div>
+                <span class="skill-years">3 yrs</span>
+                <p class="skill-note">Latency budgets per endpoint, structured logs with request ids, alerts that page only when humans must act.</p>
+                <div class="skill-meter"><span class="meter-track"><span class="meter-fill"></span></span><span class="meter-label">advanced</span></div>
+                <div class="skill-tags"><span class="tag">p95</span><span class="tag">tracing</span><span class="tag">error budgets</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= Services ================= -->
+    <section class="section services-section" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// hire the stack</p>
+            <h2 class="h2">Services, engineered end-to-end.</h2>
+            <p class="section-sub">Four disciplines, one standard: systems that stay fast, secure and calm under load.</p>
+          </div>
+        </div>
+        <div class="svc-grid">
+          <article class="card svc svc--lead reveal">
+            <div class="svc-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <h3 class="svc-name">Backend Architecture</h3>
+            <p class="svc-desc">Pure-PHP MVC platforms, clean APIs and data layers built to scale — no framework bloat, no surprises in production. You own every line.</p>
+            <ul class="svc-list">
+              <li>REST &amp; GraphQL APIs with typed contracts</li>
+              <li>Queues, caching contracts, workers</li>
+              <li>Audit-ready, strictly typed code</li>
+              <li>Migration &amp; legacy rescue plans</li>
+            </ul>
+            <div class="svc-code" aria-hidden="true">
+<span class="c">// app/Core/Pipeline.php</span><br>
+<span class="k">final class</span> Pipeline {<br>
+&nbsp;&nbsp;<span class="k">public function</span> run(Task $t): Result {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> $this-&gt;bus-&gt;dispatch($t);<br>
+&nbsp;&nbsp;}<br>
+}
+            </div>
+            <div class="svc-foot">
+              <span class="svc-price">from <b>$2,400</b> / engagement</span>
+              <a class="btn btn-primary btn-sm svc-cta" href="contact.html">Scope it →</a>
+            </div>
+          </article>
+
+          <article class="card svc svc--a reveal" style="--d:80ms">
+            <div class="svc-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <h3 class="svc-name">Security Audits</h3>
+            <p class="svc-desc">OWASP-driven reviews, threat modeling and hardening — before attackers get a vote. Findings arrive with fixes and regression tests.</p>
+            <div class="svc-foot">
+              <span class="svc-price">from <b>$900</b> / audit</span>
+              <a class="btn btn-ghost btn-sm svc-cta" href="contact.html">Book audit →</a>
+            </div>
+          </article>
+
+          <article class="card svc svc--b reveal" style="--d:140ms">
+            <div class="svc-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+            <h3 class="svc-name">AI Agent Systems</h3>
+            <p class="svc-desc">Tool-using agents on a model-agnostic abstraction layer. Swap OpenAI, DeepSeek or local models freely — contracts keep them honest.</p>
+            <div class="svc-foot">
+              <span class="svc-price">from <b>$1,800</b> / system</span>
+              <a class="btn btn-ghost btn-sm svc-cta" href="contact.html">Design it →</a>
+            </div>
+          </article>
+
+          <article class="card svc svc--wide reveal" style="--d:200ms">
+            <div class="svc-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+            <div class="svc-copy">
+              <h3 class="svc-name">Performance &amp; DevOps</h3>
+              <p class="svc-desc">Linux, Docker, CI and observability — latency budgets enforced in the pipeline, deploys without maintenance windows, p95 down and sleep up.</p>
+            </div>
+            <figure class="svc-spark" aria-label="Latency improved by 63 percent">
+              <svg viewBox="0 0 190 56" preserveAspectRatio="none" aria-hidden="true"><polyline points="2,10 26,16 50,12 74,26 98,22 122,36 146,40 170,48 188,50"/></svg>
+              <figcaption>p95 latency <b>−63%</b> after hardening</figcaption>
+            </figure>
+            <div class="svc-foot" style="border-top:0;padding-top:0;margin-top:0;">
+              <span class="svc-price">from <b>$1,200</b> / sprint</span>
+              <a class="btn btn-ghost btn-sm svc-cta" href="contact.html">Tune it →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Process ================= -->
+    <section class="section process-section" id="process">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// how engagements run</p>
+            <h2 class="h2">Four steps, no mystery.</h2>
+            <p class="section-sub">You always know what ships Friday, and what it costs to change your mind.</p>
+          </div>
+        </div>
+        <div class="proc-track" id="procTrack">
+          <span class="proc-fill" id="procFill" aria-hidden="true"></span>
+          <div class="proc-step reveal">
+            <span class="proc-dot" aria-hidden="true"></span><span class="proc-num">STEP 01</span>
+            <div class="card proc-card">
+              <h3 class="h3 proc-name">Question</h3>
+              <p class="proc-desc">We write the mas’ala: the exact problem, its boundaries, and who benefits if it fails. No proposal before this page exists.</p>
+              <p class="proc-out">→ output: problem brief</p>
+            </div>
+          </div>
+          <div class="proc-step reveal" style="--d:80ms">
+            <span class="proc-dot" aria-hidden="true"></span><span class="proc-num">STEP 02</span>
+            <div class="card proc-card">
+              <h3 class="h3 proc-name">Contract</h3>
+              <p class="proc-desc">Scope, interfaces, latency budget and price — signed before code. Changes are priced, not argued.</p>
+              <p class="proc-out">→ output: fixed scope + SLOs</p>
+            </div>
+          </div>
+          <div class="proc-step reveal" style="--d:160ms">
+            <span class="proc-dot" aria-hidden="true"></span><span class="proc-num">STEP 03</span>
+            <div class="card proc-card">
+              <h3 class="h3 proc-name">Build</h3>
+              <p class="proc-desc">Weekly demos on a staging URL you can click. Tests and performance gates run beside every commit.</p>
+              <p class="proc-out">→ output: weekly shippable increments</p>
+            </div>
+          </div>
+          <div class="proc-step reveal" style="--d:240ms">
+            <span class="proc-dot" aria-hidden="true"></span><span class="proc-num">STEP 04</span>
+            <div class="card proc-card">
+              <h3 class="h3 proc-name">Handover</h3>
+              <p class="proc-desc">Docs, runbooks, audit trail and a walkthrough recorded. You own the repo, the keys and the decisions.</p>
+              <p class="proc-out">→ output: ownership, transferred</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Learning ================= -->
+    <section class="section" id="learning">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// currently sharpening</p>
+            <h2 class="h2">In the workshop.</h2>
+            <p class="section-sub">A stack that stops growing is a stack that starts dying. These have commits from this week.</p>
+          </div>
+        </div>
+        <div class="learn-grid">
+          <article class="card learn-card reveal">
+            <div class="learn-top">
+              <span class="learn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg></span>
+              <span class="learn-badge"><i></i> learning</span>
+            </div>
+            <h3 class="h3">Local model fine-tuning</h3>
+            <p class="learn-desc">LoRA adapters on small Qwen variants for domain-specific retrieval — private, offline, and cheap enough to run on a studio box.</p>
+            <div class="learn-progress">
+              <div class="lp-track"><span class="lp-fill" style="--p:58%"></span></div>
+              <div class="lp-meta"><span>last experiment 1d ago</span><b>58%</b></div>
+            </div>
+          </article>
+          <article class="card learn-card reveal" style="--d:80ms">
+            <div class="learn-top">
+              <span class="learn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <span class="learn-badge"><i></i> learning</span>
+            </div>
+            <h3 class="h3">Formal verification basics</h3>
+            <p class="learn-desc">TLA+ specs for queue and lock protocols. If a concurrency bug can be drawn as a state graph, I want to draw it before it ships.</p>
+            <div class="learn-progress">
+              <div class="lp-track"><span class="lp-fill" style="--p:34%"></span></div>
+              <div class="lp-meta"><span>last spec 3d ago</span><b>34%</b></div>
+            </div>
+          </article>
+          <article class="card learn-card reveal" style="--d:160ms">
+            <div class="learn-top">
+              <span class="learn-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+              <span class="learn-badge"><i></i> learning</span>
+            </div>
+            <h3 class="h3">Advanced Arabic rhetoric</h3>
+            <p class="learn-desc">Ma‘ani and bayan at the seminary — the grammar of persuasion. It keeps my documentation honest and my pull-quotes sharp.</p>
+            <div class="learn-progress">
+              <div class="lp-track"><span class="lp-fill" style="--p:72%"></span></div>
+              <div class="lp-meta"><span>last seminar 6h ago</span><b>72%</b></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="section cta-section" id="next">
+      <div class="container">
+        <div class="card cta-bar reveal">
+          <div class="cta-copy">
+            <p class="kicker">// put the stack to work</p>
+            <h2 class="h2">Need one of these domains on your team?</h2>
+            <p>Tell me the problem. I’ll bring the contract, the budget and the calm.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-lg" href="contact.html">
+              Start a project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="cta-mail" href="mailto:hello@kazemifakhr.ir">or email → hello@kazemifakhr.ir</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <a class="logo" href="index.html"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="about.html">About</a><a href="skills.html">Skills</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/heydarkf" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a class="icon-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+          <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="credit">Designed by <strong>HeydarKF (OS Heydar)</strong> · © <span id="year">2026</span> HeydarKF. All rights reserved.</p>
+        <a class="to-top" href="#top">back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ JS ============ -->
+  <script>
+  (function () {
+    'use strict';
+    var d = document, root = d.documentElement;
+    var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var $ = function (s, c) { return (c || d).querySelector(s); };
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
+
+    /* ---------- Theme ---------- */
+    var themeBtn = $('#themeToggle');
+    function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('hkf-theme', t); } catch (e) {} }
+    if (themeBtn) themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (d.startViewTransition && !reduced) d.startViewTransition(function () { setTheme(next); });
+      else setTheme(next);
+    });
+
+    /* ---------- Header + sticky rail + scrollspy + process fill ---------- */
+    var header = $('#siteHeader'), domWrap = $('#domWrap');
+    var domLinks = $$('.dom-link');
+    var domains = $$('.domain');
+    var procTrack = $('#procTrack'), procFill = $('#procFill'), procSteps = $$('.proc-step');
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        if (domWrap) domWrap.classList.toggle('is-stuck', domWrap.getBoundingClientRect().top <= 87);
+        /* scrollspy */
+        var probe = innerHeight * 0.38, activeId = domains.length ? domains[0].id : null;
+        domains.forEach(function (sec) {
+          if (sec.getBoundingClientRect().top <= probe) activeId = sec.id;
+        });
+        domLinks.forEach(function (a) {
+          var on = a.getAttribute('href') === '#' + activeId;
+          if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+        /* process progressive fill */
+        if (procTrack && procFill) {
+          if (reduced) {
+            procFill.style.width = '92%';
+            procSteps.forEach(function (s) { s.classList.add('is-passed'); });
+          } else {
+            var r = procTrack.getBoundingClientRect();
+            var p = Math.min(Math.max((innerHeight * 0.7 - r.top) / (r.height * 0.9), 0), 1);
+            procFill.style.width = (p * 92) + '%';
+            procSteps.forEach(function (s, i) {
+              s.classList.toggle('is-passed', p >= (i + 0.35) / procSteps.length);
+            });
+          }
+        }
+        ticking = false;
+      });
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', onScroll, { passive: true });
+
+    /* smooth anchor jumps land below sticky bars */
+    domLinks.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = $(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        var y = target.getBoundingClientRect().top + window.scrollY - 148;
+        window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+        try { history.replaceState(null, '', a.getAttribute('href')); } catch (err) {}
+      });
+    });
+
+    /* ---------- Lang ---------- */
+    var lang = $('#lang'), langBtn = $('#langBtn');
+    function closeLang() { lang.classList.remove('is-open'); langBtn.setAttribute('aria-expanded', 'false'); }
+    if (langBtn) langBtn.addEventListener('click', function (e) { e.stopPropagation(); langBtn.setAttribute('aria-expanded', String(lang.classList.toggle('is-open'))); });
+    d.addEventListener('click', function (e) { if (lang && !lang.contains(e.target)) closeLang(); });
+
+    /* ---------- Mobile menu ---------- */
+    var burger = $('#burgerBtn'), menu = $('#mobileMenu'), lastFocus = null;
+    function openMenu() { lastFocus = d.activeElement; d.body.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu'); var f = $('.mobile-nav a', menu); if (f) setTimeout(function () { f.focus(); }, 350); }
+    function closeMenu() { d.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); if (lastFocus) lastFocus.focus(); }
+    if (burger) burger.addEventListener('click', function () { d.body.classList.contains('menu-open') ? closeMenu() : openMenu(); });
+    if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeLang(); if (d.body.classList.contains('menu-open')) closeMenu(); }
+      if (e.key === 'Tab' && d.body.classList.contains('menu-open')) {
+        var mf = $$('a, button', menu).concat([burger]);
+        var mF = mf[0], mL = mf[mf.length - 1];
+        if (e.shiftKey && d.activeElement === mF) { e.preventDefault(); mL.focus(); }
+        else if (!e.shiftKey && d.activeElement === mL) { e.preventDefault(); mF.focus(); }
+      }
+    });
+
+    /* ---------- Reveal once ---------- */
+    if ('IntersectionObserver' in window && !reduced) {
+      var ro = new IntersectionObserver(function (en) {
+        en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); ro.unobserve(x.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      $$('.reveal').forEach(function (el) { ro.observe(el); });
+    } else {
+      $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
+    }
+
+    /* ---------- Year + init ---------- */
+    var yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
+    onScroll();
+  })();
+  </script>
+</body>
+</html>

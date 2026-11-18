@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — HeydarKF | Start a project</title>
+  <meta name="description" content="Tell Heydar Kazemi Fakhr the problem. Project brief form, direct email, socials, availability and response time — challenge first, proposal second.">
+  <meta name="author" content="Heydar Kazemi Fakhr">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f8f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f0e">
+  <link rel="canonical" href="https://heydar.kazemifakhr.ir/contact.html">
+  <link rel="alternate" hreflang="fa" href="https://heydar.kazemifakhr.ir/fa/contact.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HeydarKF">
+  <meta property="og:title" content="Contact — HeydarKF">
+  <meta property="og:description" content="Tell me the problem. I’ll bring the contract, the budget and the calm.">
+  <meta property="og:url" content="https://heydar.kazemifakhr.ir/contact.html">
+  <meta property="og:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact — HeydarKF">
+  <meta name="twitter:description" content="Tell me the problem. I’ll bring the contract, the budget and the calm.">
+  <meta name="twitter:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('hkf-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact — HeydarKF",
+    "url": "https://heydar.kazemifakhr.ir/contact.html",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Heydar Kazemi Fakhr",
+      "alternateName": "HeydarKF",
+      "email": "mailto:hello@kazemifakhr.ir",
+      "jobTitle": "Backend Engineer & Full-Stack Developer",
+      "address": { "@type": "PostalAddress", "addressLocality": "Qom", "addressCountry": "IR" },
+      "sameAs": ["https://github.com/heydarkf", "https://www.linkedin.com/in/heydarkf", "https://x.com/heydarkf"]
+    }
+  }
+  </script>
+
+  <!-- ============ Page CSS (Contact) ============ -->
+  <style>
+    :root {
+      --teal: #2b7f8c;
+      --cyan: #35b8c9;
+      --amber: #d8b56a;
+      --blue: #4f83c2;
+      --crimson: #d64550;
+    }
+
+    /* ---------- Hero ---------- */
+    .c-hero { position: relative; padding: calc(var(--header-offset) + 22px) 0 46px; }
+    .c-hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 72% 90% at 26% 0%, #000 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse 72% 90% at 26% 0%, #000 20%, transparent 72%);
+      opacity: .5; pointer-events: none;
+    }
+    .c-hero::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(640px 340px at 90% 6%, rgba(53,184,201,.09), transparent 70%);
+      pointer-events: none;
+    }
+    .c-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(300px,.9fr); gap: clamp(30px,5vw,64px); align-items: center; }
+    .c-title { font-size: clamp(2.5rem, 5.4vw, 4.2rem); letter-spacing: -.035em; margin-bottom: 14px; }
+    .c-title .dot { color: var(--accent-ink); }
+    .c-lede { font-size: 1.02rem; max-width: 50ch; margin-bottom: 24px; }
+    .c-meta { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    /* live status card */
+    .status-card { padding: 24px 26px; display: flex; flex-direction: column; gap: 16px; }
+    .status-card:hover { transform: none; }
+    .status-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .status-live { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: .7rem; color: var(--accent-ink); }
+    .status-live i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse-dot 2.2s infinite; }
+    .status-clock { font-family: var(--font-mono); font-size: .7rem; color: var(--faint); }
+    .status-clock b { color: var(--ink); font-weight: 500; }
+    .status-rows { display: flex; flex-direction: column; }
+    .status-row { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 10px 0; border-top: 1px solid var(--line); font-size: .86rem; }
+    .status-row:first-child { border-top: 0; }
+    .status-row span { color: var(--muted); }
+    .status-row b { font-family: var(--font-mono); font-size: .74rem; font-weight: 500; color: var(--ink); text-align: right; }
+    .status-row b.ok { color: var(--accent-ink); }
+    .status-row b.warn { color: #b98a00; }
+    [data-theme="dark"] .status-row b.warn { color: var(--amber); }
+    .status-bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+    .status-bar i { display: block; height: 100%; width: 0; border-radius: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); transition: width 1.2s var(--ease) .2s; }
+    .is-in .status-bar i { width: 66%; }
+    .status-note { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+
+    /* ---------- Main layout ---------- */
+    .contact-section { position: relative; padding-top: 26px; }
+    .contact-section::before { content: ""; position: absolute; inset: 0; background: radial-gradient(720px 400px at 88% 24%, var(--accent-soft), transparent 70%); pointer-events: none; }
+    .contact-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.25fr) minmax(300px,.75fr); gap: clamp(26px,4vw,44px); align-items: start; }
+
+    /* ---------- Brief form ---------- */
+    .brief { padding: clamp(26px,3.5vw,40px); display: flex; flex-direction: column; gap: 22px; }
+    .brief:hover { transform: none; }
+    .brief-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .brief-head .h2 { font-size: clamp(1.5rem,2.6vw,2rem); }
+    .brief-head p { font-size: .9rem; max-width: 44ch; margin-top: 8px; }
+    .brief-step { font-family: var(--font-mono); font-size: .66rem; color: var(--faint); letter-spacing: .16em; white-space: nowrap; padding-top: 6px; }
+    .brief-progress { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+    .brief-progress i { display: block; height: 100%; width: 0; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); transition: width .45s var(--ease); }
+
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .lbl { display: flex; align-items: baseline; gap: 8px; font-size: .84rem; font-weight: 600; color: var(--ink); }
+    .lbl .req { color: var(--accent-ink); font-family: var(--font-mono); font-size: .7rem; }
+    .lbl .opt { font-family: var(--font-mono); font-size: .62rem; color: var(--faint); font-weight: 400; }
+    .inp, .sel, .txt {
+      width: 100%; padding: 14px 16px; border-radius: var(--r-sm);
+      border: 1px solid var(--line-2); background: var(--surface); color: var(--ink);
+      font: inherit; font-size: .94rem;
+      transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background-color var(--t-med) var(--ease);
+    }
+    .inp::placeholder, .txt::placeholder { color: var(--faint); }
+    .inp:focus, .sel:focus, .txt:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .inp.err, .sel.err, .txt.err { border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(214,69,80,.14); }
+    .txt { min-height: 150px; resize: vertical; line-height: 1.65; }
+    .sel {
+      appearance: none; cursor: pointer; padding-right: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d9793' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 15px center;
+    }
+    .err-msg { display: none; font-family: var(--font-mono); font-size: .66rem; color: var(--crimson); }
+    .err-msg.on { display: block; }
+    .hint { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .txt-foot { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .counter { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .counter.low { color: var(--amber); }
+    .counter.over { color: var(--crimson); }
+
+    /* service picker chips */
+    .pick-grid { display: flex; flex-wrap: wrap; gap: 9px; }
+    .pick {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 11px 17px; border-radius: var(--r-pill);
+      border: 1px solid var(--line); background: var(--glass);
+      font-size: .86rem; font-weight: 600; color: var(--muted);
+      transition: all var(--t-fast) var(--ease);
+    }
+    .pick svg { color: var(--faint); transition: color var(--t-fast) var(--ease); }
+    .pick:hover { border-color: var(--accent-line); color: var(--ink); transform: translateY(-2px); }
+    .pick[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); box-shadow: var(--shadow-accent); }
+    .pick[aria-pressed="true"] svg { color: var(--on-accent); }
+
+    /* budget segmented */
+    .seg { display: flex; flex-wrap: wrap; gap: 8px; }
+    .seg button {
+      padding: 11px 16px; border-radius: var(--r-sm);
+      border: 1px solid var(--line); background: var(--glass);
+      font-family: var(--font-mono); font-size: .76rem; color: var(--muted);
+      transition: all var(--t-fast) var(--ease);
+    }
+    .seg button:hover { border-color: var(--accent-line); color: var(--ink); }
+    .seg button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent-line); color: var(--accent-ink); font-weight: 700; }
+
+    /* timeline slider */
+    .range-row { display: flex; align-items: center; gap: 16px; }
+    .range {
+      flex: 1; appearance: none; height: 5px; border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent) var(--fill, 30%), var(--line) var(--fill, 30%));
+      cursor: pointer;
+    }
+    .range::-webkit-slider-thumb {
+      appearance: none; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--surface); border: 3px solid var(--accent);
+      box-shadow: var(--shadow-1); cursor: grab;
+      transition: transform var(--t-fast) var(--ease);
+    }
+    .range::-webkit-slider-thumb:hover { transform: scale(1.12); }
+    .range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); cursor: grab; }
+    .range:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 4px; }
+    .range-val { font-family: var(--font-mono); font-size: .76rem; color: var(--accent-ink); min-width: 96px; text-align: right; }
+
+    /* consent + submit */
+    .consent { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+    .consent input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .box {
+      width: 20px; height: 20px; flex: none; margin-top: 2px;
+      border-radius: 6px; border: 1.6px solid var(--line-2); background: var(--surface);
+      display: grid; place-items: center; color: transparent;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .consent input:checked + .box { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+    .consent input:focus-visible + .box { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+    .consent span.txt-l { font-size: .84rem; color: var(--muted); line-height: 1.55; }
+    .consent.err .box { border-color: var(--crimson); }
+    .submit-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 4px; }
+    .submit-note { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .btn[disabled] { opacity: .6; pointer-events: none; }
+    .spinner { width: 15px; height: 15px; border-radius: 50%; border: 2px solid rgba(5,32,24,.3); border-top-color: var(--on-accent); animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* success state */
+    .brief-done { display: none; flex-direction: column; gap: 18px; align-items: flex-start; }
+    .brief-done.on { display: flex; }
+    .done-seal { width: 62px; height: 62px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-line); display: grid; place-items: center; color: var(--accent-ink); }
+    .brief-done .h2 { font-size: clamp(1.5rem,2.6vw,2rem); }
+    .brief-done p { font-size: .94rem; max-width: 52ch; }
+    .done-ref { font-family: var(--font-mono); font-size: .74rem; color: var(--accent-ink); padding: 9px 15px; border-radius: var(--r-pill); background: var(--accent-soft); border: 1px solid var(--accent-line); }
+    .done-summary { width: 100%; padding: 18px 20px; border-radius: var(--r-md); background: var(--bg-2); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+    .done-summary .row { display: flex; justify-content: space-between; gap: 14px; font-size: .84rem; }
+    .done-summary .row span { color: var(--muted); }
+    .done-summary .row b { font-family: var(--font-mono); font-size: .74rem; font-weight: 500; color: var(--ink); text-align: right; }
+    .done-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ---------- Side rail ---------- */
+    .side { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 110px; }
+    .direct { padding: 26px; display: flex; flex-direction: column; gap: 14px; }
+    .direct:hover { transform: none; }
+    .side-title { font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; color: var(--faint); }
+    .mail-line { display: flex; align-items: center; gap: 10px; }
+    .mail-link { font-family: var(--font-display); font-weight: 600; font-size: clamp(.98rem,1.6vw,1.16rem); letter-spacing: -.02em; color: var(--ink); text-decoration: none; word-break: break-all; transition: color var(--t-fast) var(--ease); }
+    .mail-link:hover { color: var(--accent-ink); }
+    .copy-mini { width: 34px; height: 34px; flex: none; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--muted); transition: all var(--t-fast) var(--ease); }
+    .copy-mini:hover { border-color: var(--accent-line); color: var(--accent-ink); transform: translateY(-2px); }
+    .direct-note { font-size: .84rem; }
+    .social-row { display: flex; gap: 9px; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 15px; border-radius: var(--r-pill);
+      border: 1px solid var(--line); background: var(--glass);
+      font-size: .82rem; font-weight: 600; color: var(--muted); text-decoration: none;
+      transition: all var(--t-fast) var(--ease);
+    }
+    .social-btn:hover { border-color: var(--accent-line); color: var(--accent-ink); transform: translateY(-2px); }
+
+    .expect { padding: 26px; display: flex; flex-direction: column; gap: 0; }
+    .expect:hover { transform: none; }
+    .expect-list { display: flex; flex-direction: column; }
+    .expect-item { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .expect-item:first-of-type { border-top: 0; }
+    .expect-n { font-family: var(--font-mono); font-size: .68rem; color: var(--accent-ink); padding-top: 3px; }
+    .expect-item b { display: block; font-size: .9rem; color: var(--ink); margin-bottom: 4px; }
+    .expect-item p { font-size: .82rem; }
+
+    .faq { padding: 8px 26px; }
+    .faq:hover { transform: none; }
+    .faq-item { border-top: 1px solid var(--line); }
+    .faq-item:first-child { border-top: 0; }
+    .faq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 16px 0; text-align: left;
+      font-size: .9rem; font-weight: 600; color: var(--ink);
+      transition: color var(--t-fast) var(--ease);
+    }
+    .faq-q:hover { color: var(--accent-ink); }
+    .faq-q .chev { flex: none; color: var(--faint); transition: transform var(--t-med) var(--ease), color var(--t-fast) var(--ease); }
+    .faq-item.open .faq-q .chev { transform: rotate(180deg); color: var(--accent-ink); }
+    .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease); }
+    .faq-a > div { overflow: hidden; }
+    .faq-a p { font-size: .84rem; padding-bottom: 16px; max-width: 46ch; }
+    .faq-item.open .faq-a { grid-template-rows: 1fr; }
+
+    /* ---------- Elsewhere strip ---------- */
+    .elsewhere { position: relative; }
+    .elsewhere::before { content: ""; position: absolute; inset: 0; background: radial-gradient(680px 360px at 12% 40%, rgba(216,181,106,.09), transparent 70%); pointer-events: none; }
+    .else-grid { position: relative; display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .else-card { padding: 26px; display: flex; flex-direction: column; gap: 12px; text-decoration: none; }
+    .else-icon { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-ink); transition: all var(--t-fast) var(--ease); }
+    .else-card:hover .else-icon { background: var(--accent); color: var(--on-accent); transform: scale(1.06) rotate(-4deg); }
+    .else-name { font-size: 1.08rem; color: var(--ink); }
+    .else-desc { font-size: .86rem; }
+    .else-go { margin-top: auto; padding-top: 8px; font-family: var(--font-mono); font-size: .68rem; color: var(--accent-ink); }
+
+    /* ---------- Toast ---------- */
+    .toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; transform: translate(-50%,16px); display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--accent-line); box-shadow: var(--shadow-2); font-size: .86rem; font-weight: 600; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s; }
+    .toast.show { opacity: 1; visibility: visible; transform: translate(-50%,0); }
+    .toast svg { color: var(--accent-ink); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .c-hero-grid { grid-template-columns: 1fr; }
+      .status-card { max-width: 520px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .side { position: static; }
+      .else-grid { grid-template-columns: 1fr; max-width: 560px; }
+    }
+    @media (max-width: 620px) {
+      .field-row { grid-template-columns: 1fr; }
+      .submit-row .btn { width: 100%; }
+      .range-val { min-width: 80px; }
+      .done-actions { width: 100%; }
+      .done-actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= Header ================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-bar">
+      <a class="logo" href="index.html" aria-label="HeydarKF — home"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" >About</a>
+        <a href="skills.html">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html" aria-current="page">Contact ME</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="header-actions">        
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <span class="header-sep" aria-hidden="true"></span>
+        <a class="btn btn-primary btn-sm header-contact" href="contact.html">Start a project</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+        </div>
+    </div>
+  </header>
+
+  <!-- ================= Mobile menu ================= -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Site menu">
+    <nav class="mobile-nav" aria-label="Mobile">
+      <a href="index.html"><span class="idx">01</span> Home</a>
+      <a href="about.html"><span class="idx">02</span> About</a>
+      <a href="skills.html"><span class="idx">03</span> Skills</a>
+      <a href="projects.html"><span class="idx">04</span> Projects</a>
+      <a href="contact.html"><span class="idx">05</span> Contact</a>
+    </nav>
+    <div class="mobile-foot">
+      <a class="mail" href="mailto:hello@kazemifakhr.ir">hello@kazemifakhr.ir</a>
+      <a class="btn btn-primary btn-sm" href="#brief">Start a project</a>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ================= Hero ================= -->
+    <section class="c-hero" id="top">
+      <div class="container">
+        <div class="c-hero-grid">
+          <div>
+            <p class="kicker reveal">// open channel — say hello</p>
+            <h1 class="c-title reveal" style="--d:60ms">Tell me the problem<span class="dot">.</span></h1>
+            <p class="c-lede reveal" style="--d:120ms">Not the solution you’ve already guessed — the actual problem. I’ll bring the questions, the contract, and a number you can plan around.</p>
+            <div class="c-meta reveal" style="--d:180ms">
+              <span class="chip">Replies under 24h</span>
+              <span class="chip">EN · FA spoken</span>
+              <span class="chip">Remote · GMT+3:30</span>
+              <span class="chip">NDA-friendly</span>
+            </div>
+          </div>
+
+          <aside class="card status-card reveal" style="--d:160ms" aria-label="Current availability">
+            <div class="status-top">
+              <span class="status-live"><i></i> studio status</span>
+              <span class="status-clock">Qom · <b id="localClock">--:--</b></span>
+            </div>
+            <div class="status-rows">
+              <div class="status-row"><span>Availability</span><b class="ok">booking Dec 2026</b></div>
+              <div class="status-row"><span>Capacity this month</span><b class="warn">2 of 3 slots taken</b></div>
+              <div class="status-row"><span>Avg. first reply</span><b>6h 40m</b></div>
+              <div class="status-row"><span>Working hours</span><b>09–18 IRST · Sat–Wed</b></div>
+            </div>
+            <div class="status-bar" aria-hidden="true"><i></i></div>
+            <p class="status-note">// capacity bar: booked vs. open · updated weekly</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Form + side ================= -->
+    <section class="section contact-section" id="brief">
+      <div class="container">
+        <div class="contact-grid">
+
+          <!-- Brief form -->
+          <div class="card brief reveal">
+            <form id="briefForm" novalidate>
+              <div class="brief-head">
+                <div>
+                  <h2 class="h2">Project brief.</h2>
+                  <p>Five minutes here saves two meetings later. Fields marked <span style="color:var(--accent-ink)">*</span> are the ones I actually need.</p>
+                </div>
+                <span class="brief-step" id="stepLabel">0 / 6 COMPLETE</span>
+              </div>
+              <div class="brief-progress" style="margin:18px 0 24px;" aria-hidden="true"><i id="stepBar"></i></div>
+
+              <div style="display:flex;flex-direction:column;gap:22px;">
+                <div class="field-row">
+                  <div class="field">
+                    <label class="lbl" for="fName">Your name <span class="req">*</span></label>
+                    <input class="inp" id="fName" name="name" type="text" placeholder="Ada Lovelace" autocomplete="name" maxlength="80">
+                    <p class="err-msg" id="eName">A name helps me reply like a human.</p>
+                  </div>
+                  <div class="field">
+                    <label class="lbl" for="fEmail">Email <span class="req">*</span></label>
+                    <input class="inp" id="fEmail" name="email" type="email" placeholder="you@studio.dev" autocomplete="email" maxlength="120">
+                    <p class="err-msg" id="eEmail">That address doesn’t parse — check the format.</p>
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="lbl" for="fOrg">Company / project <span class="opt">optional</span></label>
+                    <input class="inp" id="fOrg" name="org" type="text" placeholder="Analytical Engines Ltd." autocomplete="organization" maxlength="80">
+                  </div>
+                  <div class="field">
+                    <label class="lbl" for="fWhere">How did you find me? <span class="opt">optional</span></label>
+                    <select class="sel" id="fWhere" name="source">
+                      <option value="">Pick one…</option>
+                      <option>GitHub</option>
+                      <option>A project of mine</option>
+                      <option>The blog</option>
+                      <option>Referral from someone</option>
+                      <option>Search engine</option>
+                      <option>Somewhere else</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <span class="lbl" id="svcLbl">What do you need? <span class="req">*</span> <span class="opt">pick one or more</span></span>
+                  <div class="pick-grid" role="group" aria-labelledby="svcLbl" id="svcGrid">
+                    <button type="button" class="pick" data-svc="Backend architecture" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                      Backend architecture
+                    </button>
+                    <button type="button" class="pick" data-svc="Security audit" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      Security audit
+                    </button>
+                    <button type="button" class="pick" data-svc="AI agent system" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+                      AI agent system
+                    </button>
+                    <button type="button" class="pick" data-svc="Performance &amp; DevOps" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+                      Performance &amp; DevOps
+                    </button>
+                    <button type="button" class="pick" data-svc="WordPress build" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+                      WordPress build
+                    </button>
+                    <button type="button" class="pick" data-svc="Something else" aria-pressed="false">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                      Something else
+                    </button>
+                  </div>
+                  <p class="err-msg" id="eSvc">Pick at least one — “something else” counts.</p>
+                </div>
+
+                <div class="field">
+                  <span class="lbl" id="budLbl">Budget range <span class="opt">rough is fine</span></span>
+                  <div class="seg" role="group" aria-labelledby="budLbl" id="budSeg">
+                    <button type="button" data-bud="under $1k" aria-pressed="false">&lt; $1k</button>
+                    <button type="button" data-bud="$1k – $3k" aria-pressed="false">$1k – $3k</button>
+                    <button type="button" data-bud="$3k – $8k" aria-pressed="false">$3k – $8k</button>
+                    <button type="button" data-bud="$8k+" aria-pressed="false">$8k+</button>
+                    <button type="button" data-bud="not sure yet" aria-pressed="false">not sure yet</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="lbl" for="fTime">When do you want to start?</label>
+                  <div class="range-row">
+                    <input class="range" id="fTime" type="range" min="0" max="4" step="1" value="1" aria-valuetext="Within a month">
+                    <span class="range-val" id="timeVal">within a month</span>
+                  </div>
+                  <p class="hint">// asap · within a month · this quarter · flexible · just exploring</p>
+                </div>
+
+                <div class="field">
+                  <label class="lbl" for="fMsg">The problem, in your words <span class="req">*</span></label>
+                  <textarea class="txt" id="fMsg" name="message" maxlength="2000" placeholder="What breaks today? Who feels it? What does “fixed” look like to you? Links and repos welcome."></textarea>
+                  <div class="txt-foot">
+                    <p class="err-msg" id="eMsg">Give me at least 30 characters of actual problem — I read every word.</p>
+                    <span class="counter" id="msgCount">0 / 2000</span>
+                  </div>
+                </div>
+
+                <label class="consent" id="consentWrap">
+                  <input type="checkbox" id="fConsent">
+                  <span class="box" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="txt-l">I’m happy for Heydar to store this brief and reply by email. Nothing is shared, sold, or fed to a newsletter. <span style="color:var(--accent-ink)">*</span></span>
+                </label>
+                <p class="err-msg" id="eConsent" style="margin-top:-12px;">I need this tick before I can keep your brief.</p>
+
+                <div class="submit-row">
+                  <button class="btn btn-primary btn-lg" type="submit" id="sendBtn">
+                    <span id="sendLabel">Send the brief</span>
+                    <svg id="sendArrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                  <span class="submit-note">// draft autosaves locally · never leaves this page until you send</span>
+                </div>
+              </div>
+            </form>
+
+            <!-- success -->
+            <div class="brief-done" id="briefDone" role="status">
+              <span class="done-seal">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              <h2 class="h2">Brief received. Question one is already forming.</h2>
+              <p>You’ll get a real reply from a real person — usually within a working day, always under 24 hours. If it’s urgent, email me directly and put <strong>URGENT</strong> in the subject.</p>
+              <span class="done-ref" id="doneRef">ref: HKF-2026-0000</span>
+              <div class="done-summary" id="doneSummary"></div>
+              <div class="done-actions">
+                <button class="btn btn-ghost btn-sm" id="copyBrief">Copy brief as text</button>
+                <a class="btn btn-ghost btn-sm" id="mailBrief" href="#">Open in email app</a>
+                <button class="btn btn-primary btn-sm" id="newBrief">Send another brief</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side rail -->
+          <aside class="side">
+            <div class="card direct reveal" style="--d:80ms">
+              <p class="side-title">DIRECT LINE</p>
+              <div class="mail-line">
+                <a class="mail-link" href="mailto:hello@kazemifakhr.ir" id="mailLink">hello@kazemifakhr.ir</a>
+                <button class="copy-mini" id="copyMail" aria-label="Copy email address">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+              <p class="direct-note">Prefer plain email? Send the same five answers: who, what breaks, budget, timing, and what “fixed” means.</p>
+              <div class="social-row">
+                <a class="social-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+                  GitHub
+                </a>
+                <a class="social-btn" href="https://www.linkedin.com/in/heydarkf" target="_blank" rel="noopener">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+                  LinkedIn
+                </a>
+                <a class="social-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>
+                  X
+                </a>
+              </div>
+            </div>
+
+            <div class="card expect reveal" style="--d:140ms">
+              <p class="side-title" style="margin-bottom:6px;">WHAT HAPPENS NEXT</p>
+              <div class="expect-list">
+                <div class="expect-item">
+                  <span class="expect-n">01</span>
+                  <div><b>I read it properly</b><p>Not a template reply. If the brief is unclear, my first email is questions, not a quote.</p></div>
+                </div>
+                <div class="expect-item">
+                  <span class="expect-n">02</span>
+                  <div><b>A 30-minute call</b><p>We write the problem statement together. You leave with a clearer brief even if we never work together.</p></div>
+                </div>
+                <div class="expect-item">
+                  <span class="expect-n">03</span>
+                  <div><b>Scope &amp; number</b><p>Fixed scope, latency budget, price and dates — in writing, before any code.</p></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card faq reveal" style="--d:200ms" id="faq">
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Do you sign NDAs?
+                  <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div><p>Yes, happily — yours or mine. Security work often starts under NDA; the public case studies are the clients who said yes to being named.</p></div></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Do you take small jobs?
+                  <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div><p>Audits and hardening sprints start around a week. Below that, I’ll usually point you to a good person or a good write-up rather than take your money.</p></div></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Which time zones do you work with?
+                  <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div><p>I’m on GMT+3:30 and keep overlap hours for EU and US-East clients. Async-first by default: written updates, recorded demos, no surprise meetings.</p></div></div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-q" aria-expanded="false">Who owns the code?
+                  <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div><p>You do — repo, keys, docs and decisions, transferred at handover. I keep the right to describe the work anonymously unless you agree otherwise.</p></div></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Elsewhere ================= -->
+    <section class="section elsewhere" id="elsewhere">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// before you write</p>
+            <h2 class="h2">Maybe the answer is already here.</h2>
+          </div>
+        </div>
+        <div class="else-grid">
+          <a class="card else-card reveal" href="projects.html">
+            <span class="else-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="10" height="14" rx="2"/><rect x="16" y="3" width="5" height="6" rx="2"/><rect x="16" y="12" width="5" height="9" rx="2"/></svg></span>
+            <h3 class="h3 else-name">See the work first</h3>
+            <p class="else-desc">Seven projects told as challenge → solution → result. If one matches your problem, mention it in the brief.</p>
+            <span class="else-go">open projects →</span>
+          </a>
+          <a class="card else-card reveal" style="--d:80ms" href="skills.html#services">
+            <span class="else-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></span>
+            <h3 class="h3 else-name">Check services &amp; pricing</h3>
+            <p class="else-desc">Four disciplines with starting prices and what each engagement includes. No mystery invoices.</p>
+            <span class="else-go">open services →</span>
+          </a>
+          <a class="card else-card reveal" style="--d:160ms" href="blog.html">
+            <span class="else-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <h3 class="h3 else-name">Read how I think</h3>
+            <p class="else-desc">Nine essays on architecture, security and craft. The cheapest way to interview me before hiring me.</p>
+            <span class="else-go">open field notes →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <a class="logo" href="index.html"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="about.html">About</a><a href="skills.html">Skills</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/heydarkf" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a class="icon-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+          <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="credit">Designed by <strong>HeydarKF (OS Heydar)</strong> · © <span id="year">2026</span> HeydarKF. All rights reserved.</p>
+        <a class="to-top" href="#top">back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Copied</span>
+  </div>
+
+  <!-- ============ JS ============ -->
+  <script>
+  (function () {
+    'use strict';
+    var d = document, root = d.documentElement;
+    var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var $ = function (s, c) { return (c || d).querySelector(s); };
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); }
+
+    /* ---------- Shared chrome ---------- */
+    var themeBtn = $('#themeToggle');
+    function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('hkf-theme', t); } catch (e) {} }
+    if (themeBtn) themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (d.startViewTransition && !reduced) d.startViewTransition(function () { setTheme(next); });
+      else setTheme(next);
+    });
+    var header = $('#siteHeader'), ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        ticking = false;
+      });
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    var lang = $('#lang'), langBtn = $('#langBtn');
+    function closeLang() { lang.classList.remove('is-open'); langBtn.setAttribute('aria-expanded', 'false'); }
+    if (langBtn) langBtn.addEventListener('click', function (e) { e.stopPropagation(); langBtn.setAttribute('aria-expanded', String(lang.classList.toggle('is-open'))); });
+    d.addEventListener('click', function (e) { if (lang && !lang.contains(e.target)) closeLang(); });
+    var burger = $('#burgerBtn'), menu = $('#mobileMenu'), lastFocus = null;
+    function openMenu() { lastFocus = d.activeElement; d.body.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu'); var f = $('.mobile-nav a', menu); if (f) setTimeout(function () { f.focus(); }, 350); }
+    function closeMenu() { d.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); if (lastFocus) lastFocus.focus(); }
+    if (burger) burger.addEventListener('click', function () { d.body.classList.contains('menu-open') ? closeMenu() : openMenu(); });
+    if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeLang(); if (d.body.classList.contains('menu-open')) closeMenu(); }
+      if (e.key === 'Tab' && d.body.classList.contains('menu-open')) {
+        var mf = $$('a, button', menu).concat([burger]);
+        var mF = mf[0], mL = mf[mf.length - 1];
+        if (e.shiftKey && d.activeElement === mF) { e.preventDefault(); mL.focus(); }
+        else if (!e.shiftKey && d.activeElement === mL) { e.preventDefault(); mF.focus(); }
+      }
+    });
+    if ('IntersectionObserver' in window && !reduced) {
+      var ro = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); ro.unobserve(x.target); } }); }, { threshold: .1, rootMargin: '0px 0px -30px 0px' });
+      $$('.reveal').forEach(function (el) { ro.observe(el); });
+    } else $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
+    var yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
+
+    /* ---------- Toast + clipboard ---------- */
+    var toast = $('#toast'), toastMsg = $('#toastMsg'), toastTimer = null;
+    function showToast(msg) { toastMsg.textContent = msg; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200); }
+    function copyText(text, okMsg) {
+      function done() { showToast(okMsg); }
+      function fallback() {
+        var ta = d.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        d.body.appendChild(ta); ta.select();
+        try { d.execCommand('copy'); done(); } catch (e) { showToast('Copy failed — select it manually'); }
+        ta.remove();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    }
+    $('#copyMail').addEventListener('click', function () { copyText('hello@kazemifakhr.ir', 'Email address copied ✓'); });
+
+    /* ---------- Live Qom clock ---------- */
+    var clockEl = $('#localClock');
+    function tickClock() {
+      try {
+        clockEl.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Tehran', hour12: false }).format(new Date());
+      } catch (e) {
+        var n = new Date(Date.now() + (3.5 * 3600 + new Date().getTimezoneOffset() * 60) * 1000);
+        clockEl.textContent = String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
+      }
+    }
+    tickClock(); setInterval(tickClock, 30000);
+
+    /* ---------- FAQ accordion ---------- */
+    $$('.faq-item').forEach(function (item) {
+      var q = $('.faq-q', item);
+      q.addEventListener('click', function () {
+        var open = item.classList.toggle('open');
+        q.setAttribute('aria-expanded', String(open));
+      });
+    });
+
+    /* ---------- Form state ---------- */
+    var form = $('#briefForm'), done = $('#briefDone');
+    var fName = $('#fName'), fEmail = $('#fEmail'), fOrg = $('#fOrg'), fWhere = $('#fWhere'), fMsg = $('#fMsg'), fConsent = $('#fConsent');
+    var svcBtns = $$('#svcGrid .pick'), budBtns = $$('#budSeg button');
+    var services = [], budget = '';
+    var TIME_LABELS = ['asap', 'within a month', 'this quarter', 'flexible', 'just exploring'];
+    var fTime = $('#fTime'), timeVal = $('#timeVal');
+    var stepLabel = $('#stepLabel'), stepBar = $('#stepBar');
+    var msgCount = $('#msgCount');
+    var DRAFT_KEY = 'hkf-brief-draft';
+
+    function paintRange() {
+      var pct = (fTime.value / 4) * 100;
+      fTime.style.setProperty('--fill', pct + '%');
+      timeVal.textContent = TIME_LABELS[+fTime.value];
+      fTime.setAttribute('aria-valuetext', TIME_LABELS[+fTime.value]);
+    }
+    fTime.addEventListener('input', function () { paintRange(); saveDraft(); updateStep(); });
+    paintRange();
+
+    svcBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var on = b.getAttribute('aria-pressed') === 'true';
+        b.setAttribute('aria-pressed', String(!on));
+        var v = b.dataset.svc;
+        if (on) services = services.filter(function (x) { return x !== v; });
+        else services.push(v);
+        $('#eSvc').classList.remove('on');
+        saveDraft(); updateStep();
+      });
+    });
+    budBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        budBtns.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        budget = b.dataset.bud;
+        saveDraft(); updateStep();
+      });
+    });
+
+    function msgLen() { return fMsg.value.trim().length; }
+    fMsg.addEventListener('input', function () {
+      var n = fMsg.value.length;
+      msgCount.textContent = n + ' / 2000';
+      msgCount.classList.toggle('low', n > 1700 && n <= 2000);
+      msgCount.classList.toggle('over', n >= 2000);
+      fMsg.classList.remove('err'); $('#eMsg').classList.remove('on');
+      saveDraft(); updateStep();
+    });
+    [fName, fEmail, fOrg, fWhere].forEach(function (el) {
+      el.addEventListener('input', function () {
+        el.classList.remove('err');
+        var e = $('#e' + el.id.slice(1));
+        if (e) e.classList.remove('on');
+        saveDraft(); updateStep();
+      });
+    });
+    fConsent.addEventListener('change', function () {
+      $('#consentWrap').classList.remove('err'); $('#eConsent').classList.remove('on');
+      saveDraft(); updateStep();
+    });
+
+    function emailOK(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+    function checks() {
+      return {
+        name: fName.value.trim().length >= 2,
+        email: emailOK(fEmail.value.trim()),
+        svc: services.length > 0,
+        msg: msgLen() >= 30,
+        consent: fConsent.checked,
+        extra: !!(budget || fOrg.value.trim() || fWhere.value)
+      };
+    }
+    function updateStep() {
+      var c = checks();
+      var n = [c.name, c.email, c.svc, c.msg, c.consent, c.extra].filter(Boolean).length;
+      stepLabel.textContent = n + ' / 6 COMPLETE';
+      stepBar.style.width = (n / 6 * 100) + '%';
+    }
+
+    /* ---------- Draft autosave ---------- */
+    var saveTimer = null;
+    function saveDraft() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        try {
+          localStorage.setItem(DRAFT_KEY, JSON.stringify({
+            name: fName.value, email: fEmail.value, org: fOrg.value, where: fWhere.value,
+            msg: fMsg.value, services: services, budget: budget, time: +fTime.value, consent: fConsent.checked
+          }));
+        } catch (e) {}
+      }, 350);
+    }
+    function loadDraft() {
+      var raw = null;
+      try { raw = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) {}
+      if (!raw) return;
+      fName.value = raw.name || ''; fEmail.value = raw.email || ''; fOrg.value = raw.org || '';
+      fWhere.value = raw.where || ''; fMsg.value = raw.msg || '';
+      fConsent.checked = !!raw.consent;
+      services = Array.isArray(raw.services) ? raw.services : [];
+      svcBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(services.indexOf(b.dataset.svc) > -1)); });
+      budget = raw.budget || '';
+      budBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.bud === budget)); });
+      if (typeof raw.time === 'number') fTime.value = String(Math.min(4, Math.max(0, raw.time)));
+      paintRange();
+      msgCount.textContent = fMsg.value.length + ' / 2000';
+      if (fName.value || fMsg.value) showToast('Draft restored from this browser');
+    }
+    loadDraft(); updateStep();
+
+    /* ---------- Submit ---------- */
+    var sendBtn = $('#sendBtn'), sendLabel = $('#sendLabel'), sendArrow = $('#sendArrow');
+    var lastBrief = null;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var c = checks(), bad = null;
+      function flag(input, errSel, on) {
+        input.classList.toggle('err', on);
+        $(errSel).classList.toggle('on', on);
+        if (on && !bad) bad = input;
+      }
+      flag(fName, '#eName', !c.name);
+      flag(fEmail, '#eEmail', !c.email);
+      $('#eSvc').classList.toggle('on', !c.svc); if (!c.svc && !bad) bad = svcBtns[0];
+      flag(fMsg, '#eMsg', !c.msg);
+      $('#consentWrap').classList.toggle('err', !c.consent);
+      $('#eConsent').classList.toggle('on', !c.consent);
+      if (!c.consent && !bad) bad = fConsent;
+      if (bad) {
+        bad.focus({ preventScroll: true });
+        bad.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+        showToast('A few fields still need you');
+        return;
+      }
+      sendBtn.disabled = true;
+      sendArrow.style.display = 'none';
+      var sp = d.createElement('span'); sp.className = 'spinner'; sendBtn.appendChild(sp);
+      sendLabel.textContent = 'Sending…';
+
+      setTimeout(function () {
+        var ref = 'HKF-' + new Date().getFullYear() + '-' + String(Math.floor(1000 + Math.random() * 9000));
+        lastBrief = {
+          ref: ref, name: fName.value.trim(), email: fEmail.value.trim(),
+          org: fOrg.value.trim(), where: fWhere.value,
+          services: services.slice(), budget: budget || 'not stated',
+          time: TIME_LABELS[+fTime.value], msg: fMsg.value.trim()
+        };
+        try {
+          var sent = JSON.parse(localStorage.getItem('hkf-briefs-sent') || '[]');
+          sent.push({ ref: ref, ts: Date.now(), name: lastBrief.name, services: lastBrief.services });
+          localStorage.setItem('hkf-briefs-sent', JSON.stringify(sent));
+          localStorage.removeItem(DRAFT_KEY);
+        } catch (err) {}
+        $('#doneRef').textContent = 'ref: ' + ref;
+        $('#doneSummary').innerHTML =
+          '<div class="row"><span>from</span><b>' + esc(lastBrief.name) + ' · ' + esc(lastBrief.email) + '</b></div>' +
+          (lastBrief.org ? '<div class="row"><span>org</span><b>' + esc(lastBrief.org) + '</b></div>' : '') +
+          '<div class="row"><span>needs</span><b>' + esc(lastBrief.services.join(', ')) + '</b></div>' +
+          '<div class="row"><span>budget</span><b>' + esc(lastBrief.budget) + '</b></div>' +
+          '<div class="row"><span>start</span><b>' + esc(lastBrief.time) + '</b></div>';
+        $('#mailBrief').href = 'mailto:hello@kazemifakhr.ir?subject=' + encodeURIComponent('[' + ref + '] Project brief — ' + lastBrief.name) + '&body=' + encodeURIComponent(briefText(lastBrief));
+        form.style.display = 'none';
+        done.classList.add('on');
+        sendBtn.disabled = false; sendLabel.textContent = 'Send the brief'; sendArrow.style.display = ''; sp.remove();
+        done.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+        showToast('Brief sent — ref ' + ref + ' ✓');
+      }, reduced ? 100 : 1100);
+    });
+
+    function briefText(b) {
+      return 'PROJECT BRIEF ' + b.ref + '\n' +
+        '— — — — — — — — — —\n' +
+        'Name:     ' + b.name + '\n' +
+        'Email:    ' + b.email + '\n' +
+        (b.org ? 'Org:      ' + b.org + '\n' : '') +
+        (b.where ? 'Found via: ' + b.where + '\n' : '') +
+        'Needs:    ' + b.services.join(', ') + '\n' +
+        'Budget:   ' + b.budget + '\n' +
+        'Start:    ' + b.time + '\n\n' +
+        'THE PROBLEM\n' + b.msg + '\n\n— sent from heydar.kazemifakhr.ir/contact';
+    }
+    $('#copyBrief').addEventListener('click', function () { if (lastBrief) copyText(briefText(lastBrief), 'Brief copied as text ✓'); });
+    $('#newBrief').addEventListener('click', function () {
+      done.classList.remove('on');
+      form.style.display = '';
+      form.reset();
+      services = []; budget = '';
+      svcBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      budBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      fTime.value = '1'; paintRange();
+      msgCount.textContent = '0 / 2000';
+      updateStep();
+      fName.focus();
+      form.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+
+    /* ---------- Prefill from other pages (?service= / ?ref=) ---------- */
+    var qp = new URLSearchParams(location.search);
+    var wantSvc = qp.get('service');
+    if (wantSvc) {
+      svcBtns.forEach(function (b) {
+        if (b.dataset.svc.toLowerCase().indexOf(wantSvc.toLowerCase()) > -1 && b.getAttribute('aria-pressed') !== 'true') b.click();
+      });
+    }
+    onScroll();
+  })();
+  </script>
+</body>
+</html>

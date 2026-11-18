@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>راهنمای قالب HeydarKF — مستندات کامل</title>
+<meta name="description" content="مستندات کامل قالب HeydarKF: ساختار فایل‌ها، توکن‌های طراحی، کامپوننت‌ها، ویرایش صفحات، افزودن پروژه و مقاله، اتصال فرم به PHP، امنیت، RTL و استقرار — همراه استودیوی زندهٔ توکن.">
+<meta name="author" content="Heydar Kazemi Fakhr">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f8f7">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f0e">
+<link rel="canonical" href="https://heydar.kazemifakhr.ir/docs.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="HeydarKF">
+<meta property="og:title" content="راهنمای قالب HeydarKF">
+<meta property="og:description" content="مستندات کامل + استودیوی زندهٔ توکن‌های طراحی.">
+<meta property="og:url" content="https://heydar.kazemifakhr.ir/docs.html">
+<meta property="og:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/global.css">
+
+<script>
+(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('hkf-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+
+<style>
+/* ============ Docs page CSS ============ */
+:root{
+  --font-display:"Vazirmatn","Inter",ui-sans-serif,system-ui,sans-serif;
+  --font-body:"Vazirmatn","Inter",ui-sans-serif,system-ui,sans-serif;
+  --teal:#2b7f8c; --cyan:#35b8c9; --amber:#d8b56a; --blue:#4f83c2; --crimson:#d64550; --violet:#8b6fc9;
+  --grain:.05; --grid-op:.5; --fs:1;
+  --studio-w:326px;
+}
+html[data-theme="dark"]{ --grain:.07; }
+html body{ font-size:calc(16px * var(--fs)); }
+body{ line-height:1.95; }
+h1,h2,h3,h4{ letter-spacing:normal; line-height:1.35; }
+p{ line-height:1.95; }
+html[data-theme] body::after{ opacity:var(--grain); }
+html[data-motion="off"] *,html[data-motion="off"] *::before,html[data-motion="off"] *::after{
+  animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;
+}
+.ltr{ direction:ltr; unicode-bidi:isolate; display:inline-block; }
+code,pre,.mono,.kicker,.chip,.tag,.badge{ font-family:var(--font-mono); }
+.skip-link{ left:auto; inset-inline-start:16px; }
+.lang-menu{ right:auto; inset-inline-end:0; }
+
+/* ---------- reading progress ---------- */
+.doc-progress{ position:fixed; inset-block-start:0; inset-inline-start:0; height:3px; width:0; z-index:120;
+  background:linear-gradient(90deg,var(--accent),var(--accent-strong)); box-shadow:0 0 12px var(--accent-line); transition:width .1s linear; }
+
+/* ---------- hero ---------- */
+.doc-hero{ position:relative; padding:calc(var(--header-offset) + 18px) 0 40px; }
+.doc-hero::before{ content:""; position:absolute; inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px; opacity:var(--grid-op);
+  -webkit-mask-image:radial-gradient(ellipse 70% 90% at 78% 0%,#000 20%,transparent 72%);
+  mask-image:radial-gradient(ellipse 70% 90% at 78% 0%,#000 20%,transparent 72%); pointer-events:none; }
+.hero-row{ position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:30px; flex-wrap:wrap; }
+.doc-title{ font-size:clamp(2.4rem,5.2vw,4rem); font-weight:800; line-height:1.2; margin-bottom:12px; }
+.doc-title .dot{ color:var(--accent-ink); }
+.doc-lede{ font-size:1.03rem; max-width:56ch; margin-bottom:22px; }
+.hero-chips{ display:flex; flex-wrap:wrap; gap:9px; }
+.ver-seal{ position:relative; width:104px; height:104px; flex:none; display:grid; place-items:center; }
+.ver-disc{ position:absolute; inset:0; border-radius:50%; background:var(--glass);
+  -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border:1px solid var(--glass-line); box-shadow:var(--shadow-1); }
+.ver-seal svg{ position:absolute; inset:0; animation:spin 26s linear infinite; }
+.ver-seal text{ font-family:var(--font-mono); font-size:8.4px; letter-spacing:2.1px; fill:var(--muted); }
+.ver-core{ position:relative; font-family:var(--font-mono); font-weight:700; font-size:.92rem; color:var(--accent-ink); }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* ---------- studio ---------- */
+.studio{ padding:22px 20px 24px; display:flex; flex-direction:column; gap:16px; margin-bottom:34px; }
+.studio:hover{ transform:none; }
+.studio-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.studio-title{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.18em; color:var(--faint); }
+.studio-live{ display:inline-flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:.62rem; color:var(--accent-ink); }
+.studio-live i{ width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pulse-dot 2.2s infinite; }
+.studio-preview{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:14px; border-radius:var(--r-md);
+  background:var(--bg-2); border:1px solid var(--line); }
+.sp-card{ flex:1; min-width:96px; padding:11px 12px; border-radius:var(--r-sm); background:var(--glass);
+  -webkit-backdrop-filter:blur(var(--glass-blur)); backdrop-filter:blur(var(--glass-blur));
+  border:1px solid var(--glass-line); box-shadow:var(--shadow-1); }
+.sp-card b{ display:block; font-family:var(--font-mono); font-size:.66rem; color:var(--ink); }
+.sp-card span{ font-family:var(--font-mono); font-size:.56rem; color:var(--faint); }
+.sp-meter{ height:5px; border-radius:3px; background:var(--line); overflow:hidden; margin-top:7px; }
+.sp-meter i{ display:block; height:100%; width:68%; border-radius:3px; background:linear-gradient(90deg,var(--accent-deep),var(--accent-strong)); }
+.ctl{ display:flex; flex-direction:column; gap:7px; }
+.ctl-lbl{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; font-size:.8rem; font-weight:600; color:var(--ink); }
+.ctl-val{ font-family:var(--font-mono); font-size:.66rem; color:var(--accent-ink); }
+.ctl-row{ display:flex; align-items:center; gap:10px; }
+input[type=range].rng{ flex:1; appearance:none; height:5px; border-radius:3px; cursor:pointer;
+  background:linear-gradient(90deg,var(--accent) var(--fill,40%),var(--line) var(--fill,40%)); }
+input[type=range].rng::-webkit-slider-thumb{ appearance:none; width:18px; height:18px; border-radius:50%;
+  background:var(--surface); border:3px solid var(--accent); box-shadow:var(--shadow-1); cursor:grab; transition:transform var(--t-fast) var(--ease); }
+input[type=range].rng::-webkit-slider-thumb:hover{ transform:scale(1.14); }
+input[type=range].rng::-moz-range-thumb{ width:14px; height:14px; border-radius:50%; background:var(--surface); border:3px solid var(--accent); cursor:grab; }
+input[type=range].rng:focus-visible{ outline:2px solid var(--accent-ink); outline-offset:4px; }
+input[type=color].clr{ width:44px; height:34px; padding:0; border:1px solid var(--line-2); border-radius:10px; background:var(--surface); cursor:pointer; }
+input[type=color].clr::-webkit-color-swatch-wrapper{ padding:3px; }
+input[type=color].clr::-webkit-color-swatch{ border:none; border-radius:7px; }
+.hexin{ flex:1; height:34px; padding:0 12px; border-radius:10px; border:1px solid var(--line-2); background:var(--surface);
+  color:var(--ink); font-family:var(--font-mono); font-size:.76rem; direction:ltr; text-align:left; }
+.hexin:focus{ outline:none; border-color:var(--accent-line); box-shadow:0 0 0 3px var(--accent-soft); }
+.sel-mini{ width:100%; height:36px; padding:0 32px 0 12px; border-radius:10px; border:1px solid var(--line-2);
+  background:var(--surface); color:var(--ink); font:inherit; font-size:.8rem; cursor:pointer; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d9793' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:left 11px center; }
+.sel-mini:focus{ outline:none; border-color:var(--accent-line); box-shadow:0 0 0 3px var(--accent-soft); }
+.seg-mini{ display:flex; gap:6px; }
+.seg-mini button{ flex:1; padding:8px 6px; border-radius:9px; border:1px solid var(--line); background:var(--glass);
+  font-family:var(--font-mono); font-size:.68rem; color:var(--muted); transition:all var(--t-fast) var(--ease); }
+.seg-mini button:hover{ border-color:var(--accent-line); color:var(--ink); }
+.seg-mini button[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--on-accent); font-weight:700; }
+.swatches{ display:flex; gap:6px; flex-wrap:wrap; }
+.sw{ width:26px; height:26px; border-radius:8px; border:1.5px solid var(--line-2); cursor:pointer; transition:transform var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease); }
+.sw:hover{ transform:translateY(-2px) scale(1.06); border-color:var(--ink); }
+.sw[aria-pressed="true"]{ border-color:var(--ink); box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--accent); }
+.toggle-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.tgl{ width:44px; height:24px; border-radius:999px; background:var(--line-2); position:relative; flex:none; transition:background-color var(--t-fast) var(--ease); }
+.tgl::after{ content:""; position:absolute; inset-block-start:3px; inset-inline-start:3px; width:18px; height:18px; border-radius:50%;
+  background:var(--surface); box-shadow:var(--shadow-1); transition:transform var(--t-fast) var(--ease); }
+.tgl[aria-pressed="true"]{ background:var(--accent); }
+.tgl[aria-pressed="true"]::after{ transform:translateX(-20px); }
+html[dir="ltr"] .tgl[aria-pressed="true"]::after{ transform:translateX(20px); }
+.studio-actions{ display:grid; grid-template-columns:1fr 1fr; gap:8px; padding-top:4px; border-top:1px solid var(--line); }
+.studio-actions .btn{ padding:10px 12px; font-size:.78rem; }
+.studio-note{ font-family:var(--font-mono); font-size:.6rem; color:var(--faint); line-height:1.8; }
+
+/* ---------- shell ---------- */
+.doc-shell{ display:grid; grid-template-columns:250px minmax(0,1fr); gap:clamp(24px,3.5vw,52px); align-items:start; padding-bottom:60px; }
+.toc-col{ position:sticky; top:104px; display:flex; flex-direction:column; gap:14px; }
+.toc-card{ padding:18px 16px 14px; }
+.toc-card:hover{ transform:none; }
+.search-box{ position:relative; margin-bottom:12px; }
+.search-box svg{ position:absolute; inset-inline-start:12px; inset-block-start:50%; transform:translateY(-50%); color:var(--faint); pointer-events:none; }
+.search-in{ width:100%; height:38px; padding:0 34px; border-radius:var(--r-pill); border:1px solid var(--line);
+  background:var(--bg-2); color:var(--ink); font:inherit; font-size:.82rem; }
+.search-in::placeholder{ color:var(--faint); }
+.search-in:focus{ outline:none; border-color:var(--accent-line); box-shadow:0 0 0 3px var(--accent-soft); }
+.search-kbd{ position:absolute; inset-inline-end:10px; inset-block-start:50%; transform:translateY(-50%);
+  font-family:var(--font-mono); font-size:.6rem; color:var(--faint); border:1px solid var(--line); border-radius:5px; padding:1px 5px; pointer-events:none; }
+.search-count{ font-family:var(--font-mono); font-size:.62rem; color:var(--accent-ink); margin-bottom:8px; min-height:14px; }
+.toc-list{ display:flex; flex-direction:column; gap:1px; max-height:52vh; overflow-y:auto; padding-inline-end:4px; }
+.toc-list::-webkit-scrollbar{ width:6px; }
+.toc-list::-webkit-scrollbar-track{ background:transparent; }
+.toc-list::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:3px; border:none; }
+.toc-list::-webkit-scrollbar-thumb:hover{ background:var(--accent); }
+.toc-link{ display:flex; align-items:baseline; gap:8px; padding:6px 9px; border-radius:8px; border-inline-start:2px solid transparent;
+  font-size:.8rem; color:var(--muted); text-decoration:none; line-height:1.6; transition:all var(--t-fast) var(--ease); }
+.toc-link .n{ font-family:var(--font-mono); font-size:.58rem; color:var(--faint); flex:none; }
+.toc-link:hover{ color:var(--ink); background:var(--bg-2); }
+.toc-link[aria-current="true"]{ color:var(--accent-ink); border-inline-start-color:var(--accent); background:var(--accent-soft); font-weight:600; }
+.toc-link.hide{ display:none; }
+.toc-foot{ margin-top:10px; padding-top:10px; border-top:1px solid var(--line); display:flex; justify-content:space-between;
+  font-family:var(--font-mono); font-size:.6rem; color:var(--faint); }
+.toc-foot b{ color:var(--accent-ink); }
+
+/* ---------- content ---------- */
+.doc-body{ min-width:0; }
+.sec{ padding:34px 0; border-top:1px solid var(--line); scroll-margin-top:110px; }
+.sec:first-child{ border-top:0; padding-top:0; }
+.sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:8px; flex-wrap:wrap; }
+.sec-num{ font-family:var(--font-mono); font-size:.72rem; color:var(--accent-ink); letter-spacing:.16em; }
+.sec h2{ font-size:clamp(1.4rem,2.6vw,1.95rem); font-weight:700; }
+.sec h3{ font-size:1.08rem; font-weight:700; margin:26px 0 10px; display:flex; align-items:center; gap:10px; }
+.sec h3::before{ content:""; width:16px; height:2px; background:var(--accent); flex:none; }
+.sec h4{ font-size:.94rem; font-weight:700; margin:18px 0 8px; color:var(--ink); }
+.sec p{ color:var(--muted); font-size:.93rem; margin-bottom:14px; max-width:76ch; }
+.sec p strong,.sec li strong{ color:var(--ink); }
+.sec ul,.sec ol{ margin:0 1.1em 16px 0; list-style:none; }
+.sec ul li,.sec ol li{ position:relative; padding-inline-start:1.2em; color:var(--muted); font-size:.91rem; margin-bottom:7px; }
+.sec ul li::before{ content:"▸"; position:absolute; inset-inline-start:0; color:var(--accent-ink); }
+.sec ol{ counter-reset:s; }
+.sec ol li{ counter-increment:s; }
+.sec ol li::before{ content:counter(s,decimal-leading-zero); position:absolute; inset-inline-start:0; inset-block-start:.35em;
+  font-family:var(--font-mono); font-size:.68em; color:var(--accent-ink); }
+.sec a{ color:var(--accent-ink); text-decoration:underline; text-underline-offset:4px; text-decoration-color:var(--accent-line); }
+.sec a:hover{ text-decoration-color:var(--accent-ink); }
+.sec :not(pre)>code{ font-family:var(--font-mono); font-size:.82em; background:var(--bg-2); border:1px solid var(--line);
+  padding:2px 6px; border-radius:6px; color:var(--accent-ink); direction:ltr; unicode-bidi:isolate; display:inline-block; }
+
+/* code blocks */
+.code-block{ margin:16px 0; border-radius:var(--r-md); overflow:hidden; border:1px solid rgba(0,201,138,.16); background:#0d1512; }
+.code-bar{ display:flex; align-items:center; gap:10px; padding:9px 14px; background:#101b17; border-bottom:1px solid rgba(255,255,255,.06); }
+.code-lang{ font-family:var(--font-mono); font-size:.62rem; color:#7d8f88; letter-spacing:.1em; text-transform:uppercase; }
+.code-file{ font-family:var(--font-mono); font-size:.62rem; color:#64756e; flex:1; direction:ltr; text-align:left; }
+.code-copy{ display:inline-flex; align-items:center; gap:6px; padding:4px 11px; border-radius:var(--r-pill);
+  border:1px solid rgba(255,255,255,.14); color:#cfe0d8; font-family:var(--font-mono); font-size:.6rem; transition:all var(--t-fast) var(--ease); }
+.code-copy:hover{ border-color:var(--accent); color:#3ecf9a; }
+.code-copy.done{ border-color:var(--accent); color:#3ecf9a; }
+.code-block pre{ margin:0; padding:16px 18px; overflow-x:auto; direction:ltr; text-align:left;
+  font-family:var(--font-mono); font-size:.76rem; line-height:1.9; color:#c6d4cd; }
+.code-block pre::-webkit-scrollbar{ height:8px; }
+.code-block pre::-webkit-scrollbar-track{ background:#101b17; }
+.code-block pre::-webkit-scrollbar-thumb{ background:#26362f; border-radius:4px; border:none; }
+.code-block pre::-webkit-scrollbar-thumb:hover{ background:var(--accent); }
+.code-block .k{ color:#3ecf9a; } .code-block .s{ color:#d8b56a; } .code-block .c{ color:#64756e; }
+.code-block .n{ color:#7fb3e8; } .code-block .t{ color:#e08fa8; }
+
+/* tables */
+.tbl-wrap{ overflow-x:auto; margin:16px 0; border:1px solid var(--line); border-radius:var(--r-md); background:var(--glass); }
+.tbl-wrap::-webkit-scrollbar{ height:8px; }
+.tbl-wrap::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:4px; border:none; }
+table.doc-tbl{ width:100%; border-collapse:collapse; font-size:.85rem; min-width:520px; }
+table.doc-tbl th{ text-align:right; padding:12px 15px; background:var(--bg-2); font-family:var(--font-mono);
+  font-size:.64rem; letter-spacing:.1em; color:var(--faint); text-transform:uppercase; border-bottom:1px solid var(--line); white-space:nowrap; }
+table.doc-tbl td{ padding:11px 15px; border-bottom:1px solid var(--line); color:var(--muted); vertical-align:top; }
+table.doc-tbl tr:last-child td{ border-bottom:0; }
+table.doc-tbl tr:hover td{ background:var(--accent-soft); }
+table.doc-tbl td b{ color:var(--ink); font-weight:600; }
+table.doc-tbl td code{ font-size:.76rem; }
+.dot-hue{ display:inline-block; width:9px; height:9px; border-radius:3px; margin-inline-end:6px; vertical-align:-1px; }
+
+/* callouts */
+.note{ display:flex; gap:13px; align-items:flex-start; padding:16px 18px; border-radius:var(--r-md); margin:16px 0;
+  background:var(--accent-soft); border:1px solid var(--accent-line); }
+.note svg{ flex:none; color:var(--accent-ink); margin-top:4px; }
+.note p{ margin:0; font-size:.87rem; }
+.note.warn{ background:rgba(216,181,106,.12); border-color:rgba(216,181,106,.35); }
+.note.warn svg{ color:#a07c2c; }
+html[data-theme="dark"] .note.warn svg{ color:var(--amber); }
+.note.danger{ background:rgba(214,69,80,.1); border-color:rgba(214,69,80,.3); }
+.note.danger svg{ color:var(--crimson); }
+
+/* live samples */
+.samples{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:16px 0; }
+.sample{ padding:18px; border-radius:var(--r-md); background:var(--glass); border:1px solid var(--glass-line);
+  -webkit-backdrop-filter:blur(var(--glass-blur)); backdrop-filter:blur(var(--glass-blur)); box-shadow:var(--shadow-1);
+  display:flex; flex-direction:column; gap:11px; }
+.sample-lbl{ font-family:var(--font-mono); font-size:.6rem; letter-spacing:.14em; color:var(--faint); }
+.sample-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+
+/* tabs */
+.tabs{ margin:16px 0; }
+.tab-list{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:-1px; position:relative; z-index:1; }
+.tab-btn{ padding:9px 16px; border-radius:12px 12px 0 0; border:1px solid var(--line); border-bottom-color:transparent;
+  background:var(--bg-2); font-family:var(--font-mono); font-size:.72rem; color:var(--muted); transition:all var(--t-fast) var(--ease); }
+.tab-btn:hover{ color:var(--ink); }
+.tab-btn[aria-selected="true"]{ background:#0d1512; border-color:rgba(0,201,138,.16); color:#3ecf9a; }
+.tab-panel[hidden]{ display:none; }
+.tab-panel .code-block{ margin:0; border-radius:0 var(--r-md) var(--r-md) var(--r-md); }
+
+/* page cards */
+.page-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin:16px 0; }
+.page-card{ padding:20px; display:flex; flex-direction:column; gap:9px; }
+.page-card .pc-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.page-card .pc-file{ font-family:var(--font-mono); font-size:.76rem; color:var(--accent-ink); direction:ltr; }
+.page-card .pc-badge{ font-family:var(--font-mono); font-size:.56rem; padding:3px 9px; border-radius:var(--r-pill);
+  background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent-ink); }
+.page-card p{ font-size:.83rem; margin:0; }
+.page-card .pc-list{ font-family:var(--font-mono); font-size:.63rem; color:var(--faint); line-height:1.9; }
+
+/* section nav */
+.sec-nav{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:34px; }
+.sn-btn{ display:flex; flex-direction:column; gap:5px; padding:16px 18px; border-radius:var(--r-md);
+  border:1px solid var(--line); background:var(--glass); text-align:start; transition:all var(--t-fast) var(--ease); }
+.sn-btn:hover{ border-color:var(--accent-line); transform:translateY(-2px); }
+.sn-btn span{ font-family:var(--font-mono); font-size:.6rem; color:var(--faint); }
+.sn-btn b{ font-size:.9rem; color:var(--ink); }
+.sn-btn:hover b{ color:var(--accent-ink); }
+.sn-btn.next{ align-items:flex-end; text-align:end; }
+.sn-btn[disabled]{ opacity:.4; pointer-events:none; }
+
+mark{ background:var(--accent-soft); color:var(--accent-ink); border-radius:3px; padding:0 2px; box-shadow:inset 0 -2px 0 var(--accent-line); }
+
+/* toast */
+.toast{ position:fixed; inset-inline-start:50%; inset-block-end:26px; z-index:400; transform:translate(50%,16px);
+  display:inline-flex; align-items:center; gap:10px; padding:12px 22px; border-radius:var(--r-pill);
+  background:var(--surface); border:1px solid var(--accent-line); box-shadow:var(--shadow-2);
+  font-size:.85rem; font-weight:600; opacity:0; visibility:hidden;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s; }
+.toast.show{ opacity:1; visibility:visible; transform:translate(50%,0); }
+.toast svg{ color:var(--accent-ink); }
+
+/* ---------- responsive ---------- */
+@media (min-width:1300px){
+  .studio{ position:fixed; inset-block-start:96px; inset-inline-end:18px; width:var(--studio-w);
+    max-height:calc(100vh - 118px); overflow-y:auto; margin-bottom:0; z-index:70; }
+  .studio::-webkit-scrollbar{ width:7px; }
+  .studio::-webkit-scrollbar-track{ background:transparent; }
+  .studio::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:4px; border:none; }
+  .studio::-webkit-scrollbar-thumb:hover{ background:var(--accent); }
+  .doc-shell,.doc-hero .container,.site-footer .container{ padding-inline-end:calc(var(--studio-w) + 34px); }
+  .doc-hero .container,.site-footer .container{ width:min(var(--container),100% - var(--gutter)*2); }
+}
+@media (max-width:1299px){
+  .studio{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); align-items:start; }
+  .studio-head,.studio-preview,.studio-actions,.studio-note{ grid-column:1/-1; }
+}
+@media (max-width:980px){
+  .doc-shell{ grid-template-columns:1fr; }
+  .toc-col{ position:static; }
+  .toc-list{ max-height:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
+}
+@media (max-width:620px){
+  .sec-nav{ grid-template-columns:1fr; }
+  .sn-btn.next{ align-items:flex-start; text-align:start; }
+  .studio-actions{ grid-template-columns:1fr; }
+  .hero-row{ align-items:flex-start; }
+}
+@media print{
+  .site-header,.studio,.toc-col,.doc-progress,.sec-nav,.site-footer,.mobile-menu,.toast{ display:none !important; }
+  body::before,body::after{ display:none; }
+  .doc-shell{ grid-template-columns:1fr; padding:0 !important; }
+  .code-block{ break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#doc-body">پرش به محتوا</a>
+<span class="doc-progress" id="docProgress" aria-hidden="true"></span>
+
+<!-- ============ Header ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-bar">
+    <a class="logo" href="index.html" aria-label="HeydarKF"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+    <nav class="main-nav" aria-label="اصلی">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="skills.html">Skills</a>
+      <a href="projects.html">Projects</a>
+      <a href="blog.html">Blog</a>
+      <a href="docs.html" aria-current="page">Docs</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="langBtn" aria-expanded="false" aria-haspopup="true" aria-controls="langMenu">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          FA
+          <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" role="menu">
+          <a href="docs.html" role="menuitem" aria-current="true">فارسی
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          </a>
+          <a href="index.html" role="menuitem" lang="en">English site</a>
+        </div>
+      </div>
+      <button class="icon-btn theme-toggle" id="themeToggle" aria-label="تغییر تم">
+        <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <span class="header-sep" aria-hidden="true"></span>
+      <a class="btn btn-primary btn-sm header-contact" href="#sec-studio">استودیوی توکن</a>
+      <button class="burger" id="burgerBtn" aria-label="منو" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="منوی سایت">
+  <nav class="mobile-nav" aria-label="موبایل">
+    <a href="index.html"><span class="idx">01</span> Home</a>
+    <a href="about.html"><span class="idx">02</span> About</a>
+    <a href="skills.html"><span class="idx">03</span> Skills</a>
+    <a href="projects.html"><span class="idx">04</span> Projects</a>
+    <a href="blog.html"><span class="idx">05</span> Blog</a>
+    <a href="docs.html"><span class="idx">06</span> Docs</a>
+  </nav>
+  <div class="mobile-foot">
+    <a class="mail" href="mailto:hello@kazemifakhr.ir">hello@kazemifakhr.ir</a>
+    <a class="btn btn-primary btn-sm" href="#sec-studio">استودیوی توکن</a>
+  </div>
+</div>
+
+<main id="main">
+  <!-- ============ Hero ============ -->
+  <section class="doc-hero" id="top">
+    <div class="container">
+      <div class="hero-row">
+        <div>
+          <p class="kicker reveal">// DOCUMENTATION — v1.0</p>
+          <h1 class="doc-title reveal" style="--d:60ms">راهنمای قالب<span class="dot">.</span></h1>
+          <p class="doc-lede reveal" style="--d:120ms">
+            هرچیزِ لازم برای استفاده، ویرایش و توسعهٔ قالب HeydarKF — از توکن‌ها و کامپوننت‌ها تا افزودن پروژه و مقاله،
+            اتصال فرم به PHP، امنیت، RTL و استقرار. استودیوی کناری <strong>زنده</strong> است: هر تغییری بلافاصله روی همین صفحه اعمال می‌شود.
+          </p>
+          <div class="hero-chips reveal" style="--d:180ms">
+            <span class="chip">۸ صفحه</span>
+            <span class="chip">۰ وابستگی</span>
+            <span class="chip">۲۲+ توکن</span>
+            <span class="chip">دارک / لایت</span>
+            <span class="chip">EN · FA</span>
+            <span class="chip">بدون بیلد</span>
+          </div>
+        </div>
+        <div class="ver-seal reveal" style="--d:200ms" aria-hidden="true">
+          <span class="ver-disc"></span>
+          <svg viewBox="0 0 104 104"><defs><path id="verPath" d="M52,52 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+            <text><textPath href="#verPath">PURE HTML · CSS · JS · NO BUILD STEP ·&#160;</textPath></text></svg>
+          <span class="ver-core">v1.0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- ============ Token Studio (live controls) ============ -->
+    <section class="card studio reveal" id="sec-studio" aria-label="استودیوی زندهٔ توکن">
+      <div class="studio-head">
+        <span class="studio-title">TOKEN STUDIO</span>
+        <span class="studio-live"><i></i> live</span>
+      </div>
+
+      <div class="studio-preview" aria-hidden="true">
+        <div class="sp-card">
+          <b id="spHex">#009966</b><span>accent</span>
+          <div class="sp-meter"><i></i></div>
+        </div>
+        <div class="sp-card">
+          <b id="spRadius">20px</b><span>radius</span>
+          <div class="sp-meter"><i style="width:44%"></i></div>
+        </div>
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">رنگ لهجه <span class="ctl-val" id="vAccent">#009966</span></span>
+        <div class="ctl-row">
+          <input type="color" class="clr" id="cAccent" value="#009966" aria-label="انتخاب رنگ لهجه">
+          <input type="text" class="hexin" id="cHex" value="#009966" spellcheck="false" aria-label="کد هگز رنگ لهجه" maxlength="7">
+        </div>
+        <div class="swatches" id="swatches" role="group" aria-label="رنگ‌های آماده"></div>
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">متن لهجه‌ای <span class="ctl-val" id="vInk">auto</span></span>
+        <select class="sel-mini" id="cInk" aria-label="حالت کنتراست متن لهجه">
+          <option value="auto">auto — کنتراست امن</option>
+          <option value="deep">deep — تیره‌تر</option>
+          <option value="bright">bright — روشن‌تر</option>
+        </select>
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">گردی گوشه‌ها <span class="ctl-val" id="vRadius">20px</span></span>
+        <input type="range" class="rng" id="cRadius" min="6" max="32" step="1" value="20" aria-label="شعاع گوشه‌ها">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">بلور شیشه <span class="ctl-val" id="vBlur">18px</span></span>
+        <input type="range" class="rng" id="cBlur" min="0" max="34" step="1" value="18" aria-label="میزان بلور گلس">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">شفافیت شیشه <span class="ctl-val" id="vGlass">62%</span></span>
+        <input type="range" class="rng" id="cGlass" min="20" max="95" step="1" value="62" aria-label="شفافیت گلس">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">نویز / گرین <span class="ctl-val" id="vGrain">5%</span></span>
+        <input type="range" class="rng" id="cGrain" min="0" max="14" step="1" value="5" aria-label="شدت نویز پس‌زمینه">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">شدت mesh <span class="ctl-val" id="vGlow">10%</span></span>
+        <input type="range" class="rng" id="cGlow" min="0" max="24" step="1" value="10" aria-label="شدت گرادیانت پس‌زمینه">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">عمق سایه <span class="ctl-val" id="vShadow">soft</span></span>
+        <select class="sel-mini" id="cShadow" aria-label="عمق سایه">
+          <option value="flat">flat — تقریباً بدون سایه</option>
+          <option value="soft" selected>soft — پیش‌فرض قالب</option>
+          <option value="deep">deep — سایهٔ عمیق</option>
+        </select>
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">عرض کانتینر <span class="ctl-val" id="vWidth">1200px</span></span>
+        <input type="range" class="rng" id="cWidth" min="1000" max="1480" step="20" value="1200" aria-label="عرض کانتینر">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">مقیاس فونت <span class="ctl-val" id="vFs">100%</span></span>
+        <input type="range" class="rng" id="cFs" min="88" max="118" step="1" value="100" aria-label="مقیاس فونت">
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">سرعت موشن <span class="ctl-val" id="vMotion">normal</span></span>
+        <select class="sel-mini" id="cMotion" aria-label="سرعت انیمیشن">
+          <option value="calm">calm — آرام</option>
+          <option value="normal" selected>normal — پیش‌فرض</option>
+          <option value="snappy">snappy — سریع</option>
+          <option value="off">off — خاموش</option>
+        </select>
+      </div>
+
+      <div class="ctl toggle-row">
+        <span class="ctl-lbl" style="margin:0">کاغذ شطرنجی</span>
+        <button class="tgl" id="cGrid" aria-pressed="true" aria-label="نمایش گرید پس‌زمینه"></button>
+      </div>
+
+      <div class="ctl">
+        <span class="ctl-lbl">تم</span>
+        <div class="seg-mini" role="group" aria-label="تم">
+          <button id="cLight" aria-pressed="true">LIGHT</button>
+          <button id="cDark" aria-pressed="false">DARK</button>
+        </div>
+      </div>
+
+      <div class="studio-actions">
+        <button class="btn btn-ghost btn-sm" id="btnReset">↺ ریست</button>
+        <button class="btn btn-ghost btn-sm" id="btnRandom">⚄ تصادفی</button>
+        <button class="btn btn-primary btn-sm" id="btnCopyCss">کپی CSS</button>
+        <button class="btn btn-primary btn-sm" id="btnDownload">دانلود توکن</button>
+      </div>
+      <p class="studio-note">// خروجی را در <span class="ltr">global.css</span> جای‌گزین کنید.<br>// تنظیمات در همین مرورگر ذخیره می‌شود.</p>
+    </section>
+
+    <!-- ============ Shell ============ -->
+    <div class="doc-shell">
+      <!-- TOC -->
+      <aside class="toc-col">
+        <nav class="card toc-card" aria-label="فهرست مطالب">
+          <div class="search-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-in" id="docSearch" type="search" placeholder="جست‌وجو در مستندات…" aria-label="جست‌وجو در مستندات" autocomplete="off">
+            <span class="search-kbd">/</span>
+          </div>
+          <p class="search-count" id="searchCount" aria-live="polite"></p>
+          <div class="toc-list" id="tocList"></div>
+          <div class="toc-foot"><span>مطالعه</span><b id="tocPct">0%</b></div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <div class="doc-body" id="doc-body">
+
+        <!-- 01 -->
+        <section class="sec reveal" id="sec-start" data-title="شروع سریع">
+          <div class="sec-head"><span class="sec-num">۰۱</span><h2>شروع سریع</h2></div>
+          <p>قالب <strong>هیچ بیلد، باندلر یا وابستگی npm</strong> ندارد. فقط HTML، CSS و JS خالص. کافی است فایل‌ها را کنار هم بگذارید و روی یک سرور محلی باز کنید.</p>
+          <pre data-lang="text" data-file="ساختار پوشه‌ها"><code>heydarkf/
+├── index.html        خانه
+├── about.html        درباره من
+├── skills.html       مهارت‌ها و خدمات
+├── projects.html     پروژه‌ها + مودال جزئیات
+├── blog.html         لیست بلاگ + ریدر داخلی
+├── post.html         سنگل پست (?p=slug)
+├── contact.html      تماس + فرم بریف
+├── docs.html         همین مستندات
+└── assets/
+    └── css/
+        └── global.css   ← تنها فایل مشترک</code></pre>
+          <pre data-lang="bash" data-file="اجرای محلی"><code><span class="c"># پیشنهادی (PHP روی سیستم هست)</span>
+php -S localhost:8000
+
+<span class="c"># یا</span>
+npx serve .
+
+<span class="c"># سپس</span>
+open http://localhost:8000</code></pre>
+          <div class="note warn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <p>با <code>file://</code> هم باز می‌شود، ولی <strong>Clipboard API</strong> و برخی رفتارهای Storage محدود می‌شوند. همیشه روی <code>localhost</code> یا HTTPS تست کنید.</p>
+          </div>
+          <p>فونت‌ها از Google Fonts می‌آیند. آفلاین که باشید، fallback سیستمی اعمال می‌شود و قالب نمی‌شکند.</p>
+        </section>
+
+        <!-- 02 -->
+        <section class="sec reveal" id="sec-map" data-title="نقشه فایل‌ها">
+          <div class="sec-head"><span class="sec-num">۰۲</span><h2>نقشه فایل‌ها</h2></div>
+          <div class="page-grid">
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">global.css</span><span class="pc-badge">مشترک</span></div>
+              <p>UI Kit: توکن‌ها، ریست، تایپوگرافی، دکمه/کارت/چیپ، هدر شناور، منوی موبایل، مارکی، فوتر، reveal، اسکرول‌بار.</p>
+              <p class="pc-list">tokens · reset · components<br>header · menu · footer · motion</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">index.html</span><span class="pc-badge">خانه</span></div>
+              <p>هیرو نامتقارن ۷۰/۳۰ با ترمینال تایپی، مارکی مهارت‌ها، بنتو خدمات + ریل آمار چسبان، نمونه‌کار پلکانی، CTA عریض.</p>
+              <p class="pc-list">typewriter · counters · bento<br>pointer-glow · parallax</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">about.html</span><span class="pc-badge">درباره</span></div>
+              <p>پرترهٔ انتزاعی با فریم نامتقارن + seal چرخان، داستان + pull-quote، میز کار sticky، تایم‌لاین، ارزش‌ها، جعبه‌ابزار.</p>
+              <p class="pc-list">tilt · timeline-fill · tea-counter</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">skills.html</span><span class="pc-badge">مهارت</span></div>
+              <p>manifest ترمینالی، نویگیشن دامنه + scrollspy، ۲۲ مهارت با meter، خدمات و قیمت، فرآیند ۴ مرحله‌ای، درحال‌یادگیری.</p>
+              <p class="pc-list">scrollspy · meters · process-fill</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">projects.html</span><span class="pc-badge">پروژه</span></div>
+              <p>featured، فیلتر sticky با FLIP، موزاییک/نمای index + preview شناور، مودال چالش→راه‌حل→نتیجه، درحال‌ساخت.</p>
+              <p class="pc-list">PROJECTS{} · FLIP · modal · hash</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">blog.html</span><span class="pc-badge">بلاگ</span></div>
+              <p>masthead، featured، جست‌وجو/فیلتر/سورت زنده، گرید نامتقارن، کالکشن‌ها، خبرنامه، ریدر تمام‌صفحه در موبایل.</p>
+              <p class="pc-list">&lt;template&gt; · search · reader</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">post.html</span><span class="pc-badge">مقاله</span></div>
+              <p>progress، ریل شناور خواندن، TOC چسبان، مقاله، اشتراک، نویسنده، قبلی/بعدی، مرتبط، کامنت محلی.</p>
+              <p class="pc-list">?p=slug · META[] · TOC · print</p></div>
+            <div class="card page-card"><div class="pc-top"><span class="pc-file">contact.html</span><span class="pc-badge">تماس</span></div>
+              <p>کارت وضعیت زنده (ساعت قم)، فرم بریف ۶ مرحله‌ای با autosave، ریل کناری، FAQ، کارت‌های elsewhere.</p>
+              <p class="pc-list">validation · draft · mailto · ref</p></div>
+          </div>
+          <div class="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p><strong>هنوز ساخته نشده:</strong> <code>404.html</code> و پوشهٔ <code>fa/</code>. دستور ساخت هر دو در بخش‌های ۱۶ و ۱۹ آمده است.</p>
+          </div>
+        </section>
+
+        <!-- 03 -->
+        <section class="sec reveal" id="sec-arch" data-title="معماری">
+          <div class="sec-head"><span class="sec-num">۰۳</span><h2>معماری قالب</h2></div>
+          <p>سه لایه، عمداً ساده تا نگهداری‌اش راحت بماند:</p>
+          <ol>
+            <li><strong>global.css</strong> — هرچیز بین صفحات مشترک: توکن‌ها + کامپوننت‌ها + هدر/فوتر.</li>
+            <li><strong>&lt;style&gt; داخل هر صفحه</strong> — CSS اختصاصی همان صفحه، با پیشوند معنایی.</li>
+            <li><strong>&lt;script&gt; داخل هر صفحه</strong> — یک IIFE شامل «بخش مشترک» (تم/هدر/منو/lang/reveal/year) + «بخش صفحه».</li>
+          </ol>
+          <h3>قواعد طلایی</h3>
+          <ul>
+            <li>به <code>global.css</code> فقط چیزِ واقعاً مشترک اضافه کنید؛ وگرنه همهٔ صفحات باد می‌کنند.</li>
+            <li>بلوک مشترک JS عمداً در هر صفحه تکرار شده تا هر فایل <strong>self-contained</strong> بماند.</li>
+            <li>داخل <code>.mock</code> و <code>.cv</code> هیچ <code>id</code> نگذارید — این nodeها clone می‌شوند (مودال پروژه، preview بلاگ، کاور پست) و id تکراری می‌سازند.</li>
+            <li>هر المانِ دارای <code>data-slug</code> باید ورودی متناظر در دادهٔ همان صفحه داشته باشد.</li>
+          </ul>
+          <pre data-lang="text" data-file="پیشوند کلاس‌ها"><code>global      .btn .card .chip .badge .tag .kicker .section-head
+index       .hero-* .terminal .bento .stats-rail .work-*
+about       .about-* .portrait .seal .story-* .desk-* .timeline .value-* .tool-*
+skills      .s-* .manifest .domain .skill .svc-* .proc-* .learn-*
+projects    .p-* .filter-* .mosaic .work-* .mock-* .index-row .modal-*
+blog        .b-* .masthead .fp-* .cv-* .tool-* .post-* .coll-* .news-* .reader-*
+post        .post-* .read-* .toc-* .article .code-block .cm-* .rel-*
+contact     .c-* .status-* .brief-* .field .pick .seg .side .faq-* .else-*</code></pre>
+        </section>
+
+        <!-- 04 -->
+        <section class="sec reveal" id="sec-tokens" data-title="توکن‌های طراحی">
+          <div class="sec-head"><span class="sec-num">۰۴</span><h2>توکن‌های طراحی</h2></div>
+          <p>همه در <code>:root</code> و <code>[data-theme="dark"]</code> داخل <code>global.css</code>. جدول زیر <strong>زنده</strong> است و مقادیر فعلیِ استودیو را نشان می‌دهد.</p>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>توکن</th><th>مقدار فعلی</th><th>کاربرد</th></tr></thead>
+              <tbody>
+                <tr><td><code>--accent</code></td><td><b data-live="accent">#009966</b></td><td>لهجهٔ برند: دکمه، لینک فعال، آیکون کلیدی</td></tr>
+                <tr><td><code>--accent-ink</code></td><td><b data-live="ink">#007a52</b></td><td>متن ریز لهجه‌ای با کنتراست AA</td></tr>
+                <tr><td><code>--accent-soft</code></td><td><b data-live="soft">rgba(...)</b></td><td>پس‌زمینهٔ نرم چیپ/کال‌اوت</td></tr>
+                <tr><td><code>--on-accent</code></td><td><b data-live="onAccent">#052018</b></td><td>متن روی دکمهٔ لهجه</td></tr>
+                <tr><td><code>--bg / --surface</code></td><td><b data-live="bg">#f6f8f7</b></td><td>سطوح پس‌زمینه و کارت</td></tr>
+                <tr><td><code>--glass</code></td><td><b data-live="glass">rgba(...)</b></td><td>گلس‌مورفیزم کارت‌ها</td></tr>
+                <tr><td><code>--glass-blur</code></td><td><b data-live="blur">18px</b></td><td>میزان بلور شیشه</td></tr>
+                <tr><td><code>--r-md / --r-lg</code></td><td><b data-live="radius">20px / 24px</b></td><td>گردی گوشه‌ها</td></tr>
+                <tr><td><code>--container</code></td><td><b data-live="width">1200px</b></td><td>حداکثر عرض محتوا</td></tr>
+                <tr><td><code>--t-med</code></td><td><b data-live="motion">.45s</b></td><td>سرعت ترنزیشن‌ها</td></tr>
+                <tr><td><code>--grain</code> <span class="dot-hue" style="background:var(--amber)"></span></td><td><b data-live="grain">5%</b></td><td>شدت نویز (در docs اضافه شده)</td></tr>
+                <tr><td><code>--glow-a/b/c</code></td><td><b data-live="glow">10%</b></td><td>mesh گرادیانت پس‌زمینه</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>تغییر رنگ برند (Rebrand)</h3>
+          <p>سریع‌ترین راه: استودیو را تنظیم کنید و <strong>«کپی CSS»</strong> بزنید؛ خروجی را جای‌گزین بلوک توکن‌های <code>global.css</code> کنید.</p>
+          <pre data-lang="css" data-file="assets/css/global.css"><code><span class="k">:root</span> {
+  <span class="n">--accent</span>: <span class="s">#009966</span>;        <span class="c">/* رنگ اصلی */</span>
+  <span class="n">--accent-strong</span>: <span class="s">#00b377</span>;  <span class="c">/* hover */</span>
+  <span class="n">--accent-deep</span>: <span class="s">#007a52</span>;    <span class="c">/* گرادیانت */</span>
+  <span class="n">--accent-ink</span>: <span class="s">#007a52</span>;     <span class="c">/* متن ریز — کنتراست */</span>
+  <span class="n">--accent-soft</span>: <span class="s">rgba(0,153,102,.10)</span>;
+  <span class="n">--accent-line</span>: <span class="s">rgba(0,153,102,.28)</span>;
+  <span class="n">--on-accent</span>: <span class="s">#052018</span>;      <span class="c">/* متن روی دکمه */</span>
+  <span class="n">--shadow-accent</span>: <span class="s">0 10px 28px -8px rgba(0,153,102,.35)</span>;
+  <span class="n">--glow-a</span>: <span class="s">rgba(0,153,102,.10)</span>;
+}
+<span class="k">[data-theme="dark"]</span> {
+  <span class="n">--accent-ink</span>: <span class="s">#3ecf9a</span>;
+  <span class="n">--accent-soft</span>: <span class="s">rgba(0,201,138,.12)</span>;
+  <span class="n">--accent-line</span>: <span class="s">rgba(0,201,138,.30)</span>;
+}</code></pre>
+          <div class="note warn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <p><strong>رنگ‌های hard-code شده:</strong> صحنه‌های ترمینال و کاورها رنگ ثابت دارند (<code>#0d1512</code>, <code>#3ecf9a</code>, <code>#d8b56a</code>, <code>#2b7f8c</code>, <code>#4f83c2</code>, <code>#d64550</code>). برای rebrand کامل این‌ها را در CSS اختصاصی صفحات جست‌وجو و جای‌گزین کنید.</p>
+          </div>
+
+          <h3>فونت‌ها</h3>
+          <pre data-lang="css"><code><span class="n">--font-display</span>: <span class="s">"Space Grotesk"</span>, <span class="s">"Inter"</span>, sans-serif;  <span class="c">/* تیترها */</span>
+<span class="n">--font-body</span>:    <span class="s">"Inter"</span>, sans-serif;                    <span class="c">/* متن */</span>
+<span class="n">--font-mono</span>:    <span class="s">"JetBrains Mono"</span>, monospace;           <span class="c">/* فنی/کد */</span></code></pre>
+          <p>برای فارسی: <code>Vazirmatn</code> را جای‌گزین display و body کنید (همین صفحه این کار را کرده) و <code>letter-spacing</code> منفی تیترها را صفر کنید.</p>
+        </section>
+
+        <!-- 05 -->
+        <section class="sec reveal" id="sec-kit" data-title="کامپوننت‌ها">
+          <div class="sec-head"><span class="sec-num">۰۵</span><h2>کامپوننت‌های UI Kit</h2></div>
+          <p>نمونه‌های زیر <strong>واقعی</strong> هستند — با استودیو تغییرشان دهید تا بازخورد را ببینید.</p>
+          <div class="samples">
+            <div class="sample"><span class="sample-lbl">BUTTONS</span>
+              <div class="sample-row"><a class="btn btn-primary btn-sm" href="#sec-kit">اصلی</a><a class="btn btn-ghost btn-sm" href="#sec-kit">خط‌دار</a></div>
+            </div>
+            <div class="sample"><span class="sample-lbl">CHIPS / TAGS</span>
+              <div class="sample-row"><span class="chip">PHP</span><span class="tag">MVC</span><span class="tag">Redis</span></div>
+            </div>
+            <div class="sample"><span class="sample-lbl">BADGE</span>
+              <div class="sample-row"><span class="badge"><span class="badge-dot"></span> available</span></div>
+            </div>
+            <div class="sample"><span class="sample-lbl">ICON / LINK</span>
+              <div class="sample-row">
+                <button class="icon-btn" type="button" aria-label="نمونه"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+                <a class="link-arrow" href="#sec-kit">لینک <span class="arr">←</span></a>
+              </div>
+            </div>
+          </div>
+          <pre data-lang="html" data-file="کامپوننت‌ها"><code><span class="c">&lt;!-- دکمه‌ها --&gt;</span>
+<span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"btn btn-primary"</span> <span class="n">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>اصلی<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"btn btn-ghost btn-sm"</span> <span class="n">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>خط‌دار<span class="t">&lt;/a&gt;</span>
+<span class="t">&lt;button</span> <span class="n">class</span>=<span class="s">"icon-btn"</span> <span class="n">aria-label</span>=<span class="s">"…"</span><span class="t">&gt;</span>…<span class="t">&lt;/button&gt;</span>
+
+<span class="c">&lt;!-- چیپ / تگ / بج --&gt;</span>
+<span class="t">&lt;span</span> <span class="n">class</span>=<span class="s">"chip"</span><span class="t">&gt;</span>PHP<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;span</span> <span class="n">class</span>=<span class="s">"tag"</span><span class="t">&gt;</span>MVC<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;span</span> <span class="n">class</span>=<span class="s">"badge"</span><span class="t">&gt;&lt;span</span> <span class="n">class</span>=<span class="s">"badge-dot"</span><span class="t">&gt;&lt;/span&gt;</span> available<span class="t">&lt;/span&gt;</span>
+
+<span class="c">&lt;!-- کارت شیشه‌ای + عنوان بخش --&gt;</span>
+<span class="t">&lt;article</span> <span class="n">class</span>=<span class="s">"card"</span><span class="t">&gt;</span>…<span class="t">&lt;/article&gt;</span>
+<span class="t">&lt;p</span> <span class="n">class</span>=<span class="s">"kicker"</span><span class="t">&gt;</span>01 — what I do<span class="t">&lt;/p&gt;</span>
+<span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"section-head"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div&gt;&lt;h2</span> <span class="n">class</span>=<span class="s">"h2"</span><span class="t">&gt;</span>…<span class="t">&lt;/h2&gt;&lt;/div&gt;</span>
+  <span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"link-arrow"</span> <span class="n">href</span>=<span class="s">"#"</span><span class="t">&gt;</span>همه <span class="t">&lt;span</span> <span class="n">class</span>=<span class="s">"arr"</span><span class="t">&gt;</span>→<span class="t">&lt;/span&gt;&lt;/a&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- ورود هنگام اسکرول (یک‌بار) --&gt;</span>
+<span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"card reveal"</span> <span class="n">style</span>=<span class="s">"--d:120ms"</span><span class="t">&gt;</span>…<span class="t">&lt;/div&gt;</span></code></pre>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>کلاس</th><th>توضیح</th></tr></thead>
+              <tbody>
+                <tr><td><code>.container</code></td><td>عرض <code>--container</code> با گاتر واکنش‌گرا</td></tr>
+                <tr><td><code>.section</code></td><td>پدینگ عمودی استاندارد بخش</td></tr>
+                <tr><td><code>.card</code></td><td>شیشه‌ای، radius 24، hover lift + سایه</td></tr>
+                <tr><td><code>.reveal</code> + <code>--d</code></td><td>ورود یک‌بار با تأخیر دلخواه</td></tr>
+                <tr><td><code>.mono / .muted</code></td><td>فونت مونو / رنگ کم‌رنگ</td></tr>
+                <tr><td><code>.marquee</code></td><td>نوار متحرک؛ گروه باید <strong>دوبار</strong> تکرار شود</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 06 -->
+        <section class="sec reveal" id="sec-chrome" data-title="هدر، فوتر و منو">
+          <div class="sec-head"><span class="sec-num">۰۶</span><h2>هدر، فوتر و منوی موبایل</h2></div>
+          <p>مارک‌آپ هدر/فوتر در همهٔ صفحات یکسان است. فقط <code>aria-current="page"</code> روی لینک صفحهٔ جاری جابه‌جا می‌شود.</p>
+          <pre data-lang="html" data-file="هدر — بخش ناوبری"><code><span class="t">&lt;nav</span> <span class="n">class</span>=<span class="s">"main-nav"</span> <span class="n">aria-label</span>=<span class="s">"Primary"</span><span class="t">&gt;</span>
+  <span class="t">&lt;a</span> <span class="n">href</span>=<span class="s">"index.html"</span><span class="t">&gt;</span>Home<span class="t">&lt;/a&gt;</span>
+  <span class="t">&lt;a</span> <span class="n">href</span>=<span class="s">"about.html"</span> <span class="n">aria-current</span>=<span class="s">"page"</span><span class="t">&gt;</span>About<span class="t">&lt;/a&gt;</span>
+  <span class="c">&lt;!-- … --&gt;</span>
+<span class="t">&lt;/nav&gt;</span></code></pre>
+          <h3>افزودن یک آیتم ناوبری</h3>
+          <ol>
+            <li>در <strong>همهٔ صفحات</strong> به <code>.main-nav</code> اضافه کنید.</li>
+            <li>به <code>.mobile-nav</code> با شمارهٔ <code>.idx</code> اضافه کنید.</li>
+            <li>به <code>.footer-links</code> اضافه کنید.</li>
+            <li>در صفحهٔ جدید <code>aria-current="page"</code> بگذارید.</li>
+          </ol>
+          <div class="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p>هدر <strong>شناور</strong> است: با اسکرول کلاس <code>.is-scrolled</code> می‌گیرد، جمع‌وجورتر و مات می‌شود. ارتفاع آفست با <code>--header-offset</code> تنظیم می‌شود و <code>scroll-padding-top</code> سراسری، پرشِ anchorها را زیر هدر می‌نشاند.</p>
+          </div>
+        </section>
+
+        <!-- 07 -->
+        <section class="sec reveal" id="sec-theme" data-title="سیستم تم">
+          <div class="sec-head"><span class="sec-num">۰۷</span><h2>سیستم تم</h2></div>
+          <p>تم روی <code>&lt;html data-theme="light|dark"&gt;</code> می‌نشیند. اسکریپت کوچکِ داخل <code>&lt;head&gt;</code> <strong>قبل از رندر</strong> اجرا می‌شود تا پرش رنگ (FOUC) نداشته باشیم.</p>
+          <pre data-lang="html" data-file="داخل head هر صفحه"><code><span class="t">&lt;script&gt;</span>
+(<span class="k">function</span>(){
+  <span class="k">var</span> d = document.documentElement;
+  d.classList.add(<span class="s">'js'</span>);
+  <span class="k">try</span> {
+    <span class="k">var</span> t = localStorage.getItem(<span class="s">'hkf-theme'</span>);
+    <span class="k">if</span> (!t) t = matchMedia(<span class="s">'(prefers-color-scheme: dark)'</span>).matches ? <span class="s">'dark'</span> : <span class="s">'light'</span>;
+    d.setAttribute(<span class="s">'data-theme'</span>, t);
+  } <span class="k">catch</span>(e){}
+})();
+<span class="t">&lt;/script&gt;</span></code></pre>
+          <ul>
+            <li>ترجیح کاربر در <code>localStorage['hkf-theme']</code> ذخیره می‌شود.</li>
+            <li>پیش‌فرض از <code>prefers-color-scheme</code> سیستم گرفته می‌شود.</li>
+            <li>سوییچ با <strong>View Transitions API</strong> کراس‌فید نرم دارد؛ در مرورگرهای قدیمی به ترنزیشن CSS برمی‌گردد.</li>
+            <li>کلاس <code>.js</code> روی <code>html</code> باعث می‌شود بدون JS، محتوا <strong>نامرئی نماند</strong>.</li>
+          </ul>
+          <pre data-lang="js" data-file="اجبار پیش‌فرض به دارک"><code><span class="c">// به‌جای خواندن سیستم:</span>
+<span class="k">var</span> t = localStorage.getItem(<span class="s">'hkf-theme'</span>) || <span class="s">'dark'</span>;</code></pre>
+        </section>
+
+        <!-- 08 -->
+        <section class="sec reveal" id="sec-motion" data-title="انیمیشن‌ها">
+          <div class="sec-head"><span class="sec-num">۰۸</span><h2>انیمیشن‌ها و Motion</h2></div>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>افکت</th><th>کجا</th><th>مکانیزم</th></tr></thead>
+              <tbody>
+                <tr><td><b>Reveal</b></td><td>همه صفحات</td><td>IntersectionObserver + کلاس <code>.is-in</code>، یک‌بار، تأخیر با <code>--d</code></td></tr>
+                <tr><td><b>FLIP</b></td><td>projects / blog</td><td>اندازه‌گیری قبل/بعد + <code>element.animate()</code> برای جابه‌جایی نرم کارت‌ها</td></tr>
+                <tr><td><b>Counter</b></td><td>index / projects</td><td><code>requestAnimationFrame</code> با easing، یک‌بار</td></tr>
+                <tr><td><b>Typewriter</b></td><td>index</td><td>تایپ کاراکتری خطوط ترمینال، یک‌بار</td></tr>
+                <tr><td><b>Progress fill</b></td><td>about / skills / post</td><td>درصد اسکرول → ارتفاع/عرض خط</td></tr>
+                <tr><td><b>Pointer glow</b></td><td>bento / featured</td><td><code>--mx/--my</code> از mousemove</td></tr>
+                <tr><td><b>Tilt / Parallax</b></td><td>about / index</td><td>transform سبک، فقط pointer:fine</td></tr>
+                <tr><td><b>Marquee</b></td><td>index</td><td>CSS keyframes، چپ→راست، pause on hover</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>خاموش‌کردن سراسری</h3>
+          <p>قالب به <code>prefers-reduced-motion</code> احترام می‌گذارد. برای خاموش‌کردن دستی، در استودیو حالت <code>off</code> را انتخاب کنید یا:</p>
+          <pre data-lang="css"><code><span class="k">@media</span> (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    <span class="n">animation-duration</span>: .01ms <span class="k">!important</span>;
+    <span class="n">transition-duration</span>: .01ms <span class="k">!important</span>;
+  }
+}</code></pre>
+          <div class="note warn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <p>مارکی برای لوپ بی‌درز به <strong>دو گروه یکسان</strong> نیاز دارد (<code>.marquee-group</code> دوبار، دومی <code>aria-hidden</code>). اگر یکی را حذف کنید، پرش می‌بینید.</p>
+          </div>
+        </section>
+
+        <!-- 09 -->
+        <section class="sec reveal" id="sec-pages" data-title="راهنمای صفحه‌به‌صفحه">
+          <div class="sec-head"><span class="sec-num">۰۹</span><h2>راهنمای صفحه‌به‌صفحه</h2></div>
+
+          <h3>index.html — خانه</h3>
+          <ul>
+            <li>متن هیرو، چیپ‌ها و دکمه‌ها مستقیم در HTML.</li>
+            <li>خطوط ترمینال: <code>.t-cmd</code> و <code>.t-out</code> — متن نهایی را همان‌جا بنویسید؛ JS آن را برمی‌دارد و تایپ می‌کند.</li>
+            <li>آمار: <code>data-target</code> روی <code>.stat-value</code>.</li>
+            <li>کارت‌های پروژه: <code>href="projects.html#slug"</code> — دیپ‌لینک، مودال را باز می‌کند.</li>
+          </ul>
+
+          <h3>about.html — درباره</h3>
+          <ul>
+            <li>پرتره انتزاعی است. برای عکس واقعی، داخل <code>.portrait</code> یک <code>&lt;img&gt;</code> بگذارید و <code>object-fit:cover; width:100%; height:100%</code> بدهید؛ فریم و seal دست‌نخورده می‌مانند.</li>
+            <li>تایم‌لاین: هر <code>.tl-item</code> یک ایست؛ خط پُر شونده با اسکرول محاسبه می‌شود.</li>
+            <li>شمارندهٔ چای در <code>sessionStorage</code> ذخیره می‌شود.</li>
+          </ul>
+
+          <h3>skills.html — مهارت‌ها</h3>
+          <ul>
+            <li>هر مهارت یک <code>.skill</code> با <code>--lvl</code> (درصد meter)، سال و تگ‌ها.</li>
+            <li>شمارندهٔ کنار هر دامنه در نویگیشن را دستی به‌روز کنید.</li>
+            <li>لینک‌های <code>proof →</code> به پروژه/مقاله اشاره می‌کنند؛ آن‌ها را با کارهای واقعی عوض کنید.</li>
+          </ul>
+
+          <h3>projects.html — پروژه‌ها</h3>
+          <p>دادهٔ مودال در آبجکت <code>PROJECTS</code> داخل اسکریپت صفحه:</p>
+          <pre data-lang="js" data-file="projects.html — PROJECTS"><code>sentinel: {
+  <span class="n">title</span>: <span class="s">'Sentinel'</span>,
+  <span class="n">cat</span>: <span class="s">'Web · Security'</span>,
+  <span class="n">year</span>: <span class="s">'2026'</span>,
+  <span class="n">tags</span>: [<span class="s">'PHP 8'</span>, <span class="s">'WebSocket'</span>, <span class="s">'Redis'</span>],
+  <span class="n">challenge</span>: <span class="s">'…'</span>,   <span class="c">// مشکل چه بود</span>
+  <span class="n">solution</span>:  <span class="s">'…'</span>,   <span class="c">// چه ساختی</span>
+  <span class="n">result</span>:    <span class="s">'…'</span>,   <span class="c">// چه اتفاقی افتاد</span>
+  <span class="n">metrics</span>: [[<span class="s">'−72%'</span>,<span class="s">'triage time'</span>], [<span class="s">'99.98%'</span>,<span class="s">'uptime'</span>], [<span class="s">'12k'</span>,<span class="s">'alerts/day'</span>]],
+  <span class="n">quote</span>: [<span class="s">'“…”'</span>, <span class="s">'— CTO, SecureNet'</span>],  <span class="c">// یا null</span>
+  <span class="n">demo</span>: <span class="s">'https://…'</span>, <span class="n">source</span>: <span class="s">'https://github.com/…'</span>
+}</code></pre>
+          <h4>افزودن پروژهٔ جدید — ۵ قدم</h4>
+          <ol>
+            <li>یک <code>&lt;article class="card work-card …" data-slug="…" data-cat="…"&gt;</code> در <code>#mosaic</code> بسازید (کپی از کارت موجود).</li>
+            <li>کلاس اندازه: <code>--xl</code> (بزرگ)، <code>--sm</code>، <code>--md</code>، <code>--wide</code>.</li>
+            <li>یک ردیف <code>.index-row</code> با همان <code>data-slug/data-cat</code> در نمای index اضافه کنید.</li>
+            <li>ورودی <code>PROJECTS[slug]</code> را بنویسید.</li>
+            <li>شمارندهٔ <code>&lt;sup&gt;</code> دکمه‌های فیلتر را به‌روز کنید.</li>
+          </ol>
+          <div class="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p><strong>عکس واقعی به‌جای موکاپ:</strong> داخل <code>.work-media</code>، <code>.mock</code> را با <code>&lt;img loading="lazy" width="…" height="…" style="width:100%;height:100%;object-fit:cover"&gt;</code> عوض کنید. <code>.work-veil</code> و <code>.work-go</code> را نگه دارید. مودال همان media را clone می‌کند، پس عکس هم منتقل می‌شود.</p>
+          </div>
+
+          <h3>blog.html — بلاگ</h3>
+          <p>محتوا در HTML است (بدون JS هم دیده می‌شود) و متن کامل هر مقاله در <code>&lt;template&gt;</code>:</p>
+          <pre data-lang="html" data-file="blog.html — ساختار مقاله"><code><span class="t">&lt;article</span> <span class="n">class</span>=<span class="s">"post-card card reveal"</span>
+         <span class="n">data-slug</span>=<span class="s">"my-post"</span> <span class="n">data-cat</span>=<span class="s">"security"</span>
+         <span class="n">data-date</span>=<span class="s">"2026-12-01"</span> <span class="n">data-mins</span>=<span class="s">"5"</span> <span class="n">data-span</span>=<span class="s">"4"</span><span class="t">&gt;</span> … <span class="t">&lt;/article&gt;</span>
+
+<span class="t">&lt;template</span> <span class="n">id</span>=<span class="s">"tpl-my-post"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"tpl-lede"</span><span class="t">&gt;</span>یک پاراگراف معرفی…<span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"tpl-body"</span><span class="t">&gt;</span>
+    <span class="t">&lt;p&gt;</span>…<span class="t">&lt;/p&gt;&lt;h2&gt;</span>…<span class="t">&lt;/h2&gt;&lt;blockquote&gt;</span>…<span class="t">&lt;/blockquote&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/template&gt;</span></code></pre>
+          <ul>
+            <li><code>data-mins</code> به‌صورت خودکار از تعداد کلمات بازمحاسبه می‌شود.</li>
+            <li>دسته‌ها: <code>engineering · security · ai · craft · performance</code>.</li>
+            <li>کالکشن‌ها با <code>data-series-slugs="a,b"</code> فیلتر می‌کنند.</li>
+            <li>خبرنامه فعلاً فرانت‌اند است (در <code>localStorage</code>)؛ برای ارسال واقعی به بک‌اند وصل کنید.</li>
+          </ul>
+
+          <h3>post.html — سنگل پست</h3>
+          <ul>
+            <li>مسیریابی: <code>post.html?p=slug</code>. اسلاگ باید در آرایهٔ <code>META</code> و یک <code>&lt;template id="tpl-slug"&gt;</code> وجود داشته باشد.</li>
+            <li>مقالهٔ اصلی (<code>frameworks-behind</code>) دستی و غنی نوشته شده؛ بقیه از template رندر می‌شوند.</li>
+            <li>TOC از <code>h2[id]</code> ساخته می‌شود — به تیترها <strong>id</strong> بدهید (پچ §۱۹ این را خودکار می‌کند).</li>
+            <li>کامنت‌ها محلی‌اند: <code>hkf-comments-&lt;slug&gt;</code>.</li>
+            <li>بوکمارک، اندازهٔ فونت و دکمهٔ چاپ فعال‌اند؛ استایل print جدا دارد.</li>
+          </ul>
+
+          <h3>contact.html — تماس</h3>
+          <ul>
+            <li>اعتبارسنجی: نام ≥ ۲ کاراکتر، ایمیل معتبر، حداقل یک خدمت، پیام ≥ ۳۰ کاراکتر، تیک رضایت.</li>
+            <li>پیش‌نویس خودکار در <code>hkf-brief-draft</code> ذخیره و هنگام بازگشت بازیابی می‌شود.</li>
+            <li>ارسال فعلاً شبیه‌سازی است؛ در §۱۵ اتصال واقعی به PHP آمده.</li>
+            <li>پیش‌پرکردن از صفحات دیگر: <code>contact.html?service=security</code>.</li>
+          </ul>
+        </section>
+
+        <!-- 10 -->
+        <section class="sec reveal" id="sec-storage" data-title="داده‌های محلی">
+          <div class="sec-head"><span class="sec-num">۱۰</span><h2>داده‌های محلی (Storage)</h2></div>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>کلید</th><th>نوع</th><th>محتوا</th></tr></thead>
+              <tbody>
+                <tr><td><code>hkf-theme</code></td><td>local</td><td>تم انتخابی</td></tr>
+                <tr><td><code>hkf-view</code></td><td>local</td><td>نمای گالری پروژه‌ها (mosaic/index)</td></tr>
+                <tr><td><code>hkf-fs</code></td><td>local</td><td>اندازهٔ فونت ریدر بلاگ و پست</td></tr>
+                <tr><td><code>hkf-sub</code></td><td>local</td><td>وضعیت اشتراک خبرنامه</td></tr>
+                <tr><td><code>hkf-bookmarks</code></td><td>local</td><td>آرایهٔ اسلاگ مقالات نشان‌شده</td></tr>
+                <tr><td><code>hkf-comments-&lt;slug&gt;</code></td><td>local</td><td>کامنت‌های همان مقاله</td></tr>
+                <tr><td><code>hkf-brief-draft</code></td><td>local</td><td>پیش‌نویس فرم تماس</td></tr>
+                <tr><td><code>hkf-briefs-sent</code></td><td>local</td><td>تاریخچهٔ بریف‌های ارسال‌شده</td></tr>
+                <tr><td><code>hkf-docs-studio</code></td><td>local</td><td>تنظیمات استودیوی همین صفحه</td></tr>
+                <tr><td><code>hkf-tea</code></td><td><b>session</b></td><td>شمارندهٔ چای صفحهٔ درباره</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="js" data-file="ریست کامل در کنسول"><code>Object.keys(localStorage)
+  .filter(k =&gt; k.startsWith(<span class="s">'hkf-'</span>))
+  .forEach(k =&gt; localStorage.removeItem(k));
+sessionStorage.removeItem(<span class="s">'hkf-tea'</span>);
+location.reload();</code></pre>
+          <div class="note danger">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p>هرگز توکن، رمز یا دادهٔ حساس در <code>localStorage</code> نگذارید. این‌ها فقط ترجیح UI هستند.</p>
+          </div>
+        </section>
+
+        <!-- 11 -->
+        <section class="sec reveal" id="sec-links" data-title="دیپ‌لینک و میان‌بر">
+          <div class="sec-head"><span class="sec-num">۱۱</span><h2>دیپ‌لینک‌ها و میان‌برها</h2></div>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>آدرس / کلید</th><th>نتیجه</th></tr></thead>
+              <tbody>
+                <tr><td><code>projects.html#sentinel</code></td><td>بازشدن مستقیم مودال پروژه</td></tr>
+                <tr><td><code>blog.html#agents-contracts</code></td><td>بازشدن ریدر روی همان مقاله</td></tr>
+                <tr><td><code>post.html?p=p95-promise</code></td><td>سنگل‌پست مشخص</td></tr>
+                <tr><td><code>contact.html?service=security</code></td><td>پیش‌انتخاب خدمت در فرم</td></tr>
+                <tr><td><code>/</code></td><td>فوکوس روی جست‌وجو (بلاگ و همین صفحه)</td></tr>
+                <tr><td><code>Esc</code></td><td>بستن مودال/منو/پاک‌کردن جست‌وجو</td></tr>
+                <tr><td><code>← →</code></td><td>پروژهٔ قبلی/بعدی داخل مودال</td></tr>
+                <tr><td><code>[ ]</code></td><td>بخش قبلی/بعدی در همین مستندات</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 12 -->
+        <section class="sec reveal" id="sec-seo" data-title="سئو و متا">
+          <div class="sec-head"><span class="sec-num">۱۲</span><h2>سئو و متا</h2></div>
+          <ul>
+            <li>هر صفحه <code>title</code>، <code>description</code>، <code>canonical</code>، <code>hreflang</code> و OG/Twitter کامل دارد.</li>
+            <li>JSON-LD: Person / AboutPage / CollectionPage / Blog / BlogPosting / ContactPage.</li>
+            <li><code>post.html</code> هنگام تغییر مقاله، متاها و canonical را زنده به‌روز می‌کند.</li>
+            <li>تصویر اشتراک: <code>assets/og-cover.png</code> در ابعاد <strong>۱۲۰۰×۶۳۰</strong> بسازید.</li>
+          </ul>
+          <pre data-lang="text" data-file="robots.txt"><code>User-agent: *
+Allow: /
+Sitemap: https://heydar.kazemifakhr.ir/sitemap.xml</code></pre>
+          <pre data-lang="xml" data-file="sitemap.xml"><code><span class="t">&lt;?xml</span> version=<span class="s">"1.0"</span> encoding=<span class="s">"UTF-8"</span><span class="t">?&gt;</span>
+<span class="t">&lt;urlset</span> xmlns=<span class="s">"http://www.sitemaps.org/schemas/sitemap/0.9"</span><span class="t">&gt;</span>
+  <span class="t">&lt;url&gt;&lt;loc&gt;</span>https://heydar.kazemifakhr.ir/<span class="t">&lt;/loc&gt;&lt;/url&gt;</span>
+  <span class="t">&lt;url&gt;&lt;loc&gt;</span>https://heydar.kazemifakhr.ir/projects.html<span class="t">&lt;/loc&gt;&lt;/url&gt;</span>
+  <span class="t">&lt;url&gt;&lt;loc&gt;</span>https://heydar.kazemifakhr.ir/blog.html<span class="t">&lt;/loc&gt;&lt;/url&gt;</span>
+<span class="t">&lt;/urlset&gt;</span></code></pre>
+          <div class="note warn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+            <p>برای ایندکس‌شدن تک‌تک مقالات، خروجی استاتیک بسازید (مثلاً <code>post-frameworks-behind.html</code>) یا رندر سمت سرور؛ محتوای داخل <code>?p=</code> ممکن است کامل ایندکس نشود.</p>
+          </div>
+        </section>
+
+        <!-- 13 -->
+        <section class="sec reveal" id="sec-a11y" data-title="دسترسی‌پذیری">
+          <div class="sec-head"><span class="sec-num">۱۳</span><h2>دسترسی‌پذیری</h2></div>
+          <ul>
+            <li><code>skip-link</code>، <code>:focus-visible</code> با حلقهٔ لهجه، و <code>aria-current</code> روی ناوبری.</li>
+            <li>مودال‌ها: <code>role="dialog"</code> + <code>aria-modal</code> + focus trap + بازگشت فوکوس + <code>Esc</code>.</li>
+            <li>شمارنده‌ها و توست‌ها: <code>aria-live="polite"</code>.</li>
+            <li>دکمه‌های فیلتر/تگل: <code>aria-pressed</code>؛ آیکون‌ها: <code>aria-label</code>.</li>
+            <li>کنتراست: متن ریز لهجه‌ای از <code>--accent-ink</code> استفاده می‌کند نه <code>--accent</code>؛ متن روی دکمه تیره است تا AA پاس شود.</li>
+            <li>همهٔ انیمیشن‌ها با <code>prefers-reduced-motion</code> خاموش می‌شوند.</li>
+          </ul>
+          <div class="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <p>اگر رنگ لهجه را عوض کردید، حالت <strong>auto</strong> در استودیو، رنگ متن را طوری مشتق می‌کند که کنتراست حفظ شود.</p>
+          </div>
+        </section>
+
+        <!-- 14 -->
+        <section class="sec reveal" id="sec-perf" data-title="کارایی">
+          <div class="sec-head"><span class="sec-num">۱۴</span><h2>کارایی</h2></div>
+          <ul>
+            <li>بدون فریم‌ورک، بدون باندلر؛ هر صفحه فقط یک CSS مشترک + CSS خودش.</li>
+            <li>فونت‌ها: <code>preconnect</code> + <code>display=swap</code>. برای سرعت بیشتر می‌توانید self-host کنید.</li>
+            <li>انیمیشن‌ها فقط روی <code>transform</code> و <code>opacity</code>؛ اسکرول با <code>rAF</code> throttle و <code>passive</code>.</li>
+            <li>Observerها بعد از اولین تریگر <code>unobserve</code> می‌شوند.</li>
+            <li>موکاپ‌ها CSS/SVG هستند؛ اگر عکس واقعی گذاشتید: <code>loading="lazy"</code> + <code>width/height</code> + WebP/AVIF.</li>
+            <li><code>backdrop-filter</code> و لایهٔ grain هزینهٔ GPU دارند؛ روی دستگاه ضعیف با استودیو blur و grain را کم کنید.</li>
+          </ul>
+        </section>
+
+        <!-- 15 -->
+        <section class="sec reveal" id="sec-security" data-title="امنیت و CSP">
+          <div class="sec-head"><span class="sec-num">۱۵</span><h2>امنیت و CSP</h2></div>
+          <p>قالب inline <code>&lt;style&gt;</code> و <code>&lt;script&gt;</code> دارد. سیاست زیر با آن سازگار است:</p>
+          <pre data-lang="http" data-file="Content-Security-Policy"><code>default-src 'self';
+script-src 'self' 'unsafe-inline';
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+font-src 'self' https://fonts.gstatic.com;
+img-src 'self' data:;
+connect-src 'self';
+form-action 'self';
+base-uri 'self';
+frame-ancestors 'none';
+object-src 'none'</code></pre>
+          <p>برای CSP سخت‌گیرانه: inlineها را به فایل منتقل کنید و از <strong>nonce</strong> یا hash استفاده کنید.</p>
+
+          <h3>اتصال واقعی فرم تماس به PHP</h3>
+          <div class="tabs" data-tabs>
+            <div class="tab-list" role="tablist" aria-label="نمونه بک‌اند">
+              <button class="tab-btn" role="tab" aria-selected="true" data-tab="t-php">api/brief.php</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="t-js">contact.html (fetch)</button>
+            </div>
+            <div class="tab-panel" id="t-php" role="tabpanel">
+              <pre data-lang="php"><code><span class="t">&lt;?php</span>
+<span class="k">declare</span>(strict_types=<span class="n">1</span>);
+session_start();
+header(<span class="s">'Content-Type: application/json; charset=utf-8'</span>);
+
+<span class="c">// ۱) فقط POST</span>
+<span class="k">if</span> ($_SERVER[<span class="s">'REQUEST_METHOD'</span>] !== <span class="s">'POST'</span>) { http_response_code(<span class="n">405</span>); <span class="k">exit</span>; }
+
+<span class="c">// ۲) CSRF</span>
+$in = json_decode(file_get_contents(<span class="s">'php://input'</span>), <span class="k">true</span>) ?: [];
+<span class="k">if</span> (!hash_equals($_SESSION[<span class="s">'csrf'</span>] ?? <span class="s">''</span>, $in[<span class="s">'csrf'</span>] ?? <span class="s">''</span>)) {
+  http_response_code(<span class="n">419</span>); <span class="k">echo</span> json_encode([<span class="s">'error'</span>=&gt;<span class="s">'csrf'</span>]); <span class="k">exit</span>;
+}
+
+<span class="c">// ۳) Honeypot</span>
+<span class="k">if</span> (!<span class="k">empty</span>($in[<span class="s">'website'</span>])) { <span class="k">echo</span> json_encode([<span class="s">'ok'</span>=&gt;<span class="k">true</span>]); <span class="k">exit</span>; }
+
+<span class="c">// ۴) Rate limit ساده</span>
+$now = time();
+$_SESSION[<span class="s">'hits'</span>] = array_values(array_filter($_SESSION[<span class="s">'hits'</span>] ?? [], fn($t) =&gt; $now - $t &lt; <span class="n">600</span>));
+<span class="k">if</span> (count($_SESSION[<span class="s">'hits'</span>]) &gt;= <span class="n">3</span>) { http_response_code(<span class="n">429</span>); <span class="k">exit</span>; }
+$_SESSION[<span class="s">'hits'</span>][] = $now;
+
+<span class="c">// ۵) اعتبارسنجی سمت سرور</span>
+$name  = trim($in[<span class="s">'name'</span>]  ?? <span class="s">''</span>);
+$email = trim($in[<span class="s">'email'</span>] ?? <span class="s">''</span>);
+$msg   = trim($in[<span class="s">'msg'</span>]   ?? <span class="s">''</span>);
+<span class="k">if</span> (mb_strlen($name) &lt; <span class="n">2</span> || !filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($msg) &lt; <span class="n">30</span>) {
+  http_response_code(<span class="n">422</span>); <span class="k">echo</span> json_encode([<span class="s">'error'</span>=&gt;<span class="s">'validation'</span>]); <span class="k">exit</span>;
+}
+<span class="c">// جلوگیری از header injection</span>
+<span class="k">if</span> (preg_match(<span class="s">'/[\r\n]/'</span>, $email . $name)) { http_response_code(<span class="n">422</span>); <span class="k">exit</span>; }
+
+<span class="c">// ۶) ذخیره با prepared statement</span>
+$pdo = <span class="k">new</span> PDO(<span class="s">'mysql:host=localhost;dbname=hkf;charset=utf8mb4'</span>, <span class="s">'user'</span>, <span class="s">'pass'</span>,
+  [PDO::ATTR_ERRMODE =&gt; PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES =&gt; <span class="k">false</span>]);
+$ref = <span class="s">'HKF-'</span> . date(<span class="s">'Y'</span>) . <span class="s">'-'</span> . random_int(<span class="n">1000</span>, <span class="n">9999</span>);
+$pdo-&gt;prepare(<span class="s">'INSERT INTO briefs (ref,name,email,services,budget,timeline,body,created_at)
+               VALUES (?,?,?,?,?,?,?,NOW())'</span>)
+    -&gt;execute([$ref, $name, $email, implode(<span class="s">', '</span>, $in[<span class="s">'services'</span>] ?? []),
+               $in[<span class="s">'budget'</span>] ?? <span class="s">''</span>, $in[<span class="s">'time'</span>] ?? <span class="s">''</span>, $msg]);
+
+<span class="c">// ۷) اطلاع‌رسانی (PHPMailer توصیه می‌شود)</span>
+$safeName = htmlspecialchars($name, ENT_QUOTES, <span class="s">'UTF-8'</span>);
+mail(<span class="s">'hello@kazemifakhr.ir'</span>, <span class="s">"[$ref] Project brief"</span>,
+     <span class="s">"$safeName &lt;$email&gt;\n\n$msg"</span>,
+     <span class="s">"From: noreply@kazemifakhr.ir\r\nContent-Type: text/plain; charset=utf-8"</span>);
+
+<span class="k">echo</span> json_encode([<span class="s">'ok'</span>=&gt;<span class="k">true</span>, <span class="s">'ref'</span>=&gt;$ref]);</code></pre>
+            </div>
+            <div class="tab-panel" id="t-js" role="tabpanel" hidden>
+              <pre data-lang="js"><code><span class="c">// در contact.html بلوک setTimeout ارسال را با این عوض کنید:</span>
+<span class="k">const</span> res = <span class="k">await</span> fetch(<span class="s">'/api/brief.php'</span>, {
+  method: <span class="s">'POST'</span>,
+  headers: { <span class="s">'Content-Type'</span>: <span class="s">'application/json'</span> },
+  credentials: <span class="s">'same-origin'</span>,
+  body: JSON.stringify({
+    csrf: CSRF_TOKEN,           <span class="c">// از سرور در صفحه تزریق شود</span>
+    website: <span class="s">''</span>,                <span class="c">// honeypot — باید خالی بماند</span>
+    name: fName.value.trim(),
+    email: fEmail.value.trim(),
+    services, budget,
+    time: TIME_LABELS[+fTime.value],
+    msg: fMsg.value.trim()
+  })
+});
+<span class="k">if</span> (!res.ok) { showToast(<span class="s">'ارسال ناموفق — دوباره تلاش کنید'</span>); <span class="k">return</span>; }
+<span class="k">const</span> { ref } = <span class="k">await</span> res.json();
+<span class="c">// سپس همان UI موفقیت موجود را با ref واقعی نشان دهید</span></code></pre>
+            </div>
+          </div>
+          <h4>چک‌لیست امنیتی</h4>
+          <ul>
+            <li>اعتبارسنجی <strong>سمت سرور</strong> علاوه بر کلاینت.</li>
+            <li>Prepared statement برای هر کوئری؛ <code>htmlspecialchars</code> هنگام نمایش.</li>
+            <li>CSRF token + honeypot + rate limit.</li>
+            <li>جلوگیری از header injection در ایمیل (حذف <code>\r\n</code>).</li>
+            <li>لینک‌های خارجی: <code>rel="noopener"</code> (در قالب رعایت شده).</li>
+            <li>HTTPS + HSTS؛ کوکی‌های نشست با <code>HttpOnly; Secure; SameSite=Lax</code>.</li>
+          </ul>
+        </section>
+
+        <!-- 16 -->
+        <section class="sec reveal" id="sec-rtl" data-title="فارسی و RTL">
+          <div class="sec-head"><span class="sec-num">۱۶</span><h2>نسخهٔ فارسی / RTL</h2></div>
+          <p><strong>همین صفحه نمونهٔ زندهٔ RTL است</strong> — با همان <code>global.css</code> ساخته شده. برای ساخت <code>fa/</code>:</p>
+          <ol>
+            <li>صفحات را در پوشهٔ <code>fa/</code> کپی کنید.</li>
+            <li><code>&lt;html lang="fa" dir="rtl"&gt;</code>.</li>
+            <li>فونت <code>Vazirmatn</code> را جای‌گزین Inter/Space Grotesk کنید.</li>
+            <li><code>letter-spacing</code> منفی تیترها را صفر و <code>line-height</code> را ≈۱٫۹ کنید.</li>
+            <li>موارد جهت‌دار جدول زیر را اصلاح کنید.</li>
+            <li>لینک‌های <code>hreflang</code> و منوی زبان دوطرفه هستند؛ فقط مسیرها را چک کنید.</li>
+          </ol>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>مورد</th><th>اصلاح</th></tr></thead>
+              <tbody>
+                <tr><td><code>.skip-link{left}</code></td><td><code>inset-inline-start</code></td></tr>
+                <tr><td><code>.lang-menu{right:0}</code></td><td><code>inset-inline-end:0</code></td></tr>
+                <tr><td><code>border-left</code> نقل‌قول‌ها</td><td><code>border-inline-start</code></td></tr>
+                <tr><td><code>padding-left</code> لیست‌ها</td><td><code>padding-inline-start</code></td></tr>
+                <tr><td>جهت مارکی</td><td>keyframes را معکوس کنید</td></tr>
+                <tr><td>بلوک‌های کد</td><td><code>direction:ltr; text-align:left</code> بمانند</td></tr>
+                <tr><td>آیکان فلش‌ها</td><td>→ را ← کنید</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <pre data-lang="css" data-file="fa — تنظیمات پایه"><code><span class="k">:root</span>{
+  <span class="n">--font-display</span>:<span class="s">"Vazirmatn"</span>,sans-serif;
+  <span class="n">--font-body</span>:<span class="s">"Vazirmatn"</span>,sans-serif;
+}
+h1,h2,h3,h4{ <span class="n">letter-spacing</span>:normal; <span class="n">line-height</span>:1.35; }
+body{ <span class="n">line-height</span>:1.95; }
+pre,code{ <span class="n">direction</span>:ltr; <span class="n">text-align</span>:left; }</code></pre>
+        </section>
+
+        <!-- 17 -->
+        <section class="sec reveal" id="sec-deploy" data-title="استقرار">
+          <div class="sec-head"><span class="sec-num">۱۷</span><h2>استقرار</h2></div>
+          <div class="tabs" data-tabs>
+            <div class="tab-list" role="tablist" aria-label="سرور">
+              <button class="tab-btn" role="tab" aria-selected="true" data-tab="d-apache">Apache / cPanel</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="d-nginx">Nginx</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="d-static">هاست استاتیک</button>
+            </div>
+            <div class="tab-panel" id="d-apache" role="tabpanel">
+              <pre data-lang="apache" data-file=".htaccess"><code>ErrorDocument 404 /404.html
+
+&lt;IfModule mod_deflate.c&gt;
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_expires.c&gt;
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+&lt;/IfModule&gt;
+
+&lt;IfModule mod_headers.c&gt;
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "DENY"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+&lt;/IfModule&gt;</code></pre>
+            </div>
+            <div class="tab-panel" id="d-nginx" role="tabpanel" hidden>
+              <pre data-lang="nginx" data-file="server block"><code>server {
+  listen 443 ssl http2;
+  server_name heydar.kazemifakhr.ir;
+  root /var/www/hkf;
+  index index.html;
+
+  error_page 404 /404.html;
+  location / { try_files $uri $uri/ =404; }
+
+  gzip on;
+  gzip_types text/css application/javascript image/svg+xml;
+
+  location ~* \.(css|js|svg|woff2)$ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+  }
+  add_header X-Content-Type-Options nosniff;
+  add_header Referrer-Policy strict-origin-when-cross-origin;
+}</code></pre>
+            </div>
+            <div class="tab-panel" id="d-static" role="tabpanel" hidden>
+              <pre data-lang="bash" data-file="Netlify / Vercel / GitHub Pages"><code><span class="c"># همه فایل‌ها را آپلود کنید — بیلدی لازم نیست</span>
+netlify deploy --prod --dir .
+
+<span class="c"># یا</span>
+vercel --prod
+
+<span class="c"># GitHub Pages: Settings → Pages → Branch: main / root</span>
+<span class="c"># نکته: مسیرها نسبی‌اند، پس در ساب‌فولدر هم کار می‌کند</span></code></pre>
+            </div>
+          </div>
+        </section>
+
+        <!-- 18 -->
+        <section class="sec reveal" id="sec-newpage" data-title="ساخت صفحه جدید">
+          <div class="sec-head"><span class="sec-num">۱۸</span><h2>افزودن صفحهٔ جدید</h2></div>
+          <ol>
+            <li>یک صفحهٔ موجود را کپی کنید (مثلاً <code>about.html</code>).</li>
+            <li>متاها، <code>title</code>، <code>canonical</code> و JSON-LD را عوض کنید.</li>
+            <li><code>aria-current="page"</code> را روی لینک جدید بگذارید.</li>
+            <li>CSS اختصاصی داخل <code>&lt;style&gt;</code> را بازنویسی کنید.</li>
+            <li>بخش مشترک JS را نگه دارید، بخش صفحه را عوض کنید.</li>
+            <li>به ناوبری دسکتاپ، منوی موبایل و فوتر اضافه کنید.</li>
+            <li>اسکلت زیر حداقلِ لازم است:</li>
+          </ol>
+          <pre data-lang="html" data-file="new-page.html"><code><span class="t">&lt;!DOCTYPE html&gt;</span>
+<span class="t">&lt;html</span> <span class="n">lang</span>=<span class="s">"en"</span> <span class="n">dir</span>=<span class="s">"ltr"</span> <span class="n">data-theme</span>=<span class="s">"light"</span><span class="t">&gt;</span>
+<span class="t">&lt;head&gt;</span>
+  <span class="t">&lt;meta</span> <span class="n">charset</span>=<span class="s">"UTF-8"</span><span class="t">&gt;</span>
+  <span class="t">&lt;meta</span> <span class="n">name</span>=<span class="s">"viewport"</span> <span class="n">content</span>=<span class="s">"width=device-width, initial-scale=1.0"</span><span class="t">&gt;</span>
+  <span class="t">&lt;title&gt;</span>…<span class="t">&lt;/title&gt;</span>
+  <span class="t">&lt;link</span> <span class="n">rel</span>=<span class="s">"stylesheet"</span> <span class="n">href</span>=<span class="s">"assets/css/global.css"</span><span class="t">&gt;</span>
+  <span class="t">&lt;script&gt;</span><span class="c">/* اسکریپت ضد-FOUC تم — بخش ۰۷ */</span><span class="t">&lt;/script&gt;</span>
+  <span class="t">&lt;style&gt;</span><span class="c">/* CSS اختصاصی */</span><span class="t">&lt;/style&gt;</span>
+<span class="t">&lt;/head&gt;</span>
+<span class="t">&lt;body&gt;</span>
+  <span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"skip-link"</span> <span class="n">href</span>=<span class="s">"#main"</span><span class="t">&gt;</span>Skip to content<span class="t">&lt;/a&gt;</span>
+  <span class="c">&lt;!-- header + mobile menu مشترک --&gt;</span>
+  <span class="t">&lt;main</span> <span class="n">id</span>=<span class="s">"main"</span><span class="t">&gt;</span>
+    <span class="t">&lt;section</span> <span class="n">class</span>=<span class="s">"section"</span> <span class="n">id</span>=<span class="s">"top"</span><span class="t">&gt;</span>
+      <span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"container"</span><span class="t">&gt;</span>
+        <span class="t">&lt;p</span> <span class="n">class</span>=<span class="s">"kicker reveal"</span><span class="t">&gt;</span>// new page<span class="t">&lt;/p&gt;</span>
+        <span class="t">&lt;h1</span> <span class="n">class</span>=<span class="s">"h2 reveal"</span><span class="t">&gt;</span>…<span class="t">&lt;/h1&gt;</span>
+      <span class="t">&lt;/div&gt;</span>
+    <span class="t">&lt;/section&gt;</span>
+  <span class="t">&lt;/main&gt;</span>
+  <span class="c">&lt;!-- footer مشترک + اسکریپت مشترک --&gt;</span>
+<span class="t">&lt;/body&gt;&lt;/html&gt;</span></code></pre>
+        </section>
+
+        <!-- 19 -->
+        <section class="sec reveal" id="sec-patches" data-title="پچ‌های پیشنهادی">
+          <div class="sec-head"><span class="sec-num">۱۹</span><h2>پچ‌های پیشنهادی</h2></div>
+
+          <h3>۱) TOC خودکار برای همهٔ مقالات</h3>
+          <p>در <code>post.html</code> مقالاتی که از <code>&lt;template&gt;</code> می‌آیند، تیترهای بدون <code>id</code> دارند و TOC خالی می‌ماند. این قطعه را <strong>بلافاصله بعد از ساخت article و قبل از ساخت TOC</strong> اضافه کنید:</p>
+          <pre data-lang="js" data-file="post.html — auto-id"><code><span class="c">// به هر h2 بدون id، شناسهٔ یکتا بده</span>
+<span class="k">var</span> used = {};
+$$(<span class="s">'h2'</span>, article).forEach(<span class="k">function</span>(h, i){
+  <span class="k">if</span> (h.id) <span class="k">return</span>;
+  <span class="k">var</span> base = (h.textContent || <span class="s">'section'</span>).trim().toLowerCase()
+    .replace(/[^\w\u0600-\u06FF]+/g, <span class="s">'-'</span>).replace(/^-+|-+$/g, <span class="s">''</span>) || (<span class="s">'s'</span> + i);
+  <span class="k">var</span> id = base, n = <span class="n">2</span>;
+  <span class="k">while</span> (used[id] || d.getElementById(id)) id = base + <span class="s">'-'</span> + (n++);
+  used[id] = <span class="n">1</span>; h.id = id;
+});</code></pre>
+
+          <h3>۲) صفحهٔ ۴۰۴ باکلاس</h3>
+          <pre data-lang="html" data-file="404.html — بدنه"><code><span class="t">&lt;section</span> <span class="n">class</span>=<span class="s">"section"</span> <span class="n">style</span>=<span class="s">"min-height:80vh;display:grid;place-items:center"</span><span class="t">&gt;</span>
+  <span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"container"</span> <span class="n">style</span>=<span class="s">"text-align:center"</span><span class="t">&gt;</span>
+    <span class="t">&lt;p</span> <span class="n">class</span>=<span class="s">"kicker mono reveal"</span><span class="t">&gt;</span>$ curl -I /this-page<span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;h1</span> <span class="n">class</span>=<span class="s">"display reveal"</span> <span class="n">style</span>=<span class="s">"--d:60ms;font-size:clamp(4rem,14vw,9rem)"</span><span class="t">&gt;</span>404<span class="t">&lt;/h1&gt;</span>
+    <span class="t">&lt;p</span> <span class="n">class</span>=<span class="s">"reveal"</span> <span class="n">style</span>=<span class="s">"--d:120ms;max-width:44ch;margin:0 auto 28px"</span><span class="t">&gt;</span>
+      This route was never deployed. The rest of the system is healthy.
+    <span class="t">&lt;/p&gt;</span>
+    <span class="t">&lt;div</span> <span class="n">class</span>=<span class="s">"reveal"</span> <span class="n">style</span>=<span class="s">"--d:180ms;display:flex;gap:14px;justify-content:center;flex-wrap:wrap"</span><span class="t">&gt;</span>
+      <span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"btn btn-primary"</span> <span class="n">href</span>=<span class="s">"index.html"</span><span class="t">&gt;</span>Back home<span class="t">&lt;/a&gt;</span>
+      <span class="t">&lt;a</span> <span class="n">class</span>=<span class="s">"btn btn-ghost"</span> <span class="n">href</span>=<span class="s">"projects.html"</span><span class="t">&gt;</span>See the work<span class="t">&lt;/a&gt;</span>
+    <span class="t">&lt;/div&gt;</span>
+  <span class="t">&lt;/div&gt;</span>
+<span class="t">&lt;/section&gt;</span></code></pre>
+
+          <h3>۳) خروجی‌گرفتن assetها برای CSP سخت‌گیرانه</h3>
+          <ul>
+            <li>CSS هر صفحه → <code>assets/css/&lt;page&gt;.css</code></li>
+            <li>JS مشترک → <code>assets/js/core.js</code> و JS صفحه → <code>assets/js/&lt;page&gt;.js</code></li>
+            <li>سپس <code>script-src 'self'</code> بدون <code>unsafe-inline</code>.</li>
+          </ul>
+        </section>
+
+        <!-- 20 -->
+        <section class="sec reveal" id="sec-trouble" data-title="عیب‌یابی">
+          <div class="sec-head"><span class="sec-num">۲۰</span><h2>عیب‌یابی</h2></div>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>نشانه</th><th>علت</th><th>راه‌حل</th></tr></thead>
+              <tbody>
+                <tr><td>صفحه بدون استایل</td><td>مسیر CSS</td><td><code>assets/css/global.css</code> نسبت به محل فایل چک شود</td></tr>
+                <tr><td>پرش رنگ هنگام لود</td><td>نبود اسکریپت head</td><td>اسنیپت ضد-FOUC §۰۷ را اضافه کنید</td></tr>
+                <tr><td>محتوا نامرئی می‌ماند</td><td>خطای JS یا نبود کلاس <code>.js</code></td><td>کنسول را ببینید؛ اسکریپت head کلاس را می‌افزاید</td></tr>
+                <tr><td>فیلتر کار نمی‌کند</td><td>ناهماهنگی <code>data-cat</code></td><td>مقدار دکمه و کارت باید یکی باشد</td></tr>
+                <tr><td>مودال پروژه خالی</td><td>اسلاگ ناموجود</td><td><code>data-slug</code> باید در <code>PROJECTS</code> باشد</td></tr>
+                <tr><td>پست همیشه مقالهٔ پیش‌فرض</td><td>اسلاگ در META/template نیست</td><td>هر دو را اضافه کنید</td></tr>
+                <tr><td>TOC خالی</td><td>نبود <code>id</code> روی h2</td><td>پچ §۱۹ را اعمال کنید</td></tr>
+                <tr><td>کپی کار نمی‌کند</td><td>نبود HTTPS/localhost</td><td>روی سرور اجرا کنید؛ fallback خودکار هست</td></tr>
+                <tr><td>مارکی می‌پرد</td><td>حذف گروه دوم</td><td><code>.marquee-group</code> را دوبار بگذارید</td></tr>
+                <tr><td>گرید ناهماهنگ</td><td>spanها</td><td><code>packRows()</code> خودکار است؛ span دستی نگذارید</td></tr>
+                <tr><td>کارت‌ها تار و سنگین</td><td>blur زیاد</td><td>در استودیو blur/grain را کم کنید</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 21 -->
+        <section class="sec reveal" id="sec-browsers" data-title="پشتیبانی مرورگر">
+          <div class="sec-head"><span class="sec-num">۲۱</span><h2>پشتیبانی مرورگر</h2></div>
+          <div class="tbl-wrap">
+            <table class="doc-tbl">
+              <thead><tr><th>قابلیت</th><th>وضعیت</th><th>در صورت نبود</th></tr></thead>
+              <tbody>
+                <tr><td>Chrome / Edge / Firefox / Safari اخیر</td><td><b>کامل</b></td><td>—</td></tr>
+                <tr><td><code>backdrop-filter</code></td><td>اکثراً پشتیبانی</td><td>پس‌زمینهٔ نیمه‌شفاف باقی می‌ماند</td></tr>
+                <tr><td>View Transitions</td><td>پیشرو</td><td>ترنزیشن CSS جای‌گزین می‌شود</td></tr>
+                <tr><td>Web Animations API</td><td>گسترده</td><td>فیلتر بدون انیمیشن، همچنان درست</td></tr>
+                <tr><td>IntersectionObserver</td><td>گسترده</td><td>همهٔ المان‌ها فوراً نمایان می‌شوند</td></tr>
+                <tr><td><code>100dvh</code></td><td>موبایل مدرن</td><td>ارتفاع ثابت جای‌گزین</td></tr>
+                <tr><td>بدون JavaScript</td><td>قابل خواندن</td><td>محتوا دیده می‌شود؛ فیلتر/مودال غیرفعال</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <p>تمام — قالب آمادهٔ استفاده است. هر تغییری در توکن‌ها دادید، خروجی استودیو را در <code>global.css</code> بگذارید تا روی <strong>همهٔ صفحات</strong> اعمال شود.</p>
+          </div>
+          <p class="mono" style="font-size:.72rem;color:var(--faint)">// Designed &amp; Developed by HeydarKF (OS Heydar) — v1.0</p>
+        </section>
+
+        <nav class="sec-nav" aria-label="ناوبری بخش‌ها">
+          <button class="sn-btn prev" id="secPrev"><span>→ بخش قبلی</span><b id="secPrevTitle">—</b></button>
+          <button class="sn-btn next" id="secNext"><span>بخش بعدی ←</span><b id="secNextTitle">—</b></button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-row">
+      <a class="logo" href="index.html"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="footer-links" aria-label="فوتر">
+        <a href="about.html">About</a><a href="skills.html">Skills</a><a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a><a href="contact.html">Contact</a><a href="docs.html">Docs</a>
+      </nav>
+      <div class="footer-social">
+        <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+        <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="credit">Designed by <strong>HeydarKF (OS Heydar)</strong> · © <span id="year">2026</span> HeydarKF.</p>
+      <a class="to-top" href="#top">بازگشت به بالا ↑</a>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg">کپی شد</span>
+</div>
+
+<script>
+(function(){
+'use strict';
+var d=document, root=d.documentElement;
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s,c){return (c||d).querySelector(s);};
+var $$=function(s,c){return Array.prototype.slice.call((c||d).querySelectorAll(s));};
+
+/* ---------- toast + clipboard ---------- */
+var toast=$('#toast'), toastMsg=$('#toastMsg'), toastTimer=null;
+function showToast(m){ toastMsg.textContent=m; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(function(){toast.classList.remove('show');},2200); }
+function copyText(text, ok){
+  function done(){ showToast(ok); }
+  function fb(){ var ta=d.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    d.body.appendChild(ta); ta.select(); try{ d.execCommand('copy'); done(); }catch(e){ showToast('کپی ناموفق — دستی انتخاب کنید'); } ta.remove(); }
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done,fb); else fb();
+}
+
+/* ---------- shared chrome ---------- */
+var themeBtn=$('#themeToggle');
+function setTheme(t){ root.setAttribute('data-theme',t); try{localStorage.setItem('hkf-theme',t);}catch(e){} syncThemeBtns(); applyTokens(); }
+function syncThemeBtns(){ var dark=root.getAttribute('data-theme')==='dark'; $('#cLight').setAttribute('aria-pressed',String(!dark)); $('#cDark').setAttribute('aria-pressed',String(dark)); }
+themeBtn.addEventListener('click',function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
+$('#cLight').addEventListener('click',function(){ setTheme('light'); });
+$('#cDark').addEventListener('click',function(){ setTheme('dark'); });
+
+var header=$('#siteHeader'), progress=$('#docProgress'), tocPct=$('#tocPct'), ticking=false;
+var sections=$$('.sec'), tocLinks=[];
+function onScroll(){
+  if(ticking) return; ticking=true;
+  requestAnimationFrame(function(){
+    header.classList.toggle('is-scrolled', window.scrollY>24);
+    var max=d.documentElement.scrollHeight-innerHeight;
+    var pct=max>0?Math.min(100,Math.round(window.scrollY/max*100)):0;
+    progress.style.width=pct+'%'; tocPct.textContent=pct+'%';
+    var probe=innerHeight*0.32, active=sections.length?sections[0].id:null;
+    sections.forEach(function(s){ if(s.getBoundingClientRect().top<=probe) active=s.id; });
+    tocLinks.forEach(function(a){ if(a.getAttribute('href')==='#'+active) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+    updateSecNav(active);
+    ticking=false;
+  });
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onScroll,{passive:true});
+
+var lang=$('#lang'), langBtn=$('#langBtn');
+function closeLang(){ lang.classList.remove('is-open'); langBtn.setAttribute('aria-expanded','false'); }
+langBtn.addEventListener('click',function(e){ e.stopPropagation(); langBtn.setAttribute('aria-expanded',String(lang.classList.toggle('is-open'))); });
+d.addEventListener('click',function(e){ if(!lang.contains(e.target)) closeLang(); });
+
+var burger=$('#burgerBtn'), menu=$('#mobileMenu'), lastFocus=null;
+function openMenu(){ lastFocus=d.activeElement; d.body.classList.add('menu-open'); burger.setAttribute('aria-expanded','true'); burger.setAttribute('aria-label','بستن منو'); var f=$('.mobile-nav a',menu); if(f) setTimeout(function(){f.focus();},350); }
+function closeMenu(){ d.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded','false'); burger.setAttribute('aria-label','منو'); if(lastFocus) lastFocus.focus(); }
+burger.addEventListener('click',function(){ d.body.classList.contains('menu-open')?closeMenu():openMenu(); });
+menu.addEventListener('click',function(e){ if(e.target.closest('a')) closeMenu(); });
+
+if('IntersectionObserver' in window && !reduced){
+  var ro=new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting){ x.target.classList.add('is-in'); ro.unobserve(x.target); } }); },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  $$('.reveal').forEach(function(el){ ro.observe(el); });
+} else $$('.reveal').forEach(function(el){ el.classList.add('is-in'); });
+
+$('#year').textContent=new Date().getFullYear();
+
+/* ---------- code blocks ---------- */
+$$('pre[data-lang]').forEach(function(pre){
+  var wrap=d.createElement('div'); wrap.className='code-block';
+  var bar=d.createElement('div'); bar.className='code-bar';
+  bar.innerHTML='<span class="code-lang">'+(pre.dataset.lang||'code')+'</span>'+
+                '<span class="code-file">'+(pre.dataset.file||'')+'</span>'+
+                '<button class="code-copy" type="button">copy</button>';
+  pre.parentNode.insertBefore(wrap,pre); wrap.appendChild(bar); wrap.appendChild(pre);
+  $('.code-copy',bar).addEventListener('click',function(){
+    copyText(pre.innerText,'کد کپی شد ✓');
+    var b=this; b.classList.add('done'); b.textContent='copied ✓';
+    setTimeout(function(){ b.classList.remove('done'); b.textContent='copy'; },1800);
+  });
+});
+
+/* ---------- tabs ---------- */
+$$('[data-tabs]').forEach(function(box){
+  var btns=$$('.tab-btn',box), panels=$$('.tab-panel',box);
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      btns.forEach(function(x){ x.setAttribute('aria-selected',String(x===b)); });
+      panels.forEach(function(p){ p.hidden = p.id!==b.dataset.tab; });
+    });
+  });
+});
+
+/* ---------- TOC ---------- */
+var tocList=$('#tocList');
+tocList.innerHTML=sections.map(function(s,i){
+  return '<a class="toc-link" href="#'+s.id+'"><span class="n">'+String(i+1).padStart(2,'0')+'</span>'+s.dataset.title+'</a>';
+}).join('');
+tocLinks=$$('.toc-link',tocList);
+tocLinks.forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=$(a.getAttribute('href')); if(!t) return;
+    e.preventDefault();
+    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-104,behavior:reduced?'auto':'smooth'});
+    try{ history.replaceState(null,'',a.getAttribute('href')); }catch(err){}
+  });
+});
+function updateSecNav(active){
+  var i=sections.map(function(s){return s.id;}).indexOf(active);
+  var p=sections[i-1], n=sections[i+1];
+  var pb=$('#secPrev'), nb=$('#secNext');
+  pb.disabled=!p; nb.disabled=!n;
+  $('#secPrevTitle').textContent=p?p.dataset.title:'ابتدای سند';
+  $('#secNextTitle').textContent=n?n.dataset.title:'پایان سند';
+  pb.dataset.target=p?p.id:''; nb.dataset.target=n?n.id:'';
+}
+$('#secPrev').addEventListener('click',function(){ jump(this.dataset.target); });
+$('#secNext').addEventListener('click',function(){ jump(this.dataset.target); });
+function jump(id){ if(!id) return; var t=d.getElementById(id); if(!t) return;
+  window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-104,behavior:reduced?'auto':'smooth'}); }
+
+/* ---------- search ---------- */
+var searchIn=$('#docSearch'), searchCount=$('#searchCount');
+var index=sections.map(function(s){ return {id:s.id,title:s.dataset.title,text:(s.textContent||'').toLowerCase(),el:s}; });
+function clearMarks(){
+  $$('mark',d).forEach(function(m){
+    if(m.closest('.studio')||m.closest('.toc-card')) return;
+    var p=m.parentNode; p.replaceChild(d.createTextNode(m.textContent),m); p.normalize();
+  });
+}
+function markIn(el,q){
+  var walker=d.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+    if(!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+    var p=n.parentNode; if(!p||p.nodeName==='SCRIPT'||p.nodeName==='STYLE'||p.nodeName==='MARK') return NodeFilter.FILTER_REJECT;
+    return n.nodeValue.toLowerCase().indexOf(q)>-1?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+  }});
+  var nodes=[],n; while((n=walker.nextNode())) nodes.push(n);
+  nodes.forEach(function(node){
+    var txt=node.nodeValue, low=txt.toLowerCase(), frag=d.createDocumentFragment(), from=0, at;
+    while((at=low.indexOf(q,from))>-1){
+      if(at>from) frag.appendChild(d.createTextNode(txt.slice(from,at)));
+      var m=d.createElement('mark'); m.textContent=txt.slice(at,at+q.length); frag.appendChild(m);
+      from=at+q.length;
+    }
+    if(from<txt.length) frag.appendChild(d.createTextNode(txt.slice(from)));
+    node.parentNode.replaceChild(frag,node);
+  });
+}
+var sTimer=null;
+searchIn.addEventListener('input',function(){
+  clearTimeout(sTimer);
+  sTimer=setTimeout(function(){
+    var q=searchIn.value.trim().toLowerCase();
+    clearMarks();
+    if(!q){ tocLinks.forEach(function(a){a.classList.remove('hide');}); searchCount.textContent=''; return; }
+    var hits=index.filter(function(x){ return x.text.indexOf(q)>-1; });
+    tocLinks.forEach(function(a){ a.classList.toggle('hide', !hits.some(function(h){return '#'+h.id===a.getAttribute('href');})); });
+    searchCount.textContent=hits.length? hits.length+' بخش یافت شد' : 'چیزی پیدا نشد';
+    if(q.length>=2) hits.forEach(function(h){ markIn(h.el,q); });
+  },160);
+});
+searchIn.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){ var first=tocLinks.filter(function(a){return !a.classList.contains('hide');})[0]; if(first){ e.preventDefault(); jump(first.getAttribute('href').slice(1)); } }
+});
+
+/* ---------- keys ---------- */
+d.addEventListener('keydown',function(e){
+  var typing=/INPUT|TEXTAREA|SELECT/.test(d.activeElement.tagName);
+  if(e.key==='Escape'){ closeLang(); if(d.body.classList.contains('menu-open')) closeMenu();
+    else if(searchIn.value){ searchIn.value=''; searchIn.dispatchEvent(new Event('input')); } return; }
+  if(e.key==='/'&&!typing){ e.preventDefault(); searchIn.focus(); return; }
+  if(!typing&&e.key==='['){ jump($('#secPrev').dataset.target); }
+  if(!typing&&e.key===']'){ jump($('#secNext').dataset.target); }
+  if(e.key==='Tab'&&d.body.classList.contains('menu-open')){
+    var f=$$('a, button',menu).concat([burger]), a=f[0], b=f[f.length-1];
+    if(e.shiftKey&&d.activeElement===a){ e.preventDefault(); b.focus(); }
+    else if(!e.shiftKey&&d.activeElement===b){ e.preventDefault(); a.focus(); }
+  }
+});
+
+/* ================= TOKEN STUDIO ================= */
+var DEF={accent:'#009966',ink:'auto',radius:20,blur:18,glass:62,grain:5,glow:10,shadow:'soft',width:1200,fs:100,motion:'normal',grid:true};
+var S=Object.assign({},DEF);
+try{ var saved=JSON.parse(localStorage.getItem('hkf-docs-studio')||'null'); if(saved) S=Object.assign(S,saved); }catch(e){}
+
+function hex2rgb(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(function(c){return c+c;}).join('');
+  return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+function rgb2hex(r,g,b){ return '#'+[r,g,b].map(function(v){ return Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,'0'); }).join(''); }
+function rgb2hsl(r,g,b){ r/=255;g/=255;b/=255; var mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2,dd=mx-mn;
+  if(dd){ s=l>.5?dd/(2-mx-mn):dd/(mx+mn);
+    h=mx===r?((g-b)/dd+(g<b?6:0)):mx===g?((b-r)/dd+2):((r-g)/dd+4); h*=60; }
+  return [h,s*100,l*100]; }
+function hsl2hex(h,s,l){ h=((h%360)+360)%360; s/=100; l/=100;
+  var c=(1-Math.abs(2*l-1))*s, x=c*(1-Math.abs((h/60)%2-1)), m=l-c/2, r=0,g=0,b=0;
+  if(h<60){r=c;g=x;} else if(h<120){r=x;g=c;} else if(h<180){g=c;b=x;}
+  else if(h<240){g=x;b=c;} else if(h<300){r=x;b=c;} else {r=c;b=x;}
+  return rgb2hex((r+m)*255,(g+m)*255,(b+m)*255); }
+function lum(hex){ var c=hex2rgb(hex).map(function(v){ v/=255; return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4); });
+  return .2126*c[0]+.7152*c[1]+.0722*c[2]; }
+function rgba(hex,a){ var c=hex2rgb(hex); return 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')'; }
+function shift(hex,dl,ds){ var h=rgb2hsl.apply(null,hex2rgb(hex)); return hsl2hex(h[0],Math.max(0,Math.min(100,h[1]+(ds||0))),Math.max(0,Math.min(100,h[2]+dl))); }
+
+var SWATCHES=['#009966','#2b7f8c','#35b8c9','#4f83c2','#8b6fc9','#d64550','#d8b56a','#7cb342'];
+$('#swatches').innerHTML=SWATCHES.map(function(c){
+  return '<button class="sw" type="button" data-c="'+c+'" style="background:'+c+'" aria-pressed="false" aria-label="رنگ '+c+'"></button>';
+}).join('');
+$$('.sw').forEach(function(b){ b.addEventListener('click',function(){ S.accent=b.dataset.c; syncInputs(); applyTokens(); }); });
+
+var MOTION={calm:['.7s','.35s'],normal:['.45s','.25s'],snappy:['.22s','.12s'],off:['.01ms','.01ms']};
+var SHADOWS={
+  flat:['0 1px 2px rgba(14,20,17,.04)','0 2px 6px rgba(14,20,17,.05)'],
+  soft:['0 1px 2px rgba(14,20,17,.04), 0 10px 30px -12px rgba(14,20,17,.10)','0 2px 4px rgba(14,20,17,.05), 0 24px 48px -16px rgba(14,20,17,.16)'],
+  deep:['0 2px 4px rgba(14,20,17,.07), 0 18px 44px -14px rgba(14,20,17,.20)','0 4px 8px rgba(14,20,17,.09), 0 36px 72px -18px rgba(14,20,17,.30)']
+};
+var SHADOWS_D={
+  flat:['0 1px 2px rgba(0,0,0,.3)','0 2px 6px rgba(0,0,0,.35)'],
+  soft:['0 1px 2px rgba(0,0,0,.30), 0 12px 32px -12px rgba(0,0,0,.50)','0 2px 4px rgba(0,0,0,.35), 0 28px 56px -16px rgba(0,0,0,.60)'],
+  deep:['0 2px 4px rgba(0,0,0,.4), 0 20px 48px -14px rgba(0,0,0,.7)','0 4px 8px rgba(0,0,0,.45), 0 40px 80px -18px rgba(0,0,0,.85)']
+};
+
+var derived={};
+function applyTokens(){
+  var dark=root.getAttribute('data-theme')==='dark';
+  var A=S.accent, hsl=rgb2hsl.apply(null,hex2rgb(A));
+  var strong=shift(A,8,4), deep=shift(A,-10,0);
+  var inkL = S.ink==='deep'?Math.min(hsl[2],26) : S.ink==='bright'?Math.max(hsl[2],52) : Math.min(hsl[2],32);
+  var inkLight=hsl2hex(hsl[0],Math.min(hsl[1],85),inkL);
+  var inkDark=hsl2hex(hsl[0],Math.min(hsl[1],88),S.ink==='deep'?58:Math.max(hsl[2],64));
+  var ink=dark?inkDark:inkLight;
+  var onAccent=lum(A)>0.42?'#052018':'#ffffff';
+  var soft=rgba(A,dark?.13:.10), line=rgba(A,dark?.32:.28);
+  var glowA=rgba(A,S.glow/100);
+  var glowB=rgba(hsl2hex(hsl[0]+165,Math.min(hsl[1],70),hsl[2]),S.glow/100*0.75);
+  var glowC=rgba(hsl2hex(hsl[0]+42,Math.min(hsl[1],62),Math.min(70,hsl[2]+14)),S.glow/100*0.6);
+  var sh=(dark?SHADOWS_D:SHADOWS)[S.shadow];
+  var glass=dark?'rgba(18,23,22,'+(S.glass/100)+')':'rgba(255,255,255,'+(S.glass/100)+')';
+  var mo=MOTION[S.motion];
+
+  var map={
+    '--accent':A,'--accent-strong':strong,'--accent-deep':deep,'--accent-ink':ink,
+    '--accent-soft':soft,'--accent-line':line,'--on-accent':onAccent,
+    '--shadow-accent':'0 10px 28px -8px '+rgba(A,.35),
+    '--glow-a':glowA,'--glow-b':glowB,'--glow-c':glowC,
+    '--r-sm':Math.round(S.radius*.6)+'px','--r-md':S.radius+'px','--r-lg':Math.round(S.radius*1.2)+'px',
+    '--glass-blur':S.blur+'px','--glass':glass,'--grain':(S.grain/100),
+    '--container':S.width+'px','--shadow-1':sh[0],'--shadow-2':sh[1],
+    '--t-med':mo[0],'--t-fast':mo[1],'--grid-op':S.grid?(dark?.35:.5):0
+  };
+  Object.keys(map).forEach(function(k){ root.style.setProperty(k,map[k]); });
+  root.style.fontSize=(16*S.fs/100)+'px';
+  root.setAttribute('data-motion',S.motion==='off'?'off':'on');
+
+  derived={accent:A,strong:strong,deep:deep,ink:ink,soft:soft,line:line,onAccent:onAccent,
+    glowA:glowA,glowB:glowB,glowC:glowC,glass:glass,sh:sh,inkLight:inkLight,inkDark:inkDark,mo:mo};
+
+  /* readouts */
+  var set=function(id,v){ var el=d.getElementById(id); if(el) el.textContent=v; };
+  set('vAccent',A.toUpperCase()); set('vInk',S.ink); set('vRadius',S.radius+'px'); set('vBlur',S.blur+'px');
+  set('vGlass',S.glass+'%'); set('vGrain',S.grain+'%'); set('vGlow',S.glow+'%'); set('vShadow',S.shadow);
+  set('vWidth',S.width+'px'); set('vFs',S.fs+'%'); set('vMotion',S.motion);
+  set('spHex',A.toUpperCase()); set('spRadius',S.radius+'px');
+  var live={accent:A.toUpperCase(),ink:ink,soft:soft,onAccent:onAccent,
+    bg:dark?'#0b0f0e':'#f6f8f7',glass:'α '+S.glass+'%',blur:S.blur+'px',
+    radius:S.radius+'px / '+Math.round(S.radius*1.2)+'px',width:S.width+'px',motion:mo[0],
+    grain:S.grain+'%',glow:S.glow+'%'};
+  $$('[data-live]').forEach(function(el){ if(live[el.dataset.live]!==undefined) el.textContent=live[el.dataset.live]; });
+  $$('.sw').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.c.toLowerCase()===A.toLowerCase())); });
+  $('#cGrid').setAttribute('aria-pressed',String(S.grid));
+  $$('input[type=range].rng').forEach(paintRange);
+  try{ localStorage.setItem('hkf-docs-studio',JSON.stringify(S)); }catch(e){}
+}
+function paintRange(r){ var min=+r.min,max=+r.max; r.style.setProperty('--fill',((r.value-min)/(max-min)*100)+'%'); }
+function syncInputs(){
+  $('#cAccent').value=S.accent; $('#cHex').value=S.accent; $('#cInk').value=S.ink;
+  $('#cRadius').value=S.radius; $('#cBlur').value=S.blur; $('#cGlass').value=S.glass;
+  $('#cGrain').value=S.grain; $('#cGlow').value=S.glow; $('#cShadow').value=S.shadow;
+  $('#cWidth').value=S.width; $('#cFs').value=S.fs; $('#cMotion').value=S.motion;
+}
+function bindRange(id,key,cast){ var el=$(id); el.addEventListener('input',function(){ S[key]=cast?cast(el.value):+el.value; applyTokens(); }); }
+bindRange('#cRadius','radius'); bindRange('#cBlur','blur'); bindRange('#cGlass','glass');
+bindRange('#cGrain','grain'); bindRange('#cGlow','glow'); bindRange('#cWidth','width'); bindRange('#cFs','fs');
+$('#cAccent').addEventListener('input',function(){ S.accent=this.value; $('#cHex').value=this.value; applyTokens(); });
+$('#cHex').addEventListener('input',function(){
+  var v=this.value.trim(); if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){ S.accent=v; $('#cAccent').value=v.length===4?'#'+v.slice(1).split('').map(function(c){return c+c;}).join(''):v; applyTokens(); }
+});
+$('#cInk').addEventListener('change',function(){ S.ink=this.value; applyTokens(); });
+$('#cShadow').addEventListener('change',function(){ S.shadow=this.value; applyTokens(); });
+$('#cMotion').addEventListener('change',function(){ S.motion=this.value; applyTokens(); });
+$('#cGrid').addEventListener('click',function(){ S.grid=!S.grid; applyTokens(); });
+
+$('#btnReset').addEventListener('click',function(){ S=Object.assign({},DEF); syncInputs(); syncThemeBtns(); applyTokens(); showToast('به پیش‌فرض قالب برگشت ↺'); });
+$('#btnRandom').addEventListener('click',function(){
+  var hues=[152,190,38,350,215,275,100,168];
+  var h=hues[Math.floor(Math.random()*hues.length)];
+  S.accent=hsl2hex(h,58+Math.random()*26,36+Math.random()*10);
+  S.radius=10+Math.round(Math.random()*20); S.blur=6+Math.round(Math.random()*24);
+  S.grain=2+Math.round(Math.random()*8); S.glow=5+Math.round(Math.random()*14);
+  S.glass=45+Math.round(Math.random()*40);
+  syncInputs(); applyTokens(); showToast('پالت تازه ساخته شد ⚄');
+});
+function exportCSS(){
+  var v=derived;
+  return '/* HeydarKF — generated by Token Studio */\n'+
+  ':root{\n'+
+  '  --accent: '+v.accent+';\n  --accent-strong: '+v.strong+';\n  --accent-deep: '+v.deep+';\n'+
+  '  --accent-ink: '+v.inkLight+';\n  --accent-soft: '+rgba(v.accent,.10)+';\n  --accent-line: '+rgba(v.accent,.28)+';\n'+
+  '  --on-accent: '+v.onAccent+';\n  --shadow-accent: 0 10px 28px -8px '+rgba(v.accent,.35)+';\n'+
+  '  --glow-a: '+rgba(v.accent,S.glow/100)+';\n  --glow-b: '+v.glowB+';\n  --glow-c: '+v.glowC+';\n'+
+  '  --r-sm: '+Math.round(S.radius*.6)+'px;\n  --r-md: '+S.radius+'px;\n  --r-lg: '+Math.round(S.radius*1.2)+'px;\n'+
+  '  --glass: rgba(255,255,255,'+(S.glass/100)+');\n  --glass-blur: '+S.blur+'px;\n'+
+  '  --container: '+S.width+'px;\n  --shadow-1: '+SHADOWS[S.shadow][0]+';\n  --shadow-2: '+SHADOWS[S.shadow][1]+';\n'+
+  '  --t-med: '+v.mo[0]+';\n  --t-fast: '+v.mo[1]+';\n}\n\n'+
+  '[data-theme="dark"]{\n'+
+  '  --accent-ink: '+v.inkDark+';\n  --accent-soft: '+rgba(v.accent,.13)+';\n  --accent-line: '+rgba(v.accent,.32)+';\n'+
+  '  --glass: rgba(18,23,22,'+(S.glass/100)+');\n'+
+  '  --shadow-1: '+SHADOWS_D[S.shadow][0]+';\n  --shadow-2: '+SHADOWS_D[S.shadow][1]+';\n}\n';
+}
+$('#btnCopyCss').addEventListener('click',function(){ copyText(exportCSS(),'CSS توکن‌ها کپی شد ✓'); });
+$('#btnDownload').addEventListener('click',function(){
+  var blob=new Blob([exportCSS()],{type:'text/css'});
+  var url=URL.createObjectURL(blob), a=d.createElement('a');
+  a.href=url; a.download='heydarkf-tokens.css'; d.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+  showToast('فایل توکن دانلود شد ✓');
+});
+
+syncInputs(); syncThemeBtns(); applyTokens(); onScroll();
+var h=location.hash.replace('#',''); if(h&&d.getElementById(h)) setTimeout(function(){ jump(h); },260);
+})();
+</script>
+</body>
+</html>

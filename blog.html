@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — HeydarKF | Field Notes from the Workshop</title>
+  <meta name="description" content="Essays by Heydar Kazemi Fakhr on pure-PHP architecture, security, AI agents, performance and the craft of code — written while building, not after.">
+  <meta name="author" content="Heydar Kazemi Fakhr">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f6f8f7">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f0e">
+  <link rel="canonical" href="https://heydar.kazemifakhr.ir/blog.html">
+  <link rel="alternate" hreflang="fa" href="https://heydar.kazemifakhr.ir/fa/blog.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HeydarKF">
+  <meta property="og:title" content="Blog — HeydarKF">
+  <meta property="og:description" content="Field notes from the workshop. Engineering, security, agents, craft.">
+  <meta property="og:url" content="https://heydar.kazemifakhr.ir/blog.html">
+  <meta property="og:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blog — HeydarKF">
+  <meta name="twitter:description" content="Field notes from the workshop.">
+  <meta name="twitter:image" content="https://heydar.kazemifakhr.ir/assets/og-cover.png">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0f0e'/%3E%3Ctext x='12' y='42' font-family='monospace' font-size='26' font-weight='bold' fill='%2300c98a'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/global.css">
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      try {
+        var t = localStorage.getItem('hkf-theme');
+        if (!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "HeydarKF — Field Notes",
+    "url": "https://heydar.kazemifakhr.ir/blog.html",
+    "author": { "@type": "Person", "name": "Heydar Kazemi Fakhr", "alternateName": "HeydarKF" }
+  }
+  </script>
+
+  <!-- ============ Page CSS (Blog) ============ -->
+  <style>
+    :root {
+      --crimson: #d64550;
+      --blue: #4f83c2;
+      --teal: #2b7f8c;
+      --cyan: #35b8c9;
+      --amber: #d8b56a;
+      --bar-top: 86px;
+      --reader-fs: 1.02rem;
+    }
+
+    /* ---------- Masthead ---------- */
+    .masthead { position: relative; padding: calc(var(--header-offset) + 18px) 0 46px; }
+    .masthead::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 75% 90% at 22% 0%, #000 20%, transparent 72%);
+      mask-image: radial-gradient(ellipse 75% 90% at 22% 0%, #000 20%, transparent 72%);
+      opacity: .5; pointer-events: none;
+    }
+    .masthead::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(620px 340px at 88% 8%, rgba(216,181,106,.10), transparent 70%);
+      pointer-events: none;
+    }
+    .vol-line {
+      position: relative;
+      display: flex; align-items: center; gap: 16px;
+      font-family: var(--font-mono); font-size: .66rem; letter-spacing: .22em;
+      color: var(--faint); text-transform: uppercase;
+      padding-bottom: 16px; margin-bottom: 26px;
+      border-bottom: 1px solid var(--line-2);
+    }
+    .vol-line .rule { flex: 1; height: 1px; background: var(--line); }
+    .vol-line b { color: var(--accent-ink); font-weight: 700; }
+    .mast-grid { position: relative; display: grid; grid-template-columns: minmax(0,1.4fr) minmax(280px,.8fr); gap: clamp(30px,5vw,64px); align-items: end; }
+    .mast-title-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+    .b-title { font-size: clamp(2.6rem, 5.6vw, 4.4rem); letter-spacing: -.035em; }
+    .b-title .dot { color: var(--accent-ink); }
+    .seal { position: relative; width: 96px; height: 96px; flex: none; display: grid; place-items: center; }
+    .seal-disc { position: absolute; inset: 0; border-radius: 50%; background: var(--glass); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--glass-line); box-shadow: var(--shadow-1); }
+    .seal svg { position: absolute; inset: 0; animation: spin 24s linear infinite; }
+    .seal text { font-family: var(--font-mono); font-size: 8.6px; letter-spacing: 2.2px; fill: var(--muted); }
+    .seal-core { position: relative; font-family: var(--font-mono); font-weight: 700; font-size: .95rem; color: var(--accent-ink); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .b-lede { font-size: 1.02rem; max-width: 50ch; margin-top: 14px; }
+    .index-card { padding: 22px 24px; }
+    .index-card:hover { transform: none; }
+    .index-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+    .index-head b { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .2em; color: var(--faint); font-weight: 500; }
+    .index-head span { font-family: var(--font-mono); font-size: .64rem; color: var(--accent-ink); }
+    .index-list { display: flex; flex-direction: column; }
+    .index-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 6px; border-top: 1px solid var(--line);
+      font-size: .88rem; color: var(--muted); text-align: left; width: 100%;
+      transition: color var(--t-fast) var(--ease), padding-left var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease);
+      border-radius: 6px;
+    }
+    .index-item:first-child { border-top: 0; }
+    .index-item:hover { color: var(--ink); padding-left: 12px; background: var(--accent-soft); }
+    .index-item i { width: 8px; height: 8px; border-radius: 3px; flex: none; }
+    .index-item sup { margin-left: auto; font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .index-foot { margin-top: 12px; font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+
+    /* ---------- Featured spread ---------- */
+    .featured-post { position: relative; padding-bottom: 34px; }
+    .fp-card {
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr);
+      gap: clamp(26px,4vw,48px);
+      padding: clamp(26px,4vw,44px);
+    }
+    .fp-copy { display: flex; flex-direction: column; gap: 15px; position: relative; }
+    .fp-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-mono); font-size: .68rem; color: var(--faint); }
+    .cat-chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: var(--r-pill); font-family: var(--font-mono); font-size: .64rem; font-weight: 500; border: 1px solid var(--line); color: var(--muted); }
+    .cat-chip i { width: 7px; height: 7px; border-radius: 50%; }
+    .fp-title { font-size: clamp(1.7rem, 3.2vw, 2.5rem); letter-spacing: -.03em; }
+    .fp-title a { text-decoration: none; transition: color var(--t-fast) var(--ease); }
+    .fp-title a:hover { color: var(--accent-ink); }
+    .fp-excerpt { font-size: .98rem; max-width: 52ch; }
+    .fp-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .byline { display: flex; align-items: center; gap: 11px; margin-top: auto; padding-top: 6px; }
+    .avatar { width: 38px; height: 38px; border-radius: 50%; flex: none; background: linear-gradient(140deg, var(--accent), var(--teal)); display: grid; place-items: center; font-family: var(--font-mono); font-size: .72rem; font-weight: 700; color: #052018; }
+    .byline b { display: block; font-size: .86rem; font-weight: 600; color: var(--ink); }
+    .byline span { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .fp-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .fp-cover-btn {
+      position: relative; display: block; width: 100%; min-height: 320px;
+      border-radius: var(--r-md); overflow: hidden; text-align: left;
+      border: 1px solid var(--line); box-shadow: var(--shadow-1);
+      transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+    }
+    .fp-cover-btn:hover { transform: translateY(-4px); box-shadow: var(--shadow-2); }
+    .fp-pin {
+      position: absolute; top: 14px; left: 14px; z-index: 3;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 13px; border-radius: var(--r-pill);
+      background: rgba(13,21,18,.6);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.14);
+      font-family: var(--font-mono); font-size: .62rem; color: #e8f2ee;
+    }
+    .fp-pin i { color: var(--amber); font-style: normal; }
+
+    /* ---------- Covers ---------- */
+    .cv { position: absolute; inset: 0; overflow: hidden; }
+    .cv::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .cv-light::before { background-image: linear-gradient(rgba(16,20,19,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(16,20,19,.05) 1px, transparent 1px); }
+    [data-theme="dark"] .cv-light::before { background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); }
+    .cv-inner { position: absolute; inset: 0; transition: transform .6s var(--ease); }
+    .post-card:hover .cv-inner, .fp-cover-btn:hover .cv-inner, .reader-cover:hover .cv-inner { transform: scale(1.05); }
+    .cv-glyph { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-family: var(--font-mono); font-weight: 700; line-height: 1; }
+    .cv-chip {
+      position: absolute; padding: 5px 11px; border-radius: var(--r-pill);
+      font-family: var(--font-mono); font-size: .6rem;
+      background: rgba(13,21,18,.55); border: 1px solid rgba(255,255,255,.14); color: #cfe0d8;
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .cv-light .cv-chip { background: rgba(255,255,255,.65); color: #3c4642; border-color: rgba(16,20,19,.1); }
+    [data-theme="dark"] .cv-light .cv-chip { background: rgba(13,21,18,.55); color: #cfe0d8; border-color: rgba(255,255,255,.14); }
+
+    .cv-1 { background: linear-gradient(150deg, #0f231c, #14382c 55%, #0d1a15); }
+    .cv-1 .cv-glyph { font-size: 5.4rem; color: #3ecf9a; opacity: .9; }
+    .cv-1 .strike { position: absolute; left: 50%; top: 68%; transform: translate(-50%,-50%) rotate(-4deg); font-family: var(--font-mono); font-size: .8rem; color: #7d8f88; text-decoration: line-through; text-decoration-color: var(--crimson); text-decoration-thickness: 2px; }
+    .cv-2 { background: linear-gradient(150deg, #241114, #3a1a1f 55%, #1c0e11); }
+    .cv-2 .rings i { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); border: 1.4px solid rgba(214,69,80,.55); border-radius: 50%; }
+    .cv-2 .rings i:nth-child(1) { width: 60px; height: 60px; }
+    .cv-2 .rings i:nth-child(2) { width: 110px; height: 110px; opacity: .7; }
+    .cv-2 .rings i:nth-child(3) { width: 160px; height: 160px; opacity: .4; }
+    .cv-2 .cross { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; transform: translate(-50%,-50%); }
+    .cv-2 .cross::before, .cv-2 .cross::after { content: ""; position: absolute; background: var(--crimson); }
+    .cv-2 .cross::before { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); }
+    .cv-2 .cross::after { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%); }
+    .cv-3 { background: linear-gradient(150deg, #0f2224, #14343a 55%, #0d1a1c); }
+    .cv-3 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cv-3 line { stroke: var(--cyan); stroke-width: 1.3; stroke-dasharray: 4 5; opacity: .7; }
+    .cv-3 .nd { position: absolute; width: 26px; height: 26px; border-radius: 50%; transform: translate(-50%,-50%); background: #0d1a1c; border: 1.5px solid var(--cyan); }
+    .cv-3 .stamp { position: absolute; right: 12%; bottom: 16%; transform: rotate(-8deg); padding: 5px 12px; border: 1.6px solid var(--cyan); border-radius: 6px; font-family: var(--font-mono); font-size: .62rem; color: var(--cyan); letter-spacing: .18em; }
+    .cv-4 { background: linear-gradient(150deg, #f2ecdd, #e9dfc8 60%, #e0d4b8); }
+    [data-theme="dark"] .cv-4 { background: linear-gradient(150deg, #201c13, #2a2418 60%, #191610); }
+    .cv-4 .rule { position: absolute; left: 12%; right: 12%; height: 1.4px; background: rgba(160,130,70,.4); }
+    .cv-4 .marg { position: absolute; width: 9px; height: 9px; border-radius: 50%; background: var(--amber); }
+    .cv-4 .codeline { position: absolute; left: 12%; right: 20%; height: 16px; border-radius: 5px; background: rgba(0,153,102,.16); border: 1px solid var(--accent-line); }
+    .cv-5 { background: linear-gradient(150deg, #101a26, #16283c 55%, #0d1520); }
+    .cv-5 .hist { position: absolute; left: 12%; right: 12%; bottom: 22%; height: 46%; display: flex; align-items: flex-end; gap: 6px; }
+    .cv-5 .hist i { flex: 1; border-radius: 3px 3px 1px 1px; background: linear-gradient(180deg, var(--blue), rgba(79,131,194,.25)); height: var(--h); }
+    .cv-5 .budget { position: absolute; left: 10%; right: 10%; top: 34%; border-top: 2px dashed var(--crimson); }
+    .cv-6 { background: linear-gradient(150deg, #122019, #1a3026 55%, #0e1a14); }
+    .cv-6 .field { position: absolute; left: 16%; right: 16%; top: 34%; height: 34px; border-radius: 9px; border: 2px solid var(--crimson); background: rgba(255,255,255,.05); }
+    .cv-6 .field::after { content: ""; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 46%; height: 6px; border-radius: 3px; background: rgba(255,255,255,.2); }
+    .cv-6 .shield { position: absolute; left: 50%; top: 66%; transform: translate(-50%,-50%); color: #3ecf9a; }
+    .cv-7 { background: linear-gradient(150deg, #0f1e22, #143036 55%, #0d181c); }
+    .cv-7 .layer { position: absolute; left: 20%; right: 20%; height: 20px; border-radius: 7px; border: 1.4px solid rgba(53,184,201,.5); background: rgba(53,184,201,.1); }
+    .cv-7 .layer:nth-child(1) { top: 26%; }
+    .cv-7 .layer:nth-child(2) { top: 42%; left: 24%; right: 24%; opacity: .8; }
+    .cv-7 .layer:nth-child(3) { top: 58%; left: 28%; right: 28%; opacity: .6; }
+    .cv-7 .clock { position: absolute; right: 12%; top: 16%; width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--amber); }
+    .cv-7 .clock::after { content: ""; position: absolute; left: 50%; top: 50%; width: 2px; height: 13px; background: var(--amber); transform-origin: top center; transform: translate(-50%,0) rotate(140deg); }
+    .cv-8 { background: linear-gradient(150deg, #1d1a12, #262117 50%, #101b16 50%, #14261e); }
+    .cv-8 .half { position: absolute; top: 18%; bottom: 18%; width: 34%; display: flex; flex-direction: column; gap: 9px; }
+    .cv-8 .half.l { left: 10%; } .cv-8 .half.r { right: 10%; }
+    .cv-8 .half i { height: 6px; border-radius: 3px; }
+    .cv-8 .half.l i { background: rgba(216,181,106,.4); }
+    .cv-8 .half.l i:nth-child(2) { width: 70%; } .cv-8 .half.l i:nth-child(4) { width: 55%; }
+    .cv-8 .half.r i { background: rgba(62,207,154,.4); }
+    .cv-8 .half.r i:nth-child(1) { width: 60%; } .cv-8 .half.r i:nth-child(3) { width: 80%; }
+    .cv-8 .divider { position: absolute; left: 50%; top: 12%; bottom: 12%; width: 1.4px; background: rgba(255,255,255,.18); }
+    .cv-9 { background: linear-gradient(150deg, #10201a, #173428 55%, #0d1a14); }
+    .cv-9 svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cv-9 line { stroke: var(--accent); stroke-width: 1.3; opacity: .6; }
+    .cv-9 .box { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); padding: 8px 16px; border-radius: 9px; border: 1.6px solid var(--accent); background: #0d1a14; font-family: var(--font-mono); font-size: .66rem; color: #3ecf9a; }
+    .cv-9 .sat { position: absolute; width: 14px; height: 14px; border-radius: 50%; transform: translate(-50%,-50%); background: #0d1a14; border: 1.5px solid var(--amber); }
+
+    /* ---------- Toolbar ---------- */
+    .tool-wrap { position: sticky; top: var(--bar-top); z-index: 60; padding: 10px 0; }
+    .tool-bar {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      padding: 10px 12px; border-radius: var(--r-md); border: 1px solid transparent;
+      transition: background-color var(--t-med) var(--ease), border-color var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+    }
+    .tool-wrap.is-stuck .tool-bar {
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+      border-color: var(--glass-line); box-shadow: var(--shadow-1); border-radius: 18px;
+    }
+    .search-box { position: relative; flex: 1 1 220px; min-width: 180px; }
+    .search-box svg.mag { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--faint); pointer-events: none; }
+    .search-input {
+      width: 100%; height: 42px; padding: 0 40px;
+      border-radius: var(--r-pill); border: 1px solid var(--line);
+      background: var(--glass); color: var(--ink); font: inherit; font-size: .9rem;
+      transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+    }
+    .search-input::placeholder { color: var(--faint); }
+    .search-input:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .search-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; display: none; place-items: center; color: var(--faint); transition: color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease); }
+    .search-clear:hover { color: var(--ink); background: var(--line); }
+    .search-box.has-q .search-clear { display: grid; }
+    .search-kbd { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: .62rem; color: var(--faint); border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px; pointer-events: none; }
+    .search-box.has-q .search-kbd { display: none; }
+    .cat-scroll { display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+    .cat-scroll::-webkit-scrollbar { display: none; }
+    .c-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: var(--r-pill); border: 1px solid var(--line); font-size: .84rem; font-weight: 600; color: var(--muted); white-space: nowrap; transition: all var(--t-fast) var(--ease); }
+    .c-btn i { width: 7px; height: 7px; border-radius: 50%; }
+    .c-btn sup { font-family: var(--font-mono); font-size: .6rem; color: var(--faint); }
+    .c-btn:hover { border-color: var(--accent-line); color: var(--ink); transform: translateY(-1px); }
+    .c-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); box-shadow: var(--shadow-accent); }
+    .c-btn[aria-pressed="true"] sup { color: var(--on-accent); opacity: .75; }
+    .sort-sel {
+      height: 42px; padding: 0 34px 0 15px; border-radius: var(--r-pill);
+      border: 1px solid var(--line); background: var(--glass); color: var(--ink);
+      font: inherit; font-size: .84rem; font-weight: 600; cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d9793' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 13px center;
+    }
+    .sort-sel:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .tool-count { font-family: var(--font-mono); font-size: .68rem; color: var(--faint); white-space: nowrap; }
+    .series-active { display: none; align-items: center; gap: 8px; padding: 8px 8px 8px 15px; border-radius: var(--r-pill); background: var(--accent-soft); border: 1px solid var(--accent-line); font-family: var(--font-mono); font-size: .7rem; color: var(--accent-ink); }
+    .series-active.on { display: inline-flex; }
+    .series-active button { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: inherit; }
+    .series-active button:hover { background: var(--accent-line); }
+
+    /* ---------- Post grid ---------- */
+    .posts-section { padding-top: 26px; }
+    .post-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; grid-auto-flow: dense; }
+    .post-card { position: relative; display: flex; flex-direction: column; padding: 10px 10px 18px; overflow: hidden; }
+    .post-card.is-hidden { display: none; }
+    .post-card[data-span="4"] { grid-column: span 4; }
+    .post-card[data-span="5"] { grid-column: span 5; }
+    .post-card[data-span="6"] { grid-column: span 6; }
+    .post-card[data-span="7"] { grid-column: span 7; }
+    .post-card[data-span="8"] { grid-column: span 8; }
+    .post-card[data-span="9"] { grid-column: span 9; }
+    .post-card[data-span="10"] { grid-column: span 10; }
+    .post-card[data-span="11"] { grid-column: span 11; }
+    .post-card[data-span="12"] { grid-column: span 12; }
+    .post-cover { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); flex: none; aspect-ratio: 4/3; }
+    .post-card[data-span="5"] .post-cover, .post-card[data-span="6"] .post-cover { aspect-ratio: 16/10; }
+    .post-card[data-span="7"] .post-cover, .post-card[data-span="8"] .post-cover, .post-card[data-span="9"] .post-cover, .post-card[data-span="10"] .post-cover, .post-card[data-span="11"] .post-cover, .post-card[data-span="12"] .post-cover { aspect-ratio: 16/9; }
+    .post-card.is-solo { flex-direction: row; align-items: stretch; }
+    .post-card.is-solo .post-cover { flex: 1 1 46%; aspect-ratio: auto; }
+    .post-card.is-solo .post-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 26px 28px; }
+    .post-go { position: absolute; top: 12px; right: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; opacity: 0; transform: translateY(-6px) scale(.85); transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+    .post-card:hover .post-go, .post-card:focus-within .post-go { opacity: 1; transform: none; }
+    .post-body { padding: 16px 12px 0; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+    .post-meta { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .post-meta .cat-chip { padding: 3px 10px; font-size: .6rem; }
+    .post-title { font-size: 1.16rem; letter-spacing: -.02em; line-height: 1.3; }
+    .post-card[data-span="7"] .post-title, .post-card[data-span="8"] .post-title, .post-card[data-span="12"] .post-title { font-size: 1.4rem; }
+    .post-title a { text-decoration: none; transition: color var(--t-fast) var(--ease); }
+    .post-title a::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
+    .post-title a:focus-visible { outline: none; }
+    .post-title a:focus-visible::after { outline: 2px solid var(--accent-ink); outline-offset: 3px; }
+    .post-card:hover .post-title a { color: var(--accent-ink); }
+    .post-excerpt { font-size: .88rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .post-foot { margin-top: auto; padding-top: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .post-foot .tag { font-size: .64rem; }
+    .post-read { margin-left: auto; font-family: var(--font-mono); font-size: .64rem; color: var(--accent-ink); }
+    mark { background: var(--accent-soft); color: var(--accent-ink); border-radius: 3px; padding: 0 2px; }
+    .empty-state { display: none; flex-direction: column; align-items: center; gap: 14px; padding: 70px 20px; text-align: center; border: 1px dashed var(--line-2); border-radius: var(--r-lg); }
+    .empty-state.on { display: flex; }
+    .empty-glyph { font-family: var(--font-mono); font-size: 3rem; color: var(--faint); }
+    .empty-state p { max-width: 40ch; font-size: .92rem; }
+
+    /* ---------- Collections ---------- */
+    .collections { position: relative; }
+    .collections::before { content: ""; position: absolute; inset: 0; background: radial-gradient(680px 380px at 85% 30%, rgba(216,181,106,.09), transparent 70%); pointer-events: none; }
+    .coll-grid { position: relative; display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .coll-card { padding: 26px; display: flex; flex-direction: column; gap: 14px; text-align: left; width: 100%; }
+    .coll-spines { display: flex; gap: 5px; align-items: flex-end; height: 34px; }
+    .coll-spines i { width: 12px; border-radius: 4px 4px 2px 2px; background: var(--accent); }
+    .coll-spines i:nth-child(2) { background: var(--teal); }
+    .coll-spines i.draft { background: transparent; border: 1.4px dashed var(--line-2); }
+    .coll-name { font-size: 1.15rem; }
+    .coll-desc { font-size: .88rem; }
+    .coll-parts { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+    .coll-part { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: .7rem; color: var(--muted); padding: 6px 8px; border-radius: 8px; text-align: left; width: 100%; transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease); }
+    .coll-part:hover { background: var(--accent-soft); color: var(--accent-ink); }
+    .coll-part .n { color: var(--faint); }
+    .coll-part.is-draft { color: var(--faint); cursor: default; }
+    .coll-part.is-draft:hover { background: transparent; color: var(--faint); }
+    .coll-part .draft-badge { margin-left: auto; padding: 2px 8px; border-radius: var(--r-pill); border: 1px dashed var(--line-2); font-size: .58rem; }
+    .coll-open { font-family: var(--font-mono); font-size: .68rem; color: var(--accent-ink); text-align: left; }
+    .coll-open:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* ---------- Newsletter ---------- */
+    .news-card { position: relative; overflow: hidden; padding: clamp(30px,4.5vw,50px) clamp(28px,4vw,52px); display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.9fr); gap: 34px; align-items: center; }
+    .news-card:hover { transform: none; }
+    .news-card::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(520px 280px at 96% 40%, var(--accent-soft), transparent 70%),
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      opacity: .6; pointer-events: none;
+    }
+    .news-copy { position: relative; }
+    .news-copy .h2 { font-size: clamp(1.5rem,2.6vw,2.1rem); margin-bottom: 10px; }
+    .news-copy p { font-size: .94rem; max-width: 44ch; }
+    .news-form { position: relative; display: flex; flex-direction: column; gap: 10px; }
+    .news-row { display: flex; gap: 10px; }
+    .news-input { flex: 1; height: 52px; padding: 0 20px; border-radius: var(--r-pill); border: 1px solid var(--line-2); background: var(--surface); color: var(--ink); font: inherit; font-size: .94rem; transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+    .news-input:focus { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .news-input.err { border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(214,69,80,.15); animation: shake .35s var(--ease); }
+    @keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    .news-err { display: none; font-family: var(--font-mono); font-size: .68rem; color: var(--crimson); }
+    .news-err.on { display: block; }
+    .news-note { font-family: var(--font-mono); font-size: .64rem; color: var(--faint); }
+    .news-done { position: relative; display: none; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .news-done.on { display: flex; }
+    .news-done .ok-line { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink); }
+    .news-done .ok-line svg { color: var(--accent-ink); }
+    .news-undo { font-family: var(--font-mono); font-size: .68rem; color: var(--muted); text-decoration: underline; text-underline-offset: 4px; }
+    .news-undo:hover { color: var(--crimson); }
+
+    /* ---------- Reader ---------- */
+    body.reader-open { overflow: hidden; }
+    .reader-open .site-header { padding-right: calc(clamp(12px,3vw,28px) + var(--sbw,0px)); }
+    .reader { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 26px; visibility: hidden; pointer-events: none; }
+    .reader.is-open { visibility: visible; pointer-events: auto; }
+    .reader-scrim { position: absolute; inset: 0; background: rgba(8,12,10,.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); opacity: 0; transition: opacity .4s var(--ease); }
+    .reader.is-open .reader-scrim { opacity: 1; }
+    .reader-panel {
+      position: relative; width: min(880px,100%); max-height: min(90vh,940px);
+      display: flex; flex-direction: column;
+      background: var(--surface); border: 1px solid var(--glass-line);
+      border-radius: var(--r-lg); box-shadow: var(--shadow-2); overflow: hidden;
+      opacity: 0; transform: translateY(28px) scale(.97);
+      transition: opacity .4s var(--ease), transform .4s var(--ease);
+    }
+    .reader.is-open .reader-panel { opacity: 1; transform: none; }
+    .reader-progress { position: absolute; top: 0; left: 0; height: 3px; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-strong)); z-index: 5; transition: width .1s linear; }
+    .reader-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); flex: none; }
+    .reader-cat { flex: 1; min-width: 0; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .reader-tools { display: flex; align-items: center; gap: 6px; }
+    .reader-tools .icon-btn { width: 36px; height: 36px; }
+    .fs-group { display: flex; align-items: center; gap: 2px; border: 1px solid var(--line); border-radius: var(--r-pill); padding: 2px; }
+    .fs-group button { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: .68rem; color: var(--muted); transition: all var(--t-fast) var(--ease); }
+    .fs-group button:hover { color: var(--accent-ink); background: var(--accent-soft); }
+    .fs-label { font-family: var(--font-mono); font-size: .6rem; color: var(--faint); min-width: 34px; text-align: center; }
+    .reader-pct { font-family: var(--font-mono); font-size: .62rem; color: var(--faint); min-width: 34px; text-align: right; }
+    .reader-body { overflow-y: auto; padding: clamp(22px,4vw,44px); }
+    .reader-cover { position: relative; aspect-ratio: 21/9; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--line); margin-bottom: 26px; }
+    .reader-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-mono); font-size: .68rem; color: var(--faint); margin-bottom: 14px; }
+    .reader-title { font-size: clamp(1.7rem,3.4vw,2.5rem); letter-spacing: -.03em; margin-bottom: 16px; }
+    .reader-lede { font-size: calc(var(--reader-fs) * 1.12); color: var(--muted); margin-bottom: 26px; max-width: 62ch; }
+    .article { font-size: var(--reader-fs); max-width: 68ch; }
+    .article p { color: var(--muted); margin-bottom: 1.15em; line-height: 1.8; }
+    .article p strong { color: var(--ink); }
+    .article h2 { font-size: calc(var(--reader-fs) * 1.35); margin: 1.7em 0 .7em; display: flex; align-items: center; gap: 12px; }
+    .article h2::before { content: ""; width: 20px; height: 2px; background: var(--accent); flex: none; }
+    .article blockquote { margin: 1.6em 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent); font-family: var(--font-display); font-weight: 600; font-size: calc(var(--reader-fs) * 1.22); line-height: 1.45; color: var(--ink); }
+    .article ul { margin: 0 0 1.2em 1.2em; list-style: none; }
+    .article ul li { color: var(--muted); margin-bottom: .5em; position: relative; padding-left: 1.1em; }
+    .article ul li::before { content: "▸"; position: absolute; left: 0; color: var(--accent-ink); }
+    .article pre { margin: 1.5em 0; padding: 18px 20px; border-radius: var(--r-md); background: #0d1512; border: 1px solid rgba(0,201,138,.16); overflow-x: auto; font-family: var(--font-mono); font-size: calc(var(--reader-fs) * .78); line-height: 1.85; color: #c6d4cd; }
+    .article pre .k { color: #3ecf9a; } .article pre .s { color: #d8b56a; } .article pre .c { color: #64756e; } .article pre .n { color: #7fb3e8; }
+    .article table { width: 100%; border-collapse: collapse; margin: 1.5em 0; font-size: calc(var(--reader-fs) * .88); }
+    .article th, .article td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+    .article th { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+    .article td { color: var(--muted); }
+    .article td b { color: var(--ink); }
+    .reader-tags { display: flex; gap: 9px; flex-wrap: wrap; margin: 28px 0; }
+    .reader-author { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: var(--r-md); background: var(--bg-2); border: 1px solid var(--line); margin-bottom: 26px; }
+    .reader-author .avatar { width: 46px; height: 46px; font-size: .85rem; }
+    .reader-author b { display: block; font-size: .95rem; color: var(--ink); }
+    .reader-author p { font-size: .82rem; margin: 0; }
+    .reader-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .rn-btn { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; padding: 16px 18px; border-radius: var(--r-md); border: 1px solid var(--line); background: var(--glass); text-align: left; transition: border-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+    .rn-btn:hover { border-color: var(--accent-line); transform: translateY(-2px); }
+    .rn-btn.next { align-items: flex-end; text-align: right; }
+    .rn-btn span { font-family: var(--font-mono); font-size: .62rem; color: var(--faint); }
+    .rn-btn b { font-size: .9rem; color: var(--ink); line-height: 1.35; }
+    .rn-btn:hover b { color: var(--accent-ink); }
+    .rn-btn[disabled] { opacity: .4; pointer-events: none; }
+
+    /* ---------- Toast ---------- */
+    .toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; transform: translate(-50%,16px); display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--accent-line); box-shadow: var(--shadow-2); font-size: .86rem; font-weight: 600; opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s; }
+    .toast.show { opacity: 1; visibility: visible; transform: translate(-50%,0); }
+    .toast svg { color: var(--accent-ink); }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .mast-grid { grid-template-columns: 1fr; align-items: start; }
+      .index-card { max-width: 460px; }
+      .fp-card { grid-template-columns: 1fr; }
+      .fp-cover-btn { min-height: 260px; }
+      .coll-grid { grid-template-columns: 1fr; max-width: 560px; }
+      .news-card { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 900px) {
+      .post-grid { grid-template-columns: repeat(2, 1fr); }
+      .post-card { grid-column: auto; }
+      .post-card.is-lead { grid-column: span 2; }
+      .post-card .post-cover { aspect-ratio: 16/10; }
+      .post-card.is-lead .post-cover { aspect-ratio: 16/9; }
+      .tool-count { display: none; }
+    }
+    @media (max-width: 620px) {
+      .post-grid { display: flex; flex-direction: column; }
+      .post-card, .post-card.is-solo { flex-direction: column; }
+      .post-card .post-cover { aspect-ratio: 16/10; }
+      .post-card.is-solo .post-body { padding: 16px 12px 0; }
+      .post-go { opacity: 1; transform: none; }
+      .news-row { flex-direction: column; }
+      .reader { padding: 0; }
+      .reader-panel { width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; border: 0; }
+      .reader-nav { grid-template-columns: 1fr; }
+      .reader-pct, .fs-label { display: none; }
+      .reader-cover { aspect-ratio: 16/9; }
+      .vol-line { flex-wrap: wrap; gap: 8px; }
+      .vol-line .rule { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= Header ================= -->
+    <!-- ============ Header ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-bar">
+      <a class="logo" href="index.html" aria-label="HeydarKF — home"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="about.html" >About</a>
+        <a href="skills.html">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html" aria-current="page">Blog</a>
+        <a href="contact.html">Contact ME</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+      <div class="header-actions">        
+        <button class="icon-btn theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+          <svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <span class="header-sep" aria-hidden="true"></span>
+        <a class="btn btn-primary btn-sm header-contact" href="contact.html">Start a project</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+        </div>
+    </div>
+  </header>
+
+
+    <div
+      class="mobile-menu"
+      id="mobileMenu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
+      <nav class="mobile-nav" aria-label="Mobile">
+        <a href="index.html"><span class="idx">01</span> Home</a>
+        <a href="about.html"><span class="idx">02</span> About</a>
+        <a href="skills.html"><span class="idx">03</span> Skills</a>
+        <a href="projects.html"><span class="idx">04</span> Projects</a>
+        <a href="blog.html"><span class="idx">05</span> Blog</a>
+        <a href="docs.html"><span class="idx">06</span> Docs</a>
+      </nav>
+      <div class="mobile-foot">
+        <a class="mail" href="mailto:hello@kazemifakhr.ir"
+          >hello@kazemifakhr.ir</a
+        >
+        <a class="btn btn-primary btn-sm" href="#sec-studio">Token Studio</a>
+      </div>
+    </div>
+
+  <main id="main">
+    <!-- ================= Masthead ================= -->
+    <section class="masthead" id="top">
+      <div class="container">
+        <div class="vol-line reveal">
+          <span>VOL. 06 — ISSUE 11</span><span class="rule"></span>
+          <span>NOV 2026 · QOM, IR</span><span class="rule"></span>
+          <b>9 ESSAYS · UPDATED WEEKLY</b>
+        </div>
+        <div class="mast-grid">
+          <div>
+            <div class="mast-title-row reveal" style="--d:60ms">
+              <h1 class="b-title">Field notes<span class="dot">.</span></h1>
+              <div class="seal" aria-hidden="true">
+                <span class="seal-disc"></span>
+                <svg viewBox="0 0 96 96">
+                  <defs><path id="sealPath" d="M48,48 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0"/></defs>
+                  <text><textPath href="#sealPath">WRITE WHILE BUILDING • NOT AFTER •&#160;</textPath></text>
+                </svg>
+                <span class="seal-core">✎</span>
+              </div>
+            </div>
+            <p class="b-lede reveal" style="--d:120ms">Essays on architecture, security, agents and craft — each one earned by a bug, a deadline, or a very long night. Read them here, in full, without leaving the page.</p>
+          </div>
+          <aside class="card index-card reveal" style="--d:160ms" aria-label="Browse by topic">
+            <div class="index-head"><b>THE INDEX</b><span>9 essays</span></div>
+            <div class="index-list" id="indexList">
+              <button class="index-item" data-cat-jump="engineering"><i style="background:#009966"></i>Engineering<sup>2</sup></button>
+              <button class="index-item" data-cat-jump="security"><i style="background:#d64550"></i>Security<sup>2</sup></button>
+              <button class="index-item" data-cat-jump="ai"><i style="background:#35b8c9"></i>AI<sup>1</sup></button>
+              <button class="index-item" data-cat-jump="craft"><i style="background:#d8b56a"></i>Craft<sup>2</sup></button>
+              <button class="index-item" data-cat-jump="performance"><i style="background:#4f83c2"></i>Performance<sup>2</sup></button>
+            </div>
+            <p class="index-foot">// tap a topic to filter the shelf</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Featured spread ================= -->
+    <section class="section featured-post" style="padding-top:30px;">
+      <div class="container">
+        <article class="card fp-card reveal" data-slug="frameworks-behind" data-cat="engineering" data-date="2026-11-02" data-mins="6">
+          <div class="fp-copy">
+            <div class="fp-meta">
+              <span class="cat-chip"><i style="background:#009966"></i>Engineering</span>
+              <span>Nov 02, 2026</span><span>·</span><span class="js-mins">6 min read</span>
+            </div>
+            <h2 class="fp-title"><a href="#frameworks-behind" data-read="frameworks-behind">Why I Left Frameworks Behind</a></h2>
+            <p class="fp-excerpt">After six years of renting other people’s abstractions, I rebuilt my stack on pure PHP MVC. The surprise wasn’t speed — it was ownership.</p>
+            <div class="fp-tags"><span class="tag">PHP</span><span class="tag">MVC</span><span class="tag">Architecture</span></div>
+            <div class="byline"><span class="avatar">HK</span><div><b>Heydar Kazemi Fakhr</b><span>backend engineer · seminary student</span></div></div>
+            <div class="fp-actions">
+              <button class="btn btn-primary" data-read="frameworks-behind">Read the essay
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+              <a class="link-arrow" href="#collections">read in order <span class="arr">→</span></a>
+            </div>
+          </div>
+          <button class="fp-cover-btn" data-read="frameworks-behind" aria-label="Read: Why I Left Frameworks Behind">
+            <span class="fp-pin"><i>★</i> pinned essay</span>
+            <div class="cv cv-1"><div class="cv-inner">
+              <span class="cv-glyph">{ }</span>
+              <span class="strike">framework::magic()</span>
+              <span class="cv-chip" style="left:12%;top:14%">app/Core · 40 lines</span>
+            </div></div>
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= Toolbar ================= -->
+    <div class="tool-wrap" id="toolWrap">
+      <div class="container">
+        <div class="tool-bar">
+          <div class="search-box" id="searchBox">
+            <svg class="mag" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" id="searchInput" type="search" placeholder="Search essays, tags, topics…" aria-label="Search essays" autocomplete="off">
+            <span class="search-kbd">/</span>
+            <button class="search-clear" id="searchClear" aria-label="Clear search">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="cat-scroll" id="catScroll" role="group" aria-label="Filter by topic">
+            <button class="c-btn" data-cat="all" aria-pressed="true">All <sup>8</sup></button>
+            <button class="c-btn" data-cat="engineering" aria-pressed="false"><i style="background:#009966"></i>Engineering <sup>1</sup></button>
+            <button class="c-btn" data-cat="security" aria-pressed="false"><i style="background:#d64550"></i>Security <sup>2</sup></button>
+            <button class="c-btn" data-cat="ai" aria-pressed="false"><i style="background:#35b8c9"></i>AI <sup>1</sup></button>
+            <button class="c-btn" data-cat="craft" aria-pressed="false"><i style="background:#d8b56a"></i>Craft <sup>2</sup></button>
+            <button class="c-btn" data-cat="performance" aria-pressed="false"><i style="background:#4f83c2"></i>Performance <sup>2</sup></button>
+          </div>
+          <span class="series-active" id="seriesActive"><span id="seriesName"></span>
+            <button id="seriesClear" aria-label="Clear collection filter">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+          </span>
+          <select class="sort-sel" id="sortSel" aria-label="Sort essays">
+            <option value="new">Newest first</option>
+            <option value="old">Oldest first</option>
+            <option value="short">Shortest read</option>
+          </select>
+          <span class="tool-count" id="toolCount" aria-live="polite">8 essays</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= Shelf ================= -->
+    <section class="section posts-section" id="posts">
+      <div class="container">
+        <div class="post-grid" id="postGrid">
+
+          <article class="post-card card reveal" data-slug="bug-threat-model" data-cat="security" data-date="2026-10-18" data-mins="5" data-span="7">
+            <div class="post-cover">
+              <div class="cv cv-2"><div class="cv-inner">
+                <span class="rings"><i></i><i></i><i></i></span><span class="cross"></span>
+                <span class="cv-chip" style="left:10%;bottom:12%">trust boundary · crossed</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#d64550"></i>Security</span><span>Oct 18, 2026</span></div>
+              <h3 class="post-title"><a href="#bug-threat-model" data-read="bug-threat-model" data-title>The Bug That Taught Me Threat Modeling</a></h3>
+              <p class="post-excerpt" data-excerpt>A defaced client site, a week of rebuilding, and the question that changed how I design everything: who benefits if this fails?</p>
+              <div class="post-foot"><span class="tag">OWASP</span><span class="tag">Postmortem</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" style="--d:70ms" data-slug="agents-contracts" data-cat="ai" data-date="2026-09-30" data-mins="5" data-span="5">
+            <div class="post-cover">
+              <div class="cv cv-3"><div class="cv-inner">
+                <svg viewBox="0 0 100 60" preserveAspectRatio="none"><line x1="20" y1="20" x2="50" y2="12"/><line x1="50" y1="12" x2="78" y2="30"/><line x1="20" y1="20" x2="44" y2="44"/><line x1="44" y1="44" x2="78" y2="30"/></svg>
+                <span class="nd" style="left:20%;top:33%"></span><span class="nd" style="left:50%;top:20%"></span>
+                <span class="nd" style="left:78%;top:50%"></span><span class="nd" style="left:44%;top:73%"></span>
+                <span class="stamp">SIGNED</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#35b8c9"></i>AI</span><span>Sep 30, 2026</span></div>
+              <h3 class="post-title"><a href="#agents-contracts" data-read="agents-contracts" data-title>Agents Need Contracts, Not Prompts</a></h3>
+              <p class="post-excerpt" data-excerpt>Prompt engineering is folklore. Tool contracts are engineering. The schema-first approach that made my agents boring — in the best way.</p>
+              <div class="post-foot"><span class="tag">Agents</span><span class="tag">Schema</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" style="--d:140ms" data-slug="reading-code-classics" data-cat="craft" data-date="2026-09-12" data-mins="5" data-span="4">
+            <div class="post-cover">
+              <div class="cv cv-4 cv-light"><div class="cv-inner">
+                <span class="rule" style="top:26%"></span><span class="rule" style="top:40%"></span>
+                <span class="rule" style="top:54%"></span><span class="rule" style="top:68%"></span>
+                <span class="codeline" style="top:47%"></span><span class="marg" style="right:9%;top:44%"></span>
+                <span class="cv-chip" style="left:10%;bottom:10%">marginalia · q.v.</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#d8b56a"></i>Craft</span><span>Sep 12, 2026</span></div>
+              <h3 class="post-title"><a href="#reading-code-classics" data-read="reading-code-classics" data-title>Reading Code Like Classical Texts</a></h3>
+              <p class="post-excerpt" data-excerpt>Seminary trained me to parse centuries-old arguments line by line. It turns out that is exactly the skill code review is missing.</p>
+              <div class="post-foot"><span class="tag">Review</span><span class="tag">Seminary</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" data-slug="p95-promise" data-cat="performance" data-date="2026-08-21" data-mins="5" data-span="4">
+            <div class="post-cover">
+              <div class="cv cv-5"><div class="cv-inner">
+                <span class="hist"><i style="--h:30%"></i><i style="--h:46%"></i><i style="--h:62%"></i><i style="--h:80%"></i><i style="--h:58%"></i><i style="--h:40%"></i><i style="--h:26%"></i><i style="--h:16%"></i></span>
+                <span class="budget"></span>
+                <span class="cv-chip" style="right:10%;top:12%">p95 ≤ 120ms</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#4f83c2"></i>Performance</span><span>Aug 21, 2026</span></div>
+              <h3 class="post-title"><a href="#p95-promise" data-read="p95-promise" data-title>p95 Is a Promise: Latency Budgets in Practice</a></h3>
+              <p class="post-excerpt" data-excerpt>Averages hide the people having a bad day. How I turned latency from a metric into a budget every endpoint must spend honestly.</p>
+              <div class="post-foot"><span class="tag">SLO</span><span class="tag">MySQL</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" style="--d:70ms" data-slug="validation-boundary" data-cat="security" data-date="2026-07-29" data-mins="5" data-span="4">
+            <div class="post-cover">
+              <div class="cv cv-6"><div class="cv-inner">
+                <span class="field"></span>
+                <span class="shield"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span>
+                <span class="cv-chip" style="left:10%;top:12%">parse, don’t validate</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#d64550"></i>Security</span><span>Jul 29, 2026</span></div>
+              <h3 class="post-title"><a href="#validation-boundary" data-read="validation-boundary" data-title>Validation Is a Security Boundary</a></h3>
+              <p class="post-excerpt" data-excerpt>Most “validation bugs” are architecture bugs: checks scattered like decorations instead of placed like doors. Put the doors where trust changes.</p>
+              <div class="post-foot"><span class="tag">Validation</span><span class="tag">PHP</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" style="--d:140ms" data-slug="caching-contract" data-cat="performance" data-date="2026-07-08" data-mins="4" data-span="5">
+            <div class="post-cover">
+              <div class="cv cv-7"><div class="cv-inner">
+                <span class="layer"></span><span class="layer"></span><span class="layer"></span>
+                <span class="clock"></span>
+                <span class="cv-chip" style="left:10%;bottom:10%">TTL 60s · stale_ok</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#4f83c2"></i>Performance</span><span>Jul 08, 2026</span></div>
+              <h3 class="post-title"><a href="#caching-contract" data-read="caching-contract" data-title>Caching Is a Contract With Time</a></h3>
+              <p class="post-excerpt" data-excerpt>Every cache entry is a promise about how long a lie is acceptable. Write the promise down, or the cache will write it for you — in incident reports.</p>
+              <div class="post-foot"><span class="tag">Redis</span><span class="tag">TTL</span><span class="post-read js-mins">4 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" data-slug="notebook-terminal" data-cat="craft" data-date="2026-06-17" data-mins="5" data-span="7">
+            <div class="post-cover">
+              <div class="cv cv-8"><div class="cv-inner">
+                <span class="half l"><i></i><i></i><i></i><i></i></span>
+                <span class="half r"><i></i><i></i><i></i><i></i></span>
+                <span class="divider"></span>
+                <span class="cv-chip" style="left:50%;top:8%;transform:translateX(-50%)">one chair</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#d8b56a"></i>Craft</span><span>Jun 17, 2026</span></div>
+              <h3 class="post-title"><a href="#notebook-terminal" data-read="notebook-terminal" data-title>The Seminary Notebook Meets the Terminal</a></h3>
+              <p class="post-excerpt" data-excerpt>Two notebooks, one habit: write the question before the answer. How a thousand-year-old study method became my debugging protocol.</p>
+              <div class="post-foot"><span class="tag">Method</span><span class="tag">Notebook</span><span class="post-read js-mins">5 min →</span></div>
+            </div>
+          </article>
+
+          <article class="post-card card reveal" style="--d:70ms" data-slug="forty-line-container" data-cat="engineering" data-date="2026-06-03" data-mins="4" data-span="5">
+            <div class="post-cover">
+              <div class="cv cv-9"><div class="cv-inner">
+                <svg viewBox="0 0 100 60" preserveAspectRatio="none"><line x1="50" y1="30" x2="22" y2="14"/><line x1="50" y1="30" x2="80" y2="16"/><line x1="50" y1="30" x2="24" y2="48"/><line x1="50" y1="30" x2="78" y2="46"/></svg>
+                <span class="box">Container</span>
+                <span class="sat" style="left:22%;top:23%"></span><span class="sat" style="left:80%;top:27%"></span>
+                <span class="sat" style="left:24%;top:80%"></span><span class="sat" style="left:78%;top:77%"></span>
+                <span class="cv-chip" style="left:10%;bottom:10%">40 lines · no magic</span>
+              </div></div>
+              <span class="post-go" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M7 7h10v10"/></svg></span>
+            </div>
+            <div class="post-body">
+              <div class="post-meta"><span class="cat-chip"><i style="background:#009966"></i>Engineering</span><span>Jun 03, 2026</span></div>
+              <h3 class="post-title"><a href="#forty-line-container" data-read="forty-line-container" data-title>The Forty-Line Container</a></h3>
+              <p class="post-excerpt" data-excerpt>Dependency injection without a framework: a container small enough to read aloud, strict enough to trust at 2am.</p>
+              <div class="post-foot"><span class="tag">DI</span><span class="tag">PHP</span><span class="post-read js-mins">4 min →</span></div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <span class="empty-glyph">∅</span>
+          <h3 class="h3">Nothing matches that yet.</h3>
+          <p>Try a different word, or clear the filters and wander the whole shelf.</p>
+          <button class="btn btn-ghost btn-sm" id="emptyClear">Clear all filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Collections ================= -->
+    <section class="section collections" id="collections">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">// read in order</p>
+            <h2 class="h2">Collections.</h2>
+            <p class="section-sub">Some arguments need more than one essay. These are the long ones.</p>
+          </div>
+        </div>
+        <div class="coll-grid">
+          <div class="card coll-card reveal">
+            <div class="coll-spines" aria-hidden="true"><i style="height:26px"></i><i style="height:34px"></i><i class="draft" style="height:30px"></i></div>
+            <h3 class="h3 coll-name">Secure by Default</h3>
+            <p class="coll-desc">Boundaries, threat models, and the doors between trust and data.</p>
+            <div class="coll-parts">
+              <button class="coll-part" data-read="bug-threat-model"><span class="n">01</span>The Bug That Taught Me Threat Modeling</button>
+              <button class="coll-part" data-read="validation-boundary"><span class="n">02</span>Validation Is a Security Boundary</button>
+              <span class="coll-part is-draft"><span class="n">03</span>Output encoding without tears<span class="draft-badge">in draft</span></span>
+            </div>
+            <button class="coll-open" data-series-open="secure" data-series-slugs="bug-threat-model,validation-boundary" data-series-name="Secure by Default">browse collection →</button>
+          </div>
+          <div class="card coll-card reveal" style="--d:80ms">
+            <div class="coll-spines" aria-hidden="true"><i style="height:30px"></i><i style="height:24px"></i></div>
+            <h3 class="h3 coll-name">Ship Fast, Stay Calm</h3>
+            <p class="coll-desc">Latency budgets and caching contracts — speed you can promise.</p>
+            <div class="coll-parts">
+              <button class="coll-part" data-read="p95-promise"><span class="n">01</span>p95 Is a Promise</button>
+              <button class="coll-part" data-read="caching-contract"><span class="n">02</span>Caching Is a Contract With Time</button>
+            </div>
+            <button class="coll-open" data-series-open="fast" data-series-slugs="p95-promise,caching-contract" data-series-name="Ship Fast, Stay Calm">browse collection →</button>
+          </div>
+          <div class="card coll-card reveal" style="--d:160ms">
+            <div class="coll-spines" aria-hidden="true"><i style="height:22px"></i><i style="height:32px"></i><i class="draft" style="height:28px"></i></div>
+            <h3 class="h3 coll-name">The Craft Notebooks</h3>
+            <p class="coll-desc">Reading, reviewing, and questioning — the human half of engineering.</p>
+            <div class="coll-parts">
+              <button class="coll-part" data-read="reading-code-classics"><span class="n">01</span>Reading Code Like Classical Texts</button>
+              <button class="coll-part" data-read="notebook-terminal"><span class="n">02</span>The Seminary Notebook Meets the Terminal</button>
+              <span class="coll-part is-draft"><span class="n">03</span>Marginalia as code review<span class="draft-badge">in draft</span></span>
+            </div>
+            <button class="coll-open" data-series-open="craft" data-series-slugs="reading-code-classics,notebook-terminal" data-series-name="The Craft Notebooks">browse collection →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Newsletter ================= -->
+    <section class="section" id="subscribe" style="padding-top:20px;">
+      <div class="container">
+        <div class="card news-card reveal">
+          <div class="news-copy">
+            <p class="kicker">// the slow mail</p>
+            <h2 class="h2">One essay a month. No noise.</h2>
+            <p>When something is worth writing twice, it lands in your inbox. Nothing else, ever.</p>
+          </div>
+          <form class="news-form" id="newsForm" novalidate>
+            <div class="news-row">
+              <input class="news-input" id="newsEmail" type="email" placeholder="you@studio.dev" aria-label="Email address" required>
+              <button class="btn btn-primary" type="submit">Subscribe</button>
+            </div>
+            <p class="news-err" id="newsErr">That email doesn’t parse — check the format.</p>
+            <p class="news-note">// unsubscribe in one click · address never shared</p>
+          </form>
+          <div class="news-done" id="newsDone">
+            <span class="ok-line">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              You’re on the list. First essay arrives with the next moon.
+            </span>
+            <button class="news-undo" id="newsUndo" type="button">changed my mind — unsubscribe</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= Footer ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <a class="logo" href="index.html"><span class="logo-mark">&gt;_</span> Heydar&nbsp;KF</a>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="about.html">About</a><a href="skills.html">Skills</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a class="icon-btn" href="https://github.com/heydarkf" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg></a>
+          <a class="icon-btn" href="https://www.linkedin.com/in/heydarkf" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a class="icon-btn" href="https://x.com/heydarkf" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg></a>
+          <a class="icon-btn" href="mailto:hello@kazemifakhr.ir" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="credit">Designed by <strong>HeydarKF (OS Heydar)</strong> · © <span id="year">2026</span> HeydarKF. All rights reserved.</p>
+        <a class="to-top" href="#top">back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= Reader ================= -->
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle" aria-hidden="true">
+    <div class="reader-scrim" id="readerScrim"></div>
+    <div class="reader-panel" id="readerPanel">
+      <span class="reader-progress" id="readerProgress"></span>
+      <div class="reader-head">
+        <span class="reader-cat" id="readerCat"></span>
+        <div class="reader-tools">
+          <div class="fs-group" role="group" aria-label="Text size">
+            <button id="fsDown" aria-label="Decrease text size">A−</button>
+            <span class="fs-label" id="fsLabel">100%</span>
+            <button id="fsUp" aria-label="Increase text size">A+</button>
+          </div>
+          <span class="reader-pct" id="readerPct">0%</span>
+          <button class="icon-btn" id="readerCopy" aria-label="Copy essay link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+          <button class="icon-btn" id="readerClose" aria-label="Close reader"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        </div>
+      </div>
+      <div class="reader-body" id="readerBody">
+        <div class="reader-cover" id="readerCover"></div>
+        <div class="reader-meta" id="readerMeta"></div>
+        <h1 class="reader-title" id="readerTitle"></h1>
+        <p class="reader-lede" id="readerLede"></p>
+        <div class="article" id="readerArticle"></div>
+        <div class="reader-tags" id="readerTags"></div>
+        <div class="reader-author">
+          <span class="avatar">HK</span>
+          <div>
+            <b>Heydar Kazemi Fakhr</b>
+            <p>Backend engineer &amp; seminary student. Writes to find out what he thinks.</p>
+          </div>
+        </div>
+        <div class="reader-nav">
+          <button class="rn-btn prev" id="readerPrev"><span>← newer essay</span><b id="readerPrevTitle"></b></button>
+          <button class="rn-btn next" id="readerNext"><span>older essay →</span><b id="readerNextTitle"></b></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Link copied</span>
+  </div>
+
+  <!-- ================= Full essays (source of truth) ================= -->
+  <template id="tpl-frameworks-behind">
+    <div class="tpl-lede">This is not a framework-bashing essay. Frameworks are fine. This is about what happens when you stop renting your architecture and finally buy it.</div>
+    <div class="tpl-body">
+      <p>For six years I shipped on frameworks. They were good rooms: furnished, lit, someone else paying for the plumbing. Then a client asked for a change that cut across three of the framework’s opinions, and I spent two days fighting furniture I was not allowed to move.</p>
+      <h2>The rent comes due</h2>
+      <p>Every abstraction is a contract with a stranger’s future decisions. Upgrades arrive as ultimatums. Magic saves time until the day it costs a week. I counted the hours I spent <strong>working around</strong> my tools versus <strong>working with</strong> them, and the ledger was embarrassing.</p>
+      <blockquote>I didn’t want fewer features. I wanted fewer surprises.</blockquote>
+      <h2>What pure MVC actually buys</h2>
+      <p>A router I can read in one sitting. A container with forty lines, not four thousand. Middleware that is just functions. When something breaks at 2am, the stack trace ends in code I wrote, which means it ends in code I can fix.</p>
+      <pre><code><span class="c">// app/Core/Router.php — the whole magic</span>
+<span class="k">final class</span> Router {
+  <span class="k">public function</span> dispatch(Request <span class="n">$r</span>): Response {
+    <span class="n">$handler</span> = <span class="n">$this</span>-&gt;match(<span class="n">$r</span>-&gt;method(), <span class="n">$r</span>-&gt;path());
+    <span class="k">return</span> <span class="n">$this</span>-&gt;pipeline(<span class="n">$r</span>, <span class="n">$handler</span>);
+  }
+}</code></pre>
+      <p>Speed came too — 3× less memory, no boot cache to invalidate — but that was the side effect. The product was <strong>ownership</strong>: every line auditable, every decision mine to defend.</p>
+      <h2>The honest caveat</h2>
+      <p>You pay for this in discipline. No framework means no one else enforcing structure; your own standards become the only guardrail. If your team can’t hold a convention without a compiler’s help, rent the room. It’s a fine room.</p>
+      <p>But if you can hold it, buying the house changes how you sleep.</p>
+    </div>
+  </template>
+
+  <template id="tpl-bug-threat-model">
+    <div class="tpl-lede">The site came back online in six days. The lesson took a year. This is the postmortem I wish someone had handed me at seventeen.</div>
+    <div class="tpl-body">
+      <p>The defacement was almost polite: a flag, a handle, a message in broken English. The client was not amused. I rebuilt the site in six days and then spent a year answering the only question that mattered — <strong>how did they get in, and what else did I build the same way?</strong></p>
+      <h2>Trace the trust, not the code</h2>
+      <p>The entry point was an upload endpoint that trusted a MIME type from the client. Boring. Textbook. But the real failure was upstream: I had never drawn a single trust boundary. Every input was treated as a guest, never as a potential adversary.</p>
+      <blockquote>Security is not a feature you add. It is a question you ask at every boundary: who benefits if this fails?</blockquote>
+      <h2>The four questions I now ask</h2>
+      <ul>
+        <li>What am I protecting, and from whom specifically?</li>
+        <li>Where does data cross from untrusted to trusted?</li>
+        <li>What does the attacker see at each of those crossings?</li>
+        <li>If this control fails, what fails next — and how loudly?</li>
+      </ul>
+      <p>That list is STRIDE with the academic paint stripped off. It fits on an index card, which means it actually gets used, which means it actually works.</p>
+      <h2>What changed in the code</h2>
+      <p>Uploads became content-addressed storage outside the web root, served through a controller that re-sniffs bytes and refuses surprises. Validation moved to the boundary and stayed there. Every refusal logs with enough context to reconstruct intent.</p>
+      <p>The client never noticed any of it. That is the point. <strong>Good security is invisible until the day it is the only thing visible.</strong></p>
+    </div>
+  </template>
+
+  <template id="tpl-agents-contracts">
+    <div class="tpl-lede">My agents stopped hallucinating side effects the day I stopped describing tools in prose and started signing contracts with them.</div>
+    <div class="tpl-body">
+      <p>Early Atlas agents were poetical: long system prompts describing what each tool “should” do, in paragraphs, like a job posting. The models read them the way interns read job postings — optimistically.</p>
+      <h2>Prose is a lossy interface</h2>
+      <p>A paragraph cannot express that <strong>amount</strong> is integer cents, that <strong>currency</strong> is ISO-4217, that a failure returns a typed error rather than an apology. Prose leaves the model to infer the contract, and inference is where the incidents live.</p>
+      <blockquote>A prompt persuades. A contract obligates. Build the second one.</blockquote>
+      <h2>The contract layer</h2>
+      <p>Every tool now ships a JSON Schema for input and output, a declared side-effect class (read, write, irreversible), and a timeout with a typed failure. The router validates before dispatch and after return; anything off-contract is rejected and retried with the validation error, not with vibes.</p>
+      <pre><code>{
+  <span class="s">"tool"</span>: <span class="s">"ledger.invoice.create"</span>,
+  <span class="s">"effects"</span>: <span class="s">"write"</span>,
+  <span class="s">"input"</span>: {
+    <span class="s">"amount_cents"</span>: { <span class="s">"type"</span>: <span class="s">"integer"</span>, <span class="s">"minimum"</span>: 1 },
+    <span class="s">"currency"</span>: { <span class="s">"enum"</span>: [<span class="s">"USD"</span>, <span class="s">"EUR"</span>, <span class="s">"IRR"</span>] }
+  },
+  <span class="s">"on_failure"</span>: <span class="s">"typed_error"</span>
+}</code></pre>
+      <h2>Boring is the goal</h2>
+      <p>With contracts in place, swapping GPT for DeepSeek or a local Qwen became a config change, not a rewrite — the abstraction layer holds because the interface is machine-checkable. Task success went from “usually” to 99.2% on the regression suite.</p>
+      <p>The poetry is still there, in the planner’s prompts. But the hands that touch the world wear gloves that fit.</p>
+    </div>
+  </template>
+
+  <template id="tpl-reading-code-classics">
+    <div class="tpl-lede">In the seminary we read texts that are a thousand years old and still binding. You learn to read slowly, or you learn nothing. Code deserves the same patience.</div>
+    <div class="tpl-body">
+      <p>A classical legal text arrives with layers: the base line, a commentary, a super-commentary, and marginalia arguing with all three. You cannot skim it. You parse the grammar, locate the claim, find the objection, and only then decide what the author actually committed to.</p>
+      <h2>Code is also a layered text</h2>
+      <p>A function is the base line. Its tests are the commentary. The commit message is the marginalia. The incident postmortem is the super-commentary that argues with everyone. Reviewing only the base line is like ruling on a text you read half of.</p>
+      <blockquote>Parse before you judge. The bug is usually in what you assumed the line meant.</blockquote>
+      <h2>The habit that transfers</h2>
+      <ul>
+        <li>Read the signature aloud as a claim: what does this promise?</li>
+        <li>Find the objection: which test or edge case disputes it?</li>
+        <li>Locate the commitment: what behavior would break a dependent?</li>
+        <li>Only then, suggest — in the margin, not over the text.</li>
+      </ul>
+      <p>That last rule changed my reviews. Comments became questions in the margin rather than rewrites over the author’s line. Authors defended their choices, I learned why, and the code kept its voice.</p>
+      <h2>Slow reading, fast shipping</h2>
+      <p>Paradoxically, reviews got faster. Most disagreements were misparses, and misparses die early when you read the grammar first. The seminary habit — <strong>patience as a method, not a mood</strong> — turned out to be a productivity tool with a thousand-year track record.</p>
+    </div>
+  </template>
+
+  <template id="tpl-p95-promise">
+    <div class="tpl-lede">The mean said 80ms. The p95 said 1.9s. One of those numbers was lying about real people, and it wasn’t the ugly one.</div>
+    <div class="tpl-body">
+      <p>Dashboards love averages because averages are calm. Users live in the tail. The checkout that times out for one in twenty shoppers is not a “performance issue”; it is twenty percent of someone’s revenue, distributed unfairly.</p>
+      <h2>From metric to budget</h2>
+      <p>We set p95 ≤ 120ms per endpoint and treated it as a budget, not a target. Each handler gets an allocation: query 60ms, serialization 20ms, network 30ms, margin 10ms. Spend over budget and the build fails the performance gate, same as a broken test.</p>
+      <table>
+        <tr><th>Stage</th><th>Budget</th><th>Measured p95</th></tr>
+        <tr><td><b>Query</b></td><td>60ms</td><td>41ms</td></tr>
+        <tr><td><b>Serialize</b></td><td>20ms</td><td>12ms</td></tr>
+        <tr><td><b>Network</b></td><td>30ms</td><td>26ms</td></tr>
+        <tr><td><b>Margin</b></td><td>10ms</td><td>—</td></tr>
+      </table>
+      <h2>What the tail taught us</h2>
+      <p>The 1.9s tail was three things: an N+1 hiding behind a cache hit rate that looked healthy, a lock convoy on a hot row, and JSON serialization of objects nobody asked for. None of them moved the mean enough to alarm. All of them moved the p95 enough to matter.</p>
+      <blockquote>A latency budget is a promise to the slowest user you serve, not the average one you report.</blockquote>
+      <h2>Keeping the promise</h2>
+      <p>Covering indexes killed the N+1. The hot row became an append-only ledger with periodic compaction. Serialization moved to explicit view models. p95 settled at 94ms and stayed there through two sale events.</p>
+      <p>The budget stays in CI. Promises that aren’t tested are just marketing.</p>
+    </div>
+  </template>
+
+  <template id="tpl-validation-boundary">
+    <div class="tpl-lede">A form that validates in the controller, the model, and the JavaScript is not triple-safe. It is three places to forget.</div>
+    <div class="tpl-body">
+      <p>Validation scattered across layers feels thorough. It is actually entropy: three implementations of the same rule, drifting apart with every commit, each one assuming the other caught the bad case.</p>
+      <h2>Trust changes at boundaries</h2>
+      <p>There is exactly one place where untrusted input becomes trusted data: the boundary. HTTP edge, queue consumer, file import, CLI argument. Validate there, once, into a typed object — and downstream code never re-checks, because it cannot receive anything else.</p>
+      <pre><code><span class="c">// Downstream never asks "is this valid?"</span>
+<span class="k">final class</span> Email {
+  <span class="k">private function</span> __construct(<span class="k">private string</span> <span class="n">$value</span>) {}
+  <span class="k">public static function</span> fromInput(<span class="k">string</span> <span class="n">$raw</span>): <span class="k">self</span> {
+    <span class="n">$ok</span> = filter_var(<span class="n">$raw</span>, FILTER_VALIDATE_EMAIL);
+    <span class="k">if</span> (!<span class="n">$ok</span>) <span class="k">throw new</span> InvalidInput(<span class="s">'email'</span>);
+    <span class="k">return new self</span>(<span class="n">$ok</span>);
+  }
+}</code></pre>
+      <blockquote>Parse, don’t validate. Make the illegal state unrepresentable, then stop worrying about it.</blockquote>
+      <h2>The doors, listed</h2>
+      <ul>
+        <li>HTTP: request DTOs built at the edge, handlers receive objects only.</li>
+        <li>Queues: payloads re-parsed on consume — producers lie eventually.</li>
+        <li>Imports: every row through the same parser, failures quarantined with context.</li>
+        <li>Database: constraints as the last door, never the first.</li>
+      </ul>
+      <p>After the refactor, the security review found zero “missing validation” findings for the first time. Not because we checked more — because there was finally <strong>one place to check</strong>.</p>
+    </div>
+  </template>
+
+  <template id="tpl-caching-contract">
+    <div class="tpl-lede">A cache is not storage. It is a negotiated truce between freshness and speed, and like any truce, it needs terms.</div>
+    <div class="tpl-body">
+      <p>The first cache I shipped had no TTL policy, no invalidation map, and no owner. It was fast for three weeks and then became a distributed system for serving confidently wrong prices.</p>
+      <h2>Write the terms down</h2>
+      <p>Every cached key now declares: its TTL, what invalidates it, who owns it, and what staleness is acceptable to a human. Prices: 60 seconds, invalidated on write, tolerable because checkout re-reads. Catalog copy: 10 minutes, tolerable because nobody dies from an old adjective.</p>
+      <pre><code><span class="c">// cache/contract.php</span>
+<span class="k">return</span> [
+  <span class="s">'product.price'</span> =&gt; [<span class="s">'ttl'</span> =&gt; 60,  <span class="s">'invalidate_on'</span> =&gt; [<span class="s">'price.updated'</span>], <span class="s">'stale_ok'</span> =&gt; <span class="s">'60s'</span>],
+  <span class="s">'catalog.copy'</span>  =&gt; [<span class="s">'ttl'</span> =&gt; 600, <span class="s">'invalidate_on'</span> =&gt; [<span class="s">'cms.publish'</span>],   <span class="s">'stale_ok'</span> =&gt; <span class="s">'10m'</span>],
+];</code></pre>
+      <blockquote>An undocumented TTL is a lie with an expiry date you didn’t choose.</blockquote>
+      <h2>Invalidation is a publish, not a delete</h2>
+      <p>Deleting keys on write races with concurrent readers. Publishing an event and letting consumers rebuild avoids the race and gives you an audit trail of freshness. The cache became a projection of the event log, which means it can always be rebuilt from truth.</p>
+      <h2>The payoff</h2>
+      <p>Hit rate 94%, zero price incidents since, and onboarding docs that answer “how stale can this be?” before anyone asks. The truce holds because the terms are written where the code can read them.</p>
+    </div>
+  </template>
+
+  <template id="tpl-notebook-terminal">
+    <div class="tpl-lede">My paper notebook and my terminal history are the same document in two media. Both begin with a question, never a conclusion.</div>
+    <div class="tpl-body">
+      <p>In the seminary, the notebook opens with the question under discussion — the mas’ala — before any argument. You write what is being asked, then what each school claims, then where the evidence lands. Conclusion last, and provisional.</p>
+      <h2>Debugging is a mas’ala</h2>
+      <p>My incident notes now open the same way: <strong>what exactly is being asked?</strong> “Checkout fails” is not a question. “Why does checkout fail for IRR carts above 10M rials only on Tuesdays?” is a question, and it already contains half the answer.</p>
+      <blockquote>Write the question before the answer. The question is the instrument; the answer is just its reading.</blockquote>
+      <h2>The protocol</h2>
+      <ul>
+        <li>State the question with its boundaries: who, when, how much.</li>
+        <li>List the claims: each hypothesis, attributed to its evidence.</li>
+        <li>Mark the objection: the one observation each hypothesis cannot explain.</li>
+        <li>Conclude provisionally, and write what would change your mind.</li>
+      </ul>
+      <p>That last line — what would change your mind — is the whole discipline. It turns a debugging session from a search for confirmation into a search for falsification, which is faster and far less embarrassing.</p>
+      <h2>One chair, two libraries</h2>
+      <p>People ask how I balance the seminary and the terminal. Wrong frame: they are the same library. One trains the parsing of arguments, the other the parsing of systems. The notebook and the shell share a chair because they share a method — <strong>ask better questions before writing answers.</strong></p>
+    </div>
+  </template>
+
+  <template id="tpl-forty-line-container">
+    <div class="tpl-lede">Dependency injection without a framework: a container small enough to read aloud, strict enough to trust at 2am.</div>
+    <div class="tpl-body">
+      <p>Every framework container I used could do two hundred things. I needed four: bind, make, share, and fail loudly. So I wrote the four, in forty lines, and deleted the dependency.</p>
+      <h2>The whole contract</h2>
+      <p>Bindings are closures, not configuration. Shared instances are memoized per request. Unknown ids throw with the resolution chain in the message, so a missing binding reads like a stack trace, not a riddle.</p>
+      <pre><code><span class="k">final class</span> Container {
+  <span class="k">private array</span> <span class="n">$bindings</span> = [];
+  <span class="k">private array</span> <span class="n">$shared</span> = [];
+  <span class="k">public function</span> bind(<span class="k">string</span> <span class="n">$id</span>, Closure <span class="n">$fn</span>): <span class="k">void</span> {
+    <span class="n">$this</span>-&gt;bindings[<span class="n">$id</span>] = <span class="n">$fn</span>;
+  }
+  <span class="k">public function</span> get(<span class="k">string</span> <span class="n">$id</span>): <span class="k">mixed</span> {
+    <span class="k">return</span> <span class="n">$this</span>-&gt;shared[<span class="n">$id</span>] ??= <span class="n">$this</span>-&gt;resolve(<span class="n">$id</span>, []);
+  }
+}</code></pre>
+      <blockquote>If you can read the whole container aloud in one breath, you can debug it in one sitting.</blockquote>
+      <h2>What strictness buys</h2>
+      <ul>
+        <li>No autowiring magic: every dependency is declared where it is bound.</li>
+        <li>Circular dependencies throw at boot with the cycle printed, not at runtime.</li>
+        <li>Tests swap bindings in one line; no mock framework required.</li>
+      </ul>
+      <p>Forty lines is not a stunt. It is the size at which a tool stops being a product you depend on and becomes a decision you own. Own the small things; rent only what you must.</p>
+    </div>
+  </template>
+
+  <!-- ============ JS ============ -->
+  <script>
+  (function () {
+    'use strict';
+    var d = document, root = d.documentElement;
+    var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var EASE = 'cubic-bezier(.22,.61,.36,1)';
+    var $ = function (s, c) { return (c || d).querySelector(s); };
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || d).querySelectorAll(s)); };
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]; }); }
+
+    var CAT_LABEL = { engineering: 'Engineering', security: 'Security', ai: 'AI', craft: 'Craft', performance: 'Performance' };
+    var CAT_HUE = { engineering: '#009966', security: '#d64550', ai: '#35b8c9', craft: '#d8b56a', performance: '#4f83c2' };
+
+    /* ---------- Collect posts from DOM + templates ---------- */
+    var allCards = $$('[data-slug]');
+    var POSTS = allCards.map(function (card) {
+      var slug = card.dataset.slug;
+      var tpl = $('#tpl-' + slug);
+      var bodyEl = tpl ? $('.tpl-body', tpl.content) : null;
+      var ledeEl = tpl ? $('.tpl-lede', tpl.content) : null;
+      var words = bodyEl ? (bodyEl.textContent || '').trim().split(/\s+/).length : 0;
+      var mins = Math.max(3, Math.round(words / 200));
+      var titleEl = $('[data-title]', card) || $('.fp-title a', card);
+      var excerptEl = $('[data-excerpt]', card) || $('.fp-excerpt', card);
+      return {
+        slug: slug,
+        cat: card.dataset.cat,
+        date: card.dataset.date,
+        mins: mins,
+        words: words,
+        featured: card.classList.contains('fp-card'),
+        card: card,
+        title: titleEl ? titleEl.textContent.trim() : slug,
+        excerpt: excerptEl ? excerptEl.textContent.trim() : '',
+        tags: $$('.tag', card).map(function (t) { return t.textContent.trim(); }),
+        lede: ledeEl ? ledeEl.innerHTML : '',
+        body: bodyEl ? bodyEl.innerHTML : ''
+      };
+    });
+    var BY_SLUG = {};
+    POSTS.forEach(function (p) { BY_SLUG[p.slug] = p; });
+    /* live read-times everywhere */
+    POSTS.forEach(function (p) {
+      $$('.js-mins', p.card).forEach(function (el) {
+        el.textContent = el.textContent.indexOf('→') > -1 ? p.mins + ' min →' : p.mins + ' min read';
+      });
+      p.card.dataset.mins = p.mins;
+    });
+    function fmtDate(iso) {
+      var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var p = iso.split('-'); return m[+p[1] - 1] + ' ' + p[2] + ', ' + p[0];
+    }
+    function catChip(cat) { return '<span class="cat-chip"><i style="background:' + CAT_HUE[cat] + '"></i>' + CAT_LABEL[cat] + '</span>'; }
+
+    /* ---------- Shared chrome ---------- */
+    var themeBtn = $('#themeToggle');
+    function setTheme(t) { root.setAttribute('data-theme', t); try { localStorage.setItem('hkf-theme', t); } catch (e) {} }
+    if (themeBtn) themeBtn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (d.startViewTransition && !reduced) d.startViewTransition(function () { setTheme(next); });
+      else setTheme(next);
+    });
+    var header = $('#siteHeader'), toolWrap = $('#toolWrap'), ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(function () {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+        if (toolWrap) toolWrap.classList.toggle('is-stuck', toolWrap.getBoundingClientRect().top <= 87);
+        ticking = false;
+      });
+    }
+    addEventListener('scroll', onScroll, { passive: true });
+    var lang = $('#lang'), langBtn = $('#langBtn');
+    function closeLang() { lang.classList.remove('is-open'); langBtn.setAttribute('aria-expanded', 'false'); }
+    if (langBtn) langBtn.addEventListener('click', function (e) { e.stopPropagation(); langBtn.setAttribute('aria-expanded', String(lang.classList.toggle('is-open'))); });
+    d.addEventListener('click', function (e) { if (lang && !lang.contains(e.target)) closeLang(); });
+    var burger = $('#burgerBtn'), menu = $('#mobileMenu'), lastFocus = null;
+    function openMenu() { lastFocus = d.activeElement; d.body.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); burger.setAttribute('aria-label', 'Close menu'); var f = $('.mobile-nav a', menu); if (f) setTimeout(function () { f.focus(); }, 350); }
+    function closeMenu() { d.body.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); burger.setAttribute('aria-label', 'Open menu'); if (lastFocus) lastFocus.focus(); }
+    if (burger) burger.addEventListener('click', function () { d.body.classList.contains('menu-open') ? closeMenu() : openMenu(); });
+    if (menu) menu.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
+    if ('IntersectionObserver' in window && !reduced) {
+      var ro = new IntersectionObserver(function (en) { en.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('is-in'); ro.unobserve(x.target); } }); }, { threshold: .1, rootMargin: '0px 0px -30px 0px' });
+      $$('.reveal').forEach(function (el) { ro.observe(el); });
+    } else $$('.reveal').forEach(function (el) { el.classList.add('is-in'); });
+    var yr = $('#year'); if (yr) yr.textContent = new Date().getFullYear();
+
+    /* ---------- Toast ---------- */
+    var toast = $('#toast'), toastMsg = $('#toastMsg'), toastTimer = null;
+    function showToast(msg) { toastMsg.textContent = msg; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200); }
+
+    /* ---------- Shelf state ---------- */
+    var grid = $('#postGrid');
+    var gridPosts = POSTS.filter(function (p) { return !p.featured; });
+    var state = { cat: 'all', series: null, seriesName: '', q: '', sort: 'new' };
+    var searchInput = $('#searchInput'), searchBox = $('#searchBox'), searchClear = $('#searchClear');
+    var sortSel = $('#sortSel'), toolCount = $('#toolCount'), emptyState = $('#emptyState');
+    var seriesActive = $('#seriesActive'), seriesName = $('#seriesName');
+    var flipToken = 0;
+    var wideMQ = matchMedia('(min-width: 901px)');
+
+    function matches(p) {
+      if (state.series && state.series.indexOf(p.slug) === -1) return false;
+      if (state.cat !== 'all' && p.cat !== state.cat) return false;
+      if (state.q) {
+        var hay = (p.title + ' ' + p.excerpt + ' ' + p.tags.join(' ') + ' ' + CAT_LABEL[p.cat]).toLowerCase();
+        if (hay.indexOf(state.q.toLowerCase()) === -1) return false;
+      }
+      return true;
+    }
+    function sorted(list) {
+      var l = list.slice();
+      if (state.sort === 'new') l.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+      if (state.sort === 'old') l.sort(function (a, b) { return a.date > b.date ? 1 : -1; });
+      if (state.sort === 'short') l.sort(function (a, b) { return a.mins - b.mins || (a.date < b.date ? 1 : -1); });
+      return l;
+    }
+    function highlight(el, text) {
+      if (!el) return;
+      if (!state.q) { el.textContent = text; return; }
+      var safe = esc(text), q = esc(state.q);
+      var rx = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'ig');
+      el.innerHTML = safe.replace(rx, '<mark>$1</mark>');
+    }
+    function packRows(visible) {
+      visible.forEach(function (p) { p.card.classList.remove('is-lead', 'is-solo'); });
+      if (!visible.length) return;
+      if (!wideMQ.matches) { visible[0].card.classList.add('is-lead'); return; }
+      var cycle = [7, 5, 4, 4, 4, 5, 7], ci = 0, rowSum = 0;
+      visible.forEach(function (p) {
+        var span = cycle[ci % cycle.length]; ci++;
+        if (rowSum + span > 12) rowSum = 0;
+        p.card.dataset.span = span;
+        rowSum += span;
+      });
+      if (rowSum < 12) {
+        var last = visible[visible.length - 1];
+        var ns = Math.min(12, (+last.card.dataset.span) + (12 - rowSum));
+        last.card.dataset.span = ns;
+      }
+      if (visible.length === 1) visible[0].card.classList.add('is-solo');
+    }
+    function render(animate) {
+      var first = new Map();
+      gridPosts.forEach(function (p) { if (!p.card.classList.contains('is-hidden')) first.set(p.slug, p.card.getBoundingClientRect()); });
+      var oldH = grid.getBoundingClientRect().height;
+
+      var visible = sorted(gridPosts.filter(matches));
+      gridPosts.forEach(function (p) { p.card.classList.add('is-hidden'); });
+      visible.forEach(function (p) { p.card.classList.remove('is-hidden'); grid.appendChild(p.card); });
+      packRows(visible);
+      visible.forEach(function (p) {
+        highlight($('[data-title]', p.card), p.title);
+        highlight($('[data-excerpt]', p.card), p.excerpt);
+      });
+
+      toolCount.textContent = visible.length + (visible.length === 1 ? ' essay' : ' essays');
+      emptyState.classList.toggle('on', visible.length === 0);
+      grid.style.display = visible.length === 0 ? 'none' : '';
+      seriesActive.classList.toggle('on', !!state.series);
+      if (state.series) seriesName.textContent = state.seriesName;
+      $$('.c-btn').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.cat === state.cat)); });
+
+      if (!animate || reduced || !grid.animate || !visible.length) return;
+      var token = ++flipToken;
+      var newH = grid.getBoundingClientRect().height;
+      if (Math.abs(newH - oldH) > 2) {
+        grid.style.height = oldH + 'px'; void grid.offsetHeight;
+        grid.style.transition = 'height .5s ' + EASE; grid.style.height = newH + 'px';
+        setTimeout(function () { if (token !== flipToken) return; grid.style.height = ''; grid.style.transition = ''; }, 520);
+      }
+      visible.forEach(function (p) {
+        var c = p.card, f = first.get(p.slug), l = c.getBoundingClientRect();
+        if (f) {
+          var dx = f.left - l.left, dy = f.top - l.top, sx = f.width / l.width, sy = f.height / l.height;
+          if (Math.abs(dx) > 1 || Math.abs(dy) > 1 || Math.abs(sx - 1) > .01 || Math.abs(sy - 1) > .01)
+            c.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')', transformOrigin: 'top left' }, { transform: 'none', transformOrigin: 'top left' }], { duration: 500, easing: EASE });
+        } else {
+          c.animate([{ opacity: 0, transform: 'translateY(16px) scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 420, delay: 50, easing: EASE, fill: 'backwards' });
+        }
+      });
+    }
+    render(false);
+    var resizeTimer = null;
+    addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(function () { render(false); }, 150); });
+
+    $('#catScroll').addEventListener('click', function (e) {
+      var b = e.target.closest('.c-btn'); if (!b) return;
+      state.cat = b.dataset.cat; state.series = null; render(true);
+    });
+    $('#indexList').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cat-jump]'); if (!b) return;
+      state.cat = b.dataset.catJump; state.series = null; render(true);
+      $('#posts').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    });
+    $('#seriesClear').addEventListener('click', function () { state.series = null; render(true); });
+    $$('.coll-open').forEach(function (b) {
+      b.addEventListener('click', function () {
+        state.series = b.dataset.seriesSlugs.split(',');
+        state.seriesName = b.dataset.seriesName;
+        state.cat = 'all'; render(true);
+        $('#posts').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+      });
+    });
+    sortSel.addEventListener('change', function () { state.sort = sortSel.value; render(true); });
+    var qTimer = null;
+    searchInput.addEventListener('input', function () {
+      clearTimeout(qTimer);
+      qTimer = setTimeout(function () {
+        state.q = searchInput.value.trim();
+        searchBox.classList.toggle('has-q', !!state.q);
+        render(true);
+      }, 130);
+    });
+    searchClear.addEventListener('click', function () { searchInput.value = ''; state.q = ''; searchBox.classList.remove('has-q'); render(true); searchInput.focus(); });
+    $('#emptyClear').addEventListener('click', function () {
+      state.q = ''; state.cat = 'all'; state.series = null;
+      searchInput.value = ''; searchBox.classList.remove('has-q'); render(true);
+    });
+
+    /* ---------- Reader ---------- */
+    var reader = $('#reader'), readerBody = $('#readerBody'), readerPanel = $('#readerPanel');
+    var readerCover = $('#readerCover'), readerMeta = $('#readerMeta'), readerTitle = $('#readerTitle');
+    var readerLede = $('#readerLede'), readerArticle = $('#readerArticle'), readerTags = $('#readerTags');
+    var readerCat = $('#readerCat'), readerProgress = $('#readerProgress'), readerPct = $('#readerPct');
+    var readerPrev = $('#readerPrev'), readerNext = $('#readerNext');
+    var readerPrevTitle = $('#readerPrevTitle'), readerNextTitle = $('#readerNextTitle');
+    var readerClose = $('#readerClose'), readerCopy = $('#readerCopy');
+    var currentSlug = null, readerLastFocus = null;
+    var FS = [0.94, 1.02, 1.12, 1.22], FS_PCT = [92, 100, 110, 120], fsLevel = 1;
+    try { var st = parseInt(localStorage.getItem('hkf-fs'), 10); if (!isNaN(st)) fsLevel = Math.min(3, Math.max(0, st)); } catch (e) {}
+    function applyFs() {
+      root.style.setProperty('--reader-fs', FS[fsLevel] + 'rem');
+      $('#fsLabel').textContent = FS_PCT[fsLevel] + '%';
+      try { localStorage.setItem('hkf-fs', String(fsLevel)); } catch (e) {}
+    }
+    applyFs();
+    $('#fsDown').addEventListener('click', function () { fsLevel = Math.max(0, fsLevel - 1); applyFs(); });
+    $('#fsUp').addEventListener('click', function () { fsLevel = Math.min(3, fsLevel + 1); applyFs(); });
+
+    function readerOrder() { return sorted(POSTS.slice()); }
+    function fillReader(slug) {
+      var p = BY_SLUG[slug]; if (!p) return;
+      currentSlug = slug;
+      readerCat.textContent = CAT_LABEL[p.cat] + ' · ' + fmtDate(p.date);
+      var coverSrc = $('.cv', p.card);
+      readerCover.innerHTML = '';
+      if (coverSrc) readerCover.appendChild(coverSrc.cloneNode(true));
+      readerMeta.innerHTML = catChip(p.cat) + '<span>' + p.mins + ' min read</span><span>·</span><span>' + p.words + ' words</span><span>·</span><span>' + fmtDate(p.date) + '</span>';
+      readerTitle.textContent = p.title;
+      readerLede.innerHTML = p.lede;
+      readerArticle.innerHTML = p.body;
+      readerTags.innerHTML = p.tags.map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('');
+      var order = readerOrder(), i = order.map(function (x) { return x.slug; }).indexOf(slug);
+      var prev = order[i - 1], next = order[i + 1];
+      readerPrev.disabled = !prev; readerNext.disabled = !next;
+      readerPrevTitle.textContent = prev ? prev.title : 'Start of the shelf';
+      readerNextTitle.textContent = next ? next.title : 'End of the shelf';
+      readerPrev.dataset.slug = prev ? prev.slug : '';
+      readerNext.dataset.slug = next ? next.slug : '';
+      readerBody.scrollTop = 0; updateProgress();
+      try { history.replaceState(null, '', '#' + slug); } catch (e) {}
+    }
+    function updateProgress() {
+      var max = readerBody.scrollHeight - readerBody.clientHeight;
+      var pct = max > 0 ? Math.round(readerBody.scrollTop / max * 100) : 0;
+      readerProgress.style.width = pct + '%';
+      readerPct.textContent = pct + '%';
+    }
+    readerBody.addEventListener('scroll', updateProgress, { passive: true });
+    function openReader(slug) {
+      if (!BY_SLUG[slug]) return;
+      readerLastFocus = d.activeElement;
+      fillReader(slug);
+      var sbw = innerWidth - root.clientWidth;
+      root.style.setProperty('--sbw', sbw + 'px');
+      d.body.style.paddingRight = sbw + 'px';
+      d.body.classList.add('reader-open');
+      reader.classList.add('is-open');
+      reader.setAttribute('aria-hidden', 'false');
+      setTimeout(function () { readerClose.focus(); }, reduced ? 0 : 380);
+    }
+    function closeReader() {
+      if (!reader.classList.contains('is-open')) return;
+      reader.classList.remove('is-open');
+      reader.setAttribute('aria-hidden', 'true');
+      d.body.classList.remove('reader-open');
+      d.body.style.paddingRight = '';
+      root.style.setProperty('--sbw', '0px');
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+      if (readerLastFocus) readerLastFocus.focus();
+      currentSlug = null;
+    }
+    function stepReader(btn) {
+      var slug = btn.dataset.slug; if (!slug) return;
+      fillReader(slug);
+      if (!reduced && readerPanel.animate) readerPanel.animate([{ opacity: .55, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: EASE });
+    }
+    readerPrev.addEventListener('click', function () { stepReader(readerPrev); });
+    readerNext.addEventListener('click', function () { stepReader(readerNext); });
+    readerClose.addEventListener('click', closeReader);
+    $('#readerScrim').addEventListener('click', closeReader);
+    d.addEventListener('click', function (e) {
+      var r = e.target.closest('[data-read]');
+      if (r) { e.preventDefault(); openReader(r.dataset.read); }
+    });
+    readerCopy.addEventListener('click', function () {
+      var url = location.href.split('#')[0] + '#' + currentSlug;
+      function done() { showToast('Essay link copied ✓'); }
+      function fallback() {
+        var ta = d.createElement('textarea'); ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        d.body.appendChild(ta); ta.select();
+        try { d.execCommand('copy'); done(); } catch (e) { showToast('Copy failed — long-press the URL'); }
+        ta.remove();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, fallback);
+      else fallback();
+    });
+
+    /* ---------- Keys ---------- */
+    d.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeLang();
+        if (reader.classList.contains('is-open')) closeReader();
+        else if (d.body.classList.contains('menu-open')) closeMenu();
+        else if (state.q) { searchInput.value = ''; state.q = ''; searchBox.classList.remove('has-q'); render(true); }
+        return;
+      }
+      if (e.key === '/' && !reader.classList.contains('is-open') && !/INPUT|TEXTAREA|SELECT/.test(d.activeElement.tagName)) {
+        e.preventDefault(); searchInput.focus(); return;
+      }
+      if (reader.classList.contains('is-open') && e.key === 'Tab') {
+        var f = $$('a[href], button', readerPanel).filter(function (el) { return el.offsetParent !== null && !el.disabled; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && d.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && d.activeElement === last) { e.preventDefault(); first.focus(); }
+      } else if (d.body.classList.contains('menu-open') && e.key === 'Tab') {
+        var mf = $$('a, button', menu).concat([burger]);
+        var mF = mf[0], mL = mf[mf.length - 1];
+        if (e.shiftKey && d.activeElement === mF) { e.preventDefault(); mL.focus(); }
+        else if (!e.shiftKey && d.activeElement === mL) { e.preventDefault(); mF.focus(); }
+      }
+    });
+
+    /* ---------- Newsletter ---------- */
+    var newsForm = $('#newsForm'), newsEmail = $('#newsEmail'), newsErr = $('#newsErr'), newsDone = $('#newsDone');
+    function subState(on) { newsForm.style.display = on ? 'none' : ''; newsDone.classList.toggle('on', on); }
+    try { subState(localStorage.getItem('hkf-sub') === '1'); } catch (e) {}
+    newsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = newsEmail.value.trim();
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+      if (!ok) {
+        newsErr.classList.add('on');
+        newsEmail.classList.remove('err'); void newsEmail.offsetWidth; newsEmail.classList.add('err');
+        newsEmail.focus(); return;
+      }
+      newsErr.classList.remove('on'); newsEmail.classList.remove('err');
+      try { localStorage.setItem('hkf-sub', '1'); } catch (err) {}
+      subState(true);
+      showToast('Subscribed — welcome to the slow mail ✓');
+    });
+    newsEmail.addEventListener('input', function () { newsErr.classList.remove('on'); newsEmail.classList.remove('err'); });
+    $('#newsUndo').addEventListener('click', function () {
+      try { localStorage.removeItem('hkf-sub'); } catch (e) {}
+      subState(false); newsEmail.value = '';
+      showToast('Unsubscribed. No hard feelings.');
+    });
+
+    /* ---------- Deep link + init ---------- */
+    var hash = location.hash.replace('#', '');
+    if (hash && BY_SLUG[hash]) setTimeout(function () { openReader(hash); }, 300);
+    onScroll();
+  })();
+  </script>
+</body>
+</html>
