@@ -804,9 +804,7 @@ Backend engineer & full-stack developer · seminary student
 
 [![Site](https://img.shields.io/badge/site-heydar.kazemifakhr.ir-009966?style=flat-square&labelColor=101413)](https://heydar.kazemifakhr.ir)
 [![GitHub](https://img.shields.io/badge/github-heydarkf-101413?style=flat-square&logo=github)](https://github.com/heydarkf)
-[![LinkedIn](https://img.shields.io/badge/linkedin-heydarkf-101413?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/heydarkf)
-[![X](https://img.shields.io/badge/x-heydarkf-101413?style=flat-square&logo=x)](https://x.com/heydarkf)
-[![Email](https://img.shields.io/badge/email-hello%40kazemifakhr.ir-101413?style=flat-square)](mailto:hello@kazemifakhr.ir)
+[![Email](https://img.shields.io/badge/email-hello%40kazemifakhr.ir-101413?style=flat-square)](mailto:heydar@proton.me)
 
 <br>
 
