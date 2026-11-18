@@ -37,11 +37,11 @@ Soft gradients · subtle glass · asymmetric layouts · live design tokens.
 <br>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/preview/banner-dark.png">
-  <img alt="HeydarKF template preview" src="assets/preview/banner-light.png" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/preview/Screenshot From 2026-11-18 12-57-43.png">
+  <img alt="HeydarKF template preview" src="assets/preview/Screenshot From 2026-11-18 12-57-43.png" width="100%">
 </picture>
 
-<sub>Drop your captures into <code>assets/preview/</code> — see <a href="#-screenshots">Screenshots</a>.</sub>
+<sub>Drop your captures into <code>assets/preview/</code></sub>
 
 </div>
 
@@ -69,7 +69,6 @@ Soft gradients · subtle glass · asymmetric layouts · live design tokens.
 - [Browser support](#-browser-support)
 - [Deployment](#-deployment)
 - [Internationalization & RTL](#-internationalization--rtl)
-- [Screenshots](#-screenshots)
 - [Troubleshooting](#-troubleshooting)
 - [Roadmap](#-roadmap)
 - [Contributing](#-contributing)
@@ -731,22 +730,6 @@ To create `fa/`:
 | Code blocks | keep `direction:ltr; text-align:left` |
 
 `hreflang` alternates and the language menu are already wired in both directions.
-
----
-
-## 🖼 Screenshots
-
-Add captures to `assets/preview/` and this table lights up.
-
-| Light | Dark |
-|---|---|
-| `banner-light.png` | `banner-dark.png` |
-| `home-light.png` | `home-dark.png` |
-| `projects-light.png` | `projects-dark.png` |
-| `blog-light.png` | `blog-dark.png` |
-| `studio-light.png` | `studio-dark.png` |
-
-Recommended: **1600×1000**, PNG or WebP, captured at 2× and downscaled.
 
 ---
 
